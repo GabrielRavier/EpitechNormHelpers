@@ -14,3 +14,5 @@ G5: Static: gcc/clang: -Wmissing-prototypes and clang-tidy: clang-diagnostic-mis
 F- Functions
 F1: Coherence of functions: Probably can't be done automatically
 F2: Naming functions: For the verb part, could do such a check but it would probably be in some strident category. Checking for snake_case should be easy enough
+F3: Number of columns: Easy to check, be sure to use the size of tabs that Epitech specifies (probably ask)
+F4: Number of lines: Add strident check for >20 lines functions
