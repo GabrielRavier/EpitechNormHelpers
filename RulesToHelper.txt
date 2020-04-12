@@ -1,0 +1,10 @@
+O1: Contents of the delivery folder: Will do this later, maybe premade .gitignore to help
+O2: File extensions: Might be able to make script for this, will see later
+O3: File coherence: Will need custom thingy
+O4: Naming files and folders: Could possibly flag short filenames, easy to flag non-snake_case though
+G1: File header: Easy to flag for
+G2: Seperatation of functions: Easy to flag for
+G3: Indentation of pre-processor directives: Will need custom check, shouldn't be too hard to make though
+G4: Global variables: clang-tidy: cppcoreguidelines-avoid-magic-numbers, cppcoreguidelines-avoid-non-const-global-variables
+G5: Static: gcc/clang: -Wmissing-prototypes
+F1: Coherence of functions: Probably can't be done automatically
