@@ -1,10 +1,17 @@
-O1: Contents of the delivery folder: Will do this later, maybe premade .gitignore to help
+O- Files organization
+O1: Contents of the delivery folder: Will do this later, maybe premade .gitignore to help and/or a script that checks the content of the git repo itself
 O2: File extensions: Might be able to make script for this, will see later
 O3: File coherence: Will need custom thingy
 O4: Naming files and folders: Could possibly flag short filenames, easy to flag non-snake_case though
+
+G- Global scope
 G1: File header: Easy to flag for
 G2: Seperatation of functions: Easy to flag for
-G3: Indentation of pre-processor directives: Will need custom check, shouldn't be too hard to make though
+G3: Indentation of pre-processor directives: Will probably need custom check, shouldn't be too hard to make though
 G4: Global variables: clang-tidy: cppcoreguidelines-avoid-magic-numbers, cppcoreguidelines-avoid-non-const-global-variables
-G5: Static: gcc/clang: -Wmissing-prototypes
+G5: Static: gcc/clang: -Wmissing-prototypes and clang-tidy: clang-diagnostic-missing-prototypes
+
+F- Functions
 F1: Coherence of functions: Probably can't be done automatically
+F2: Naming functions: For the verb part, could do such a check but it would probably be in some strident category. Checking for snake_case should be easy enough
+
