@@ -14,5 +14,15 @@ G5: Static: gcc/clang: -Wmissing-prototypes and clang-tidy: clang-diagnostic-mis
 F- Functions
 F1: Coherence of functions: Probably can't be done automatically
 F2: Naming functions: For the verb part, could do such a check but it would probably be in some strident category. Checking for snake_case should be easy enough
-F3: Number of columns: Easy to check, be sure to use the size of tabs that Epitech specifies (probably ask)
+F3: Number of columns: Easy to check, be sure to use the size of tabs that Epitech specifies (probably ask). clang-format should help
 F4: Number of lines: Add strident check for >20 lines functions
+F5: Arguments: For no parameters void check : gcc/clang: -Wstrict-prototypes. For struct check, need something custom
+F6: Comments inside a function: Should be easy enough to check manually
+F7: Should be easy enough to find, just compile with clang. Otherwise, use -Wpedantic
+
+L- Layout inside a function scope
+L1: Code line content: Some manual checks, clang-format should help
+L2: Indentation: clang-format
+L3: Spaces: Should be doable with clang-format
+L4: Curly Brackets: Should be doable with clang-format
+L5: Variable Declaration: Probably requires manual check, or maybe just using ANSI C
