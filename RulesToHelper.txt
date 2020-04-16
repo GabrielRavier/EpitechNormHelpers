@@ -1,5 +1,5 @@
 O- Files organization
-O1: Contents of the delivery folder: Will do this later, maybe premade .gitignore to help and/or a script that checks the content of the git repo itself
+O1: Contents of the delivery folder: Will do this later, maybe premade .gitignore to help and/or a script that checks the content of the git repo itself. Can use libgit2 for this
 O2: File extensions: Might be able to make script for this, will see later
 O3: File coherence: Will need custom thingy
 O4: Naming files and folders: Could possibly flag short filenames, easy to flag non-snake_case though
@@ -24,5 +24,29 @@ L- Layout inside a function scope
 L1: Code line content: Some manual checks, clang-format should help
 L2: Indentation: clang-format
 L3: Spaces: Should be doable with clang-format
-L4: Curly Brackets: Should be doable with clang-format
-L5: Variable Declaration: Probably requires manual check, or maybe just using ANSI C
+L4: Curly brackets: Should be doable with clang-format
+L5: Variable declaration: Probably requires manual check, or maybe just using ANSI C
+L6: Line jumps: May need custom check, might be doable with clang-format
+
+V- Variables and types
+V1: Naming identifiers: Probably requires manual check
+V2: Structures: Probably requires manual check
+V3: Pointers: clang-format can do it most likely
+
+C- Control structures
+C1: Conditional branching: Probably requires manual check
+C2: Ternary: Probably requires manual check
+C3: Goto: Probably requires manual check
+
+A- Advanced
+A1: Constant pointers: clang-tidy: readability-non-const-parameter
+A2: Typing: Probably can't really be done automatically
+
+H- Header files
+H1: Content: Probably requires manual check
+H2: Include guard: Can probably be done with some tool
+H3: Macros: May require manual check
+
+
+Notes:
+- May want to take a look at linux .clang-format to figure out a few rules
