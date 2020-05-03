@@ -20,4 +20,4 @@ Name | Function
 
 ## Licensing
 
-This directory contains free software. See LICENSES/GPL-3.0 for copying permission.
+This directory contains free software. See [LICENSES/GPL-3.0](https://github.com/GabrielRavier/EpitechNormHelpers/blob/master/LICENSES/GPL-3.0) for copying permission.
