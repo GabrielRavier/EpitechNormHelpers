@@ -6,6 +6,7 @@ endif
 
 SOURCE_DIRECTORY := src
 OBJECT_DIRECTORY := obj
+INCLUDE_DIRECTORY := include
 BINARY_DIRECTORY := bin
 BINARY_BASENAME = epitech-norm-helper
 
@@ -22,14 +23,19 @@ WARNING_OPTIONS := -Wall -Wextra -Wpedantic
 # Base command line when calling the compiler
 # -std=c2x to enable C2x features
 # -MMD -MP -MF $@.d to make the compiler generate dependency files
-CFLAGS += $(OPTIMIZATION_FLAGS) $(WARNING_OPTIONS) -std=c2x -MMD
+CFLAGS += $(OPTIMIZATION_FLAGS) $(WARNING_OPTIONS) -I$(INCLUDE_DIRECTORY) -std=c2x -MMD
 LDFLAGS += $(OPTIMIZATION_FLAGS) $(WARNING_OPTIONS)
+
 
 # Main source file
 SOURCE_FILES := main
 
+# Norm helper driver
+SOURCE_FILES += driver/norm_helper
+
+
 OBJECT_FILES := $(addprefix $(OBJECT_DIRECTORY)/, $(addprefix $(BUILD_TYPE_IDENTIFIER)/, $(addsuffix .o, $(SOURCE_FILES))))
-DEPENDENCY_FILES := $(addsuffix .d, $(OBJECT_FILES))
+DEPENDENCY_FILES := $(OBJECT_FILES:.o=.d)
 
 BINARY_FILE := $(BINARY_DIRECTORY)/$(BUILD_TYPE_IDENTIFIER)/$(BINARY_BASENAME)
 
@@ -40,14 +46,14 @@ all: $(BINARY_FILE)
 $(BINARY_FILE): $(OBJECT_FILES)
 	@mkdir -p $(@D)
 	@echo "Linking to $@..."
-	$(CC) $(LDFLAGS) $(OBJECT_FILES) -o $@
+	@$(CC) $(LDFLAGS) $(OBJECT_FILES) -o $@
 	@echo "Finished compiling $@"
 
 # Generic source file target
 $(OBJECT_DIRECTORY)/$(BUILD_TYPE_IDENTIFIER)/%.o: $(SOURCE_DIRECTORY)/%.c
 	@mkdir -p $(@D)
 	@echo "Compiling $<..."
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "Finished compiling $<"
 
 
