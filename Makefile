@@ -42,7 +42,7 @@ all: $(BINARY_FILE)
 $(BINARY_FILE): $(OBJECT_FILES)
 	@mkdir -p $(@D)
 	@echo "Linking to $@..."
-	@$(CC) $(LDFLAGS) $(OBJECT_FILES) -o $@
+	@$(CXX) $(LDFLAGS) $(OBJECT_FILES) -o $@
 	@echo "Finished compiling $@"
 
 # Generic source file target
