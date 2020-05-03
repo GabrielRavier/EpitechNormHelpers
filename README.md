@@ -2,8 +2,6 @@
 
 The Epitech Norm Helper is a helper for obeying the coding norms of the Epitech.
 
-Part of the architecture of this program is based upon the architecture of the GNU Compiler Collection.
-
 ## Dependencies
 
 * None, for now
