@@ -1,2 +1,9 @@
 # Don't wanna get in trouble for distributing pdf of private thing
 epitech_c_coding_style.pdf
+
+# Object files and binary files
+obj/
+bin/
+
+# Usual name for project file names for IDEs and stuff
+EpitechNormHelpers.*
