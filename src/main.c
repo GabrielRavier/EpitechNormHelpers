@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-#include "driver/norm_helper.h"
+#include "norm_helper.h"
 
 /**
  * @brief main - Just initializes a driver and starts it up

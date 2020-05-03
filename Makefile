@@ -31,7 +31,13 @@ LDFLAGS += $(OPTIMIZATION_FLAGS) $(WARNING_OPTIONS)
 SOURCE_FILES := main
 
 # Norm helper driver
-SOURCE_FILES += driver/norm_helper
+SOURCE_FILES += norm_helper
+
+# xmalloc helper
+SOURCE_FILES += helpers/xmalloc
+
+# Diagnostic stuff
+SOURCE_FILES += diagnostic
 
 
 OBJECT_FILES := $(addprefix $(OBJECT_DIRECTORY)/, $(addprefix $(BUILD_TYPE_IDENTIFIER)/, $(addsuffix .o, $(SOURCE_FILES))))
