@@ -10,7 +10,7 @@ Part of the architecture of this program is based upon the architecture of the G
 
 ## Building
 
-This project uses Make, allowing it can be built on most UNIX systems. You should be able to build the program with `make`
+This project uses Make, allowing it to be built on most UNIX systems. You should be able to build the program with `make`
 
 You can also add the following flags :
 
