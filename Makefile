@@ -21,24 +21,14 @@ endif
 WARNING_OPTIONS := -Wall -Wextra -Wpedantic
 
 # Base command line when calling the compiler
-# -std=c2x to enable C2x features
+# -std=c++20 to enable C++20 features
 # -MMD -MP -MF $@.d to make the compiler generate dependency files
-CFLAGS += $(OPTIMIZATION_FLAGS) $(WARNING_OPTIONS) -I$(INCLUDE_DIRECTORY) -std=c2x -MMD
+CXXFLAGS += $(OPTIMIZATION_FLAGS) $(WARNING_OPTIONS) -I$(INCLUDE_DIRECTORY) -std=c++2a -MMD
 LDFLAGS += $(OPTIMIZATION_FLAGS) $(WARNING_OPTIONS)
 
 
 # Main source file
 SOURCE_FILES := main
-
-# Norm helper driver
-SOURCE_FILES += norm_helper
-
-# xmalloc helper
-SOURCE_FILES += helpers/xmalloc
-
-# Diagnostic stuff
-SOURCE_FILES += diagnostic
-
 
 OBJECT_FILES := $(addprefix $(OBJECT_DIRECTORY)/, $(addprefix $(BUILD_TYPE_IDENTIFIER)/, $(addsuffix .o, $(SOURCE_FILES))))
 DEPENDENCY_FILES := $(OBJECT_FILES:.o=.d)
@@ -56,10 +46,10 @@ $(BINARY_FILE): $(OBJECT_FILES)
 	@echo "Finished compiling $@"
 
 # Generic source file target
-$(OBJECT_DIRECTORY)/$(BUILD_TYPE_IDENTIFIER)/%.o: $(SOURCE_DIRECTORY)/%.c
+$(OBJECT_DIRECTORY)/$(BUILD_TYPE_IDENTIFIER)/%.o: $(SOURCE_DIRECTORY)/%.cpp
 	@mkdir -p $(@D)
 	@echo "Compiling $<..."
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 	@echo "Finished compiling $<"
 
 
