@@ -7,6 +7,7 @@ endif
 SOURCE_DIRECTORY := src
 OBJECT_DIRECTORY := obj
 BINARY_DIRECTORY := bin
+EXTERNAL_DIRECTORY := external
 BINARY_BASENAME = epitech-norm-helper
 
 # Optimization options fed to the compiler
@@ -22,7 +23,7 @@ WARNING_OPTIONS := -Wall -Wextra -Wpedantic
 # Base command line when calling the compiler
 # -std=c++20 to enable C++20 features
 # -MMD -MP -MF $@.d to make the compiler generate dependency files
-CXXFLAGS += $(OPTIMIZATION_FLAGS) $(WARNING_OPTIONS) -std=c++2a -MMD
+CXXFLAGS += $(OPTIMIZATION_FLAGS) $(WARNING_OPTIONS) -std=c++2a -MMD -I$(EXTERNAL_DIRECTORY)
 LDFLAGS += $(OPTIMIZATION_FLAGS) $(WARNING_OPTIONS) -lfmt
 
 

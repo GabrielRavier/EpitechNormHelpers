@@ -4,7 +4,8 @@ The Epitech Norm Helper is a helper for obeying the coding norms of the Epitech.
 
 ## Dependencies
 
-* None, for now
+* fmt
+* cxxopts
 
 ## Building
 
