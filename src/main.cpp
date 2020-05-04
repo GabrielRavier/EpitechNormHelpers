@@ -3,45 +3,23 @@
 #include <fmt/format.h>
 #include <exception>
 #include <iostream>
+#include "options.hpp"
 
-static void program(const cxxopts::ParseResult& options)
+static void program(const options_parser::parsed_options& options)
 {
 
-}
-
-static auto parseArguments(int argc, char *argv[])
-{
-	cxxopts::Options options("epitech-norm-helper", "- Helper for respecting Epitech norms");
-
-	options.add_options()
-			("check-organization-1", "Files organization - Contents of the delivery folder", cxxopts::value<unsigned>());
-			("h,help", "Print usage");
-
-	options.parse_positional({"directory"});
-	options.show_positional_help();
-	options.positional_help("[DIRECTORY]...");
-
-	auto parsedOptions = options.parse(argc, argv);
-
-	if (parsedOptions.count("help"))
-	{
-		std::cout << options.help();
-		exit(EXIT_SUCCESS);
-	}
-
-	return parsedOptions;
 }
 
 int main(int argc, char *argv[])
 {
 	try
 	{
-		program(parseArguments(argc, argv));
+		program(options_parser::parse_options(argc, argv));
 		return EXIT_SUCCESS;
 	}
-	catch (const cxxopts::OptionParseException& optionParseException)
+	catch (const cxxopts::OptionParseException& option_parse_exception)
 	{
-		std::cerr << fmt::format("Failed to parse options: {}\n", optionParseException.what());
+		std::cerr << fmt::format("Failed to parse options: {}\n", option_parse_exception.what());
 	}
 	catch (const std::exception& exception)
 	{

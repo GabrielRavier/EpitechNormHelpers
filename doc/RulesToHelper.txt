@@ -6,7 +6,7 @@ O4: Naming files and folders: Could possibly flag short filenames, easy to flag 
 
 G- Global scope
 G1: File header: Easy to flag for
-G2: Seperatation of functions: Easy to flag for
+G2: Seperation of functions: Easy to flag for
 G3: Indentation of pre-processor directives: Will probably need custom check, shouldn't be too hard to make though
 G4: Global variables: clang-tidy: cppcoreguidelines-avoid-magic-numbers, cppcoreguidelines-avoid-non-const-global-variables
 G5: Static: gcc/clang: -Wmissing-prototypes and clang-tidy: clang-diagnostic-missing-prototypes
