@@ -66,12 +66,50 @@ static const option_list possible_options =
 					 .name = "Indentation of pre-processor directives",
 					 .maximum_level = 1,
 				 },
+				 {
+					 .name = "Global variables",
+					 .maximum_level = 1,
+				 },
+				 {
+					 .name = "Static",
+					 .maximum_level = 1,
+				 },
 			 },
 			 .name = "Global scope",
 			 .category_abbreviation = 'G',
 		 },
 		 {
-			 .options = {},
+			 .options =
+			 {
+				 {
+					 .name = "Coherence of functions",
+					 .maximum_level = 1,
+				 },
+				 {
+					 .name = "Naming functions",
+					 .maximum_level = 1,
+				 },
+				 {
+					 .name = "Number of columns",
+					 .maximum_level = 1,
+				 },
+				 {
+					 .name = "Number of lines",
+					 .maximum_level = 1,
+				 },
+				 {
+					 .name = "Arguments",
+					 .maximum_level = 1,
+				 },
+				 {
+					 .name = "Comments inside a function",
+					 .maximum_level = 1,
+				 },
+				 {
+					 .name = "Nested function",
+					 .maximum_level = 1,
+				 },
+			 },
 			 .name = "Functions",
 			 .category_abbreviation = 'F',
 		 },
@@ -100,17 +138,6 @@ options_parser::parsed_options options_parser::parse_options(int argc, char *arg
 	cxxopts::Options options("epitech-norm-helper", "- Helper for respecting Epitech norms");
 
 	// Mostly test code, will scrap later
-	struct
-	{
-		std::array<option_category, 8> category_names_and_rules_amounts;
-	} options_description =
-	{
-		.category_names_and_rules_amounts =
-		{
-			{{{{"Files organization", 4}}}},
-		}
-	};
-
 	constexpr const char *o_name = "Files organization";
 	constexpr const char *g_name = "Global scope";
 
