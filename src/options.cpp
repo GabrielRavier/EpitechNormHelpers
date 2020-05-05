@@ -246,6 +246,18 @@ static void make_check_options(cxxopts::Options& options)
 	make_options_from_possible_options(options, possible_options);
 }
 
+static options_parser::parsed_options make_parsed_options_from_parse_result(const cxxopts::ParseResult& parse_result)
+{
+	options_parser::parsed_options result;
+
+	for (const auto& argument : parse_result.arguments())
+	{
+
+	}
+
+	return result;
+}
+
 options_parser::parsed_options options_parser::parse_options(int argc, char *argv[])
 {
 	cxxopts::Options options("epitech-norm-helper");
@@ -254,19 +266,20 @@ options_parser::parsed_options options_parser::parse_options(int argc, char *arg
 
 	options.add_options()
 			("check-all", "All checks at the specified level", cxxopts::value<unsigned>())
+			("directory", "Directory in which the tool will run", cxxopts::value<std::string>())
 			("h,help", "Print usage");
 
 	options.parse_positional({"directory"});
 	options.show_positional_help();
 	options.positional_help("[DIRECTORY]...");
 
-	auto parsedOptions = options.parse(argc, argv);
+	auto parse_result = options.parse(argc, argv);
 
-	if (parsedOptions.count("help"))
+	if (parse_result.count("help"))
 	{
 		std::cout << options.help();
 		exit(EXIT_SUCCESS);
 	}
 
-	return {};
+	return make_parsed_options_from_parse_result(parse_result);
 }
