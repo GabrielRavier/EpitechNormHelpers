@@ -33,6 +33,9 @@ SOURCE_FILES := main
 # Option handling
 SOURCE_FILES += options
 
+# Actual program
+SOURCE_FILES += program
+
 
 OBJECT_FILES := $(addprefix $(OBJECT_DIRECTORY)/, $(addprefix $(BUILD_TYPE_IDENTIFIER)/, $(addsuffix .o, $(SOURCE_FILES))))
 DEPENDENCY_FILES := $(OBJECT_FILES:.o=.d)

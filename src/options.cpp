@@ -32,19 +32,22 @@ struct option_list
 /**
  * @brief From an option list, make a cxxopts::Options and a vector of strings containing all possible check options in abbreviated form ("o2" for "--check-o2")
  */
-static void make_options_from_possible_options(const option_list& option_list, cxxopts::Options& options, std::vector<std::string>& check_options)
+static void make_options_from_possible_options(const option_list& option_list, cxxopts::Options& options, std::vector<std::string>& checks_names)
 {
 	for (const auto& category : option_list.categories)
 	{
 		char category_abbreviation_lowered = tolower(category.abbreviation);
+
+		options.add_options()(fmt::format("check-{}all", category_abbreviation_lowered), fmt::format("Enable all checks in '{}' category", category.name), cxxopts::value<unsigned>()->implicit_value("1"));
+
 		for (auto [index, option] : iter::enumerate(category.options))
 		{
 			std::string check_name_string = fmt::format("{}{}", category_abbreviation_lowered, std::to_string(index));
-			check_options.push_back(check_name_string);
+			checks_names.push_back(check_name_string);
 
 			std::string option_name_string = fmt::format("check-{}", check_name_string);
 
-			options.add_options()(option_name_string, fmt::format("{}", option.name), cxxopts::value<unsigned>()->implicit_value("1"));
+			options.add_options()(option_name_string, fmt::format("Enable '{}' check", option.name), cxxopts::value<unsigned>()->implicit_value("1"));
 		}
 	}
 }
@@ -255,7 +258,7 @@ static void make_check_options(cxxopts::Options& options, std::vector<std::strin
 /**
  * @brief From a cxxopts::ParseResult and a vector of strings containing shortened versions of all possible options, make an options_parser::parsed_options
  */
-static options_parser::parsed_options make_parsed_options_from_parse_result(const cxxopts::ParseResult& parse_result, const std::vector<std::string>& check_options)
+static options_parser::parsed_options make_parsed_options_from_parse_result(const cxxopts::ParseResult& parse_result, const std::vector<std::string>& checks_names)
 {
 	options_parser::parsed_options result;
 
@@ -269,8 +272,15 @@ static options_parser::parsed_options make_parsed_options_from_parse_result(cons
 
 			if (checkArg == "all")
 			{
-				for (const std::string& check_option : check_options)
-					result.rule_options[check_option] = argument.as<unsigned>();
+				for (const std::string& check_name : checks_names)
+					result.rule_options[check_name] = argument.as<unsigned>();
+			}
+			else if (checkArg.substr(1) == "all")
+			{
+				char category_abbreviation = checkArg[0];
+				for (const std::string& check_name : checks_names)
+					if (check_name[0] == category_abbreviation)
+						result.rule_options[check_name] = argument.as<unsigned>();
 			}
 			else
 			{
@@ -285,9 +295,9 @@ static options_parser::parsed_options make_parsed_options_from_parse_result(cons
 options_parser::parsed_options options_parser::parse_options(int argc, char *argv[])
 {
 	cxxopts::Options options("epitech-norm-helper");
-	std::vector<std::string> check_options;
+	std::vector<std::string> checks_names;
 
-	make_check_options(options, check_options);
+	make_check_options(options, checks_names);
 
 	options.add_options()
 			("check-all", "All checks at the specified level", cxxopts::value<unsigned>())
@@ -306,5 +316,5 @@ options_parser::parsed_options options_parser::parse_options(int argc, char *arg
 		exit(EXIT_SUCCESS);
 	}
 
-	return make_parsed_options_from_parse_result(parse_result, check_options);
+	return make_parsed_options_from_parse_result(parse_result, checks_names);
 }

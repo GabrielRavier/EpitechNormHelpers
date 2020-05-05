@@ -4,11 +4,7 @@
 #include <exception>
 #include <iostream>
 #include "options.hpp"
-
-static void program(const options_parser::parsed_options& options)
-{
-
-}
+#include "program.hpp"
 
 int main(int argc, char *argv[])
 {

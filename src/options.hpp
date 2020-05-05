@@ -1,6 +1,5 @@
 #pragma once
 #include <unordered_map>
-#include <array>
 #include <string>
 
 namespace options_parser
