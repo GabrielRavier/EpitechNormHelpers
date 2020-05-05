@@ -1,20 +1,18 @@
 #pragma once
-#include <vector>
+#include <unordered_map>
 #include <array>
 #include <string>
 
 namespace options_parser
 {
-	struct norm_helper_option_category
-	{
-		std::vector<int> option_levels;
-	};
-
 	struct parsed_options
 	{
-		std::array<norm_helper_option_category, 8> option_categories;
+		std::unordered_map<std::string, unsigned> rule_options;
 		std::string directory;
 	};
 
+	/**
+	 * @brief From the arguments normally passed to main, form an options_parser::parsed_options
+	 */
 	parsed_options parse_options(int argc, char *argv[]);
 }
