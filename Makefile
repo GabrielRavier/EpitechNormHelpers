@@ -14,7 +14,7 @@ BINARY_BASENAME = epitech-norm-helper
 ifeq ($(RELEASE), 1)
 OPTIMIZATION_FLAGS := -O3 -flto -g0 -s
 else
-OPTIMIZATION_FLAGS := -Og -ggdb3
+OPTIMIZATION_FLAGS := -O0 -ggdb3
 endif
 
 # Warning options fed to the compiler

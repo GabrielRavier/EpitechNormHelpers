@@ -44,10 +44,7 @@ static void make_options_from_possible_options(const option_list& option_list, c
 
 			std::string option_name_string = fmt::format("check-{}", check_name_string);
 
-			if (option.maximum_level > 1)
-				options.add_options()(option_name_string, fmt::format("{}", option.name), cxxopts::value<unsigned>()->implicit_value("1"));
-			else
-				options.add_options()(option_name_string, fmt::format("{}", option.name));
+			options.add_options()(option_name_string, fmt::format("{}", option.name), cxxopts::value<unsigned>()->implicit_value("1"));
 		}
 	}
 }
