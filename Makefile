@@ -36,6 +36,12 @@ SOURCE_FILES += options
 # Actual program
 SOURCE_FILES += program
 
+# Diagnostics system
+SOURCE_FILES += diagnostic
+
+# Checks for the program
+SOURCE_FILES += checks/o1
+
 
 OBJECT_FILES := $(addprefix $(OBJECT_DIRECTORY)/, $(addprefix $(BUILD_TYPE_IDENTIFIER)/, $(addsuffix .o, $(SOURCE_FILES))))
 DEPENDENCY_FILES := $(OBJECT_FILES:.o=.d)

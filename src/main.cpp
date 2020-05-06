@@ -5,6 +5,7 @@
 #include <iostream>
 #include "options.hpp"
 #include "program.hpp"
+#include "diagnostic.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -15,16 +16,16 @@ int main(int argc, char *argv[])
 	}
 	catch (const cxxopts::OptionParseException& option_parse_exception)
 	{
-		std::cerr << fmt::format("Failed to parse options: {}\n", option_parse_exception.what());
+		diagnostic::fatal_error(fmt::format("failed to parse options: {}", option_parse_exception.what()), false);
 	}
 	catch (const std::exception& exception)
 	{
-		std::cerr << fmt::format("Exception thrown: {}\n", exception.what());
+		diagnostic::fatal_error(fmt::format("exception thrown: {}", exception.what()), false);
 	}
 	catch (...)
 	{
-		std::cerr << "Exception thrown: Something not inherited from std::exception\n";
+		diagnostic::fatal_error("exception thrown: Something not inherited from std::exception", false);
 	}
 
-	return EXIT_FAILURE;
+	// Unreachable
 }

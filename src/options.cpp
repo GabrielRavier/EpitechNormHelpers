@@ -42,6 +42,7 @@ static void make_options_from_possible_options(const option_list& option_list, c
 
 		for (auto [index, option] : iter::enumerate(category.options))
 		{
+			++index;	// Rules start at 1, not 0
 			std::string check_name_string = fmt::format("{}{}", category_abbreviation_lowered, std::to_string(index));
 			checks_names.push_back(check_name_string);
 
@@ -301,7 +302,7 @@ options_parser::parsed_options options_parser::parse_options(int argc, char *arg
 
 	options.add_options()
 			("check-all", "All checks at the specified level", cxxopts::value<unsigned>())
-			("directory", "Directory in which the tool will run", cxxopts::value<std::string>())
+			("directory", "Directory in which the tool will run", cxxopts::value<std::string>()->default_value("."))
 			("h,help", "Print usage");
 
 	options.parse_positional({"directory"});
@@ -316,5 +317,8 @@ options_parser::parsed_options options_parser::parse_options(int argc, char *arg
 		exit(EXIT_SUCCESS);
 	}
 
-	return make_parsed_options_from_parse_result(parse_result, checks_names);
+	auto parsed_options = make_parsed_options_from_parse_result(parse_result, checks_names);
+	parsed_options.directory = parse_result["directory"].as<std::string>();
+
+	return parsed_options;
 }
