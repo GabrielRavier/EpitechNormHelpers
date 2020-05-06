@@ -21,7 +21,7 @@ static std::string getErrnoString(int error_number)
 
 #else
 
-	char buffer[BUFSIZ];
+	char buffer[10000];
 	result = strerror_r(error_number, buffer, sizeof(buffer));	// A copy is made here since the string may only live until buffer dies
 
 #endif
@@ -29,21 +29,28 @@ static std::string getErrnoString(int error_number)
 	return result;
 }
 
-static void do_error_print(std::string_view error_description, bool display_errno, std::string_view error_kind)
+static void do_error_print(std::string_view error_description, diagnostic::display_errno should_display_errno, std::string_view error_kind)
 {
 	std::cerr << fmt::format("{}: {}\n", error_kind, error_description);
-	if (display_errno)
-		std::cerr << fmt::format("corresponding system error: {}\n", getErrnoString(errno));
+	switch (should_display_errno)
+	{
+		case diagnostic::display_errno::doit:
+			std::cerr << fmt::format("corresponding system error: {}\n", getErrnoString(errno));
+
+			[[fallthrough]];
+		case diagnostic::display_errno::dont:
+			break;
+	}
 }
 
-[[noreturn]] void diagnostic::fatal_error(std::string_view error_description, bool display_errno)
+[[noreturn]] void diagnostic::fatal_error(std::string_view error_description, diagnostic::display_errno should_display_errno)
 {
-	do_error_print(error_description, display_errno, "fatal error");
+	do_error_print(error_description, should_display_errno, "fatal error");
 
 	exit(EXIT_FAILURE);
 }
 
-void diagnostic::error(std::string_view error_description, bool display_errno)
+void diagnostic::error(std::string_view error_description, diagnostic::display_errno should_display_errno)
 {
-	do_error_print(error_description, display_errno, "error");
+	do_error_print(error_description, should_display_errno, "error");
 }

@@ -10,7 +10,7 @@ static void change_current_directory(const std::string& directory)
 {
 	int result = chdir(directory.c_str());
 	if (result != 0)
-		diagnostic::fatal_error(fmt::format("invalid directory '{}' given, defaulting to current directory", directory), true);
+		diagnostic::fatal_error(fmt::format("invalid directory '{}' given, defaulting to current directory", directory), diagnostic::display_errno::doit);
 }
 
 static auto make_rules_functions_map()
@@ -30,8 +30,19 @@ void program(const options_parser::parsed_options& options)
 	{
 		auto match = rules_functions_map.find(rule.first);
 		if (match != rules_functions_map.end())
-			match->second(rule.second);
+		{
+			try
+			{
+				match->second(rule.second);
+			}
+			catch (const std::exception& exception)
+			{
+				diagnostic::error(fmt::format("exception thrown while doing {} check : {}", rule.first, exception.what()), diagnostic::display_errno::dont);
+			}
+		}
 		else
-			diagnostic::error(fmt::format("{} check unimplemented", rule.first), false);
+		{
+			diagnostic::error(fmt::format("{} check unimplemented", rule.first), diagnostic::display_errno::dont);
+		}
 	}
 }

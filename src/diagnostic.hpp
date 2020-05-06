@@ -4,7 +4,13 @@
 namespace diagnostic
 {
 
-[[noreturn]] void fatal_error(std::string_view error_description, bool display_errno);
-void error(std::string_view error_description, bool display_errno);
+enum class display_errno
+{
+	dont,
+	doit
+};
+
+[[noreturn]] void fatal_error(std::string_view error_description, display_errno should_display_errno);
+void error(std::string_view error_description, display_errno should_display_errno);
 
 }
