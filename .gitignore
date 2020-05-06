@@ -7,3 +7,6 @@ bin/
 
 # Usual name for project file names for IDEs and stuff
 EpitechNormHelpers.*
+
+# Build folder
+build/
