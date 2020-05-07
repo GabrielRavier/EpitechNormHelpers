@@ -16,15 +16,15 @@ int main(int argc, char *argv[])
 	}
 	catch (const cxxopts::OptionParseException& option_parse_exception)
 	{
-		diagnostic::fatal_error(fmt::format("failed to parse options: {}", option_parse_exception.what()), diagnostic::display_errno::dont);
+		diagnostic::fatal_error(fmt::format("failed to parse options: {}", option_parse_exception.what()), false);
 	}
 	catch (const std::exception& exception)
 	{
-		diagnostic::fatal_error(fmt::format("exception thrown: {}", exception.what()), diagnostic::display_errno::dont);
+		diagnostic::fatal_error(fmt::format("exception thrown: {}", exception.what()), false);
 	}
 	catch (...)
 	{
-		diagnostic::fatal_error("exception thrown: Something not inherited from std::exception", diagnostic::display_errno::dont);
+		diagnostic::fatal_error("exception thrown: Something not inherited from std::exception", false);
 	}
 
 	// Unreachable

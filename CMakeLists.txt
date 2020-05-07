@@ -7,13 +7,15 @@ project(epitech-norm-helper CXX)
 add_executable(epitech-norm-helper
     "src/main.cpp"
     "src/diagnostic.cpp"
-    "src/diagnostic.hpp"
+    "include/diagnostic.hpp"
     "src/options.cpp"
-    "src/options.hpp"
+    "include/options.hpp"
     "src/program.cpp"
-    "src/program.hpp"
+    "include/program.hpp"
     "src/checks/o1.cpp"
-    "src/checks/o1.hpp")
+    "include/checks/o1.hpp")
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 # LTO support
 if(LTO)
@@ -33,8 +35,13 @@ set_target_properties(epitech-norm-helper PROPERTIES
     CXX_EXTENSIONS OFF)
 
 # fmt library
-find_package(fmt)
+find_package(fmt REQUIRED)
 target_link_libraries(epitech-norm-helper fmt::fmt)
 
-# Add 'external' directory as include directory
+# libgit2 library
+find_package(libgit2 REQUIRED)
+target_link_libraries(epitech-norm-helper ${LIBGIT2_LIBRARIES})
+
+# Add 'external' directory as include directory, for external libraries, as well as our 'include' directory
 target_include_directories(epitech-norm-helper PRIVATE external)
+target_include_directories(epitech-norm-helper PRIVATE include)

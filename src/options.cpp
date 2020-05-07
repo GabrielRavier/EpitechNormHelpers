@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 #include "options.hpp"
 #include <cxxopts.hpp>
 #include <fmt/format.h>
