@@ -32,7 +32,7 @@ static void do_level1(const filenames_container& filenames)
 {
 	for (const auto& filename : filenames)
 	{
-		static const boost::regex basename_regex{R"delimiter((?:^((.*(\.(o|elf|obj|gch|pch|a|lib|exe|out|app|so|so\..*|dylib|dll|d|autosave)|~))|#.*#|\.#.*|Session\.vim|Sessionx\.vim|CMakeLists\.txt\.user|CMakeCache\.txt|cmake_install\.cmake|install_manifest\.txt|compile_commands\.json)$))delimiter"};
+		static const boost::regex basename_regex{R"delimiter((?:^((.*(\.(o|elf|obj|gch|pch|a|lib|exe|out|app|so|so\..*|dylib|dll|d|autosave)|~))|#.*#|\.#.*|Sessionx?\.vim|CMakeLists\.txt\.user|(CMakeCache|install_manifest)\.txt|cmake_install\.cmake|compile_commands\.json)$))delimiter"};
 		const std::string basename = basename_wrappers::base_name(filename);
 
 		boost::smatch match;
@@ -66,7 +66,7 @@ static void do_level3(const filenames_container& filenames)
 
 }
 
-// Level 4 only allows : Makefile, .gitignore, .gitconfig, README*, files in doc, documentation, src and source directories, .c and .h files
+// Level 4 only allows : Makefile, CMakeLists.txt, configure.ac, configure, Makefile.in, GNUmakefile, COPYING, .gitignore, .gitconfig, README*, files in doc, documentation, src and source directories, .c and .h files
 static void do_level4(const filenames_container& filenames)
 {
 
