@@ -3,12 +3,12 @@
 #include "libgit2wrapper/global.hpp"
 #include "libgit2wrapper/repository.hpp"
 #include "libgit2wrapper/index.hpp"
-#include "compile-time-regular-expression/ctre.hpp"
 #include "diagnostic.hpp"
 #include <vector>
 #include <string>
 #include <string_view>
 #include <fmt/format.h>
+#include <boost/regex.hpp>
 
 using filenames_container = std::vector<std::string>;
 
@@ -26,10 +26,11 @@ static void do_level1(const filenames_container& filenames)
 {
 	for (const auto& filename : filenames)
 	{
-		static constexpr auto basename_regex = ctll::fixed_string(R"delimiter((.*\.o)|(.*\.elf)|(.*\.obj)|(.*\.gch)|(.*\.pch)|(.*\.a)|(.*\.lib)|(.*\.exe)|(.*\.out)|(.*\.app)|(.*\.so)|(.*\.so\..*)|(.*\.dylib)|(.*\.dll)|(.*~)|(#.*#)|(\.#.*)|(Session\.vim)|(Sessionx\.vim)|(.*\.autosave)|(CMakeLists\.txt\.user)|(CMakeCache\.txt)|(cmake_install\.cmake)|(install_manifest\.txt)|(compile_commands\.json)|(.*\.d))delimiter");
-		std::string basename = get_basename(filename);
+		static const boost::regex basename_regex{R"delimiter((?:(.*\.o)|(.*\.elf)|(.*\.obj)|(.*\.gch)|(.*\.pch)|(.*\.a)|(.*\.lib)|(.*\.exe)|(.*\.out)|(.*\.app)|(.*\.so)|(.*\.so\..*)|(.*\.dylib)|(.*\.dll)|(.*~)|(#.*#)|(\.#.*)|(Session\.vim)|(Sessionx\.vim)|(.*\.autosave)|(CMakeLists\.txt\.user)|(CMakeCache\.txt)|(cmake_install\.cmake)|(install_manifest\.txt)|(compile_commands\.json)|(.*\.d)))delimiter"};
+		const std::string basename = get_basename(filename);
 
-		if (ctre::match<basename_regex>(basename))
+		boost::smatch match;
+		if (boost::regex_match(basename, match, basename_regex))
 			diagnostic::warn(fmt::format("o1: {} matched level 1", filename), false);
 	}
 }

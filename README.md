@@ -6,6 +6,7 @@ The Epitech Norm Helper is a helper for obeying the coding norms of the Epitech.
 
 * fmt
 * cxxopts
+* Boost.Regex
 
 ## Building
 

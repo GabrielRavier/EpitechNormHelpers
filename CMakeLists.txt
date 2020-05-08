@@ -42,6 +42,10 @@ target_link_libraries(epitech-norm-helper fmt::fmt)
 find_package(libgit2 REQUIRED)
 target_link_libraries(epitech-norm-helper ${LIBGIT2_LIBRARIES})
 
+# Boost.Regex library
+find_package(Boost COMPONENTS regex REQUIRED)
+target_link_libraries(epitech-norm-helper ${Boost_LIBRARIES})
+
 # Add 'external' directory as include directory, for external libraries, as well as our 'include' directory
 target_include_directories(epitech-norm-helper PRIVATE external)
 target_include_directories(epitech-norm-helper PRIVATE include)
