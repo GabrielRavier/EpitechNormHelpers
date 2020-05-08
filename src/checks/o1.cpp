@@ -12,12 +12,20 @@
 #include <span>
 #include <fstream>
 #include <stdexcept>
+#include <unordered_set>
 #include <fmt/format.h>
 #include <boost/regex.hpp>
 
 // Improvement idea for this : Remove regexes and match everything individually to give a better warning message
 
 using filenames_container = std::vector<std::string>;
+
+static std::string escape_string_for_regex(const std::string& string)
+{
+	static const boost::regex escape_regex{R"delimiter([.^$|()\[\]{}*+?\\])delimiter"};
+	constexpr const char *replace_regex{R"delimiter(\\&)delimiter"};
+	return boost::regex_replace(string, escape_regex, replace_regex, boost::match_default | boost::format_sed);
+}
 
 static std::string get_git_root_directory_name()
 {
@@ -47,7 +55,7 @@ static void do_level2(const filenames_container& filenames)
 	std::string git_root_repository_name = get_git_root_directory_name();
 	for (const auto& filename : filenames)
 	{
-		static const boost::regex basename_regex{fmt::format(R"delimiter((?:^(({}.*))$))delimiter", git_root_repository_name)};
+		static const boost::regex basename_regex{fmt::format(R"delimiter((?:^{}.*$))delimiter", escape_string_for_regex(git_root_repository_name))};
 		const std::string basename = basename_wrappers::base_name(filename);
 
 		boost::smatch match;
@@ -63,7 +71,23 @@ static void do_level2(const filenames_container& filenames)
 // Level 3 also checks for *.i*86, *.x86_64, *.hex, *.slo, *.lo, *.ko, *.lo, *.lai, *.la, *.mod, *.smod, *.ilk, *.map, *dSYM/, *.su, *.idb, *.pdb, *.mod*, *.cmd, .tmp_versions/, modules.order, Module.symvers, Mkfile.old, dkms.conf, .dir-locals.el, [._]*.s[a-v}[a-z], [._]*.sw[a-p], [._]s[a-rt-v][a-z], [._]ss[a-gi-z], [._]sw[a-p], [._]*.un~ and *.exp files in the git repo
 static void do_level3(const filenames_container& filenames)
 {
+	std::unordered_set<std::string> matched_directories;	// Have a set of matched directories, so we can then just print them all in the end (duplicate matches will be removed since this is a set)
+	for (const auto& filename : filenames)
+	{
+		static const boost::regex basename_regex{R"delimiter((?:^((.*\.(i.*86|x86_64|hex|slo|lo|ko|lo|lai|la|mod|smod|ilk|map|su|idb|pdg|mod.*|cmd|exp))|(modules\.order|Module\.symvers|Mkfile\.old|dkms\.conf|\.dir-locals\.el)|([._](s[a-rt-v][a-z]|ss[a-gi-z]|sw[a-p]|.*\.(s[a-v}[a-z]|sw[a-p]|un~))))$))delimiter"};
+		static const boost::regex directory_regex{R"delimiter(.*dSYM\/|(?:.*\/|^)\.tmp_versions\/)delimiter"};	// Made specifically to match the entire path up to the '/' after the directory name
+		const std::string basename = basename_wrappers::base_name(filename);
 
+		boost::smatch match;
+		if (boost::regex_match(basename, match, basename_regex))
+			diagnostic::warn(fmt::format("o1: '{}' matched level 3", filename), false);
+
+		if (boost::regex_search(filename, match, directory_regex))
+			matched_directories.insert(match[0].str());
+	}
+
+	for (const auto& directory : matched_directories)
+		diagnostic::warn(fmt::format("o1: '{}' directory matched level 3", directory), false);
 }
 
 // Level 4 only allows : Makefile, CMakeLists.txt, configure.ac, configure, Makefile.in, GNUmakefile, COPYING, .gitignore, .gitconfig, README*, files in doc, documentation, src and source directories, .c and .h files
