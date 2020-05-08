@@ -90,13 +90,13 @@ static void do_level3(const filenames_container& filenames)
 		diagnostic::warn(fmt::format("o1: '{}' directory matched level 3", directory), false);
 }
 
-// Level 4 only allows : Makefile, CMakeLists.txt, configure.ac, configure, Makefile.in, GNUmakefile, COPYING, .gitignore, .gitconfig, README*, files in doc, documentation, src and source directories, .c and .h files
+// Level 4 only allows : Makefile, GNUmakefile, CMakeLists.txt, configure.ac, configure, Makefile.in, .gitignore, .gitconfig, README*, COPYING, files in doc, documentation, src and source directories, .c and .h files
 static void do_level4(const filenames_container& filenames)
 {
 
 }
 
-// Level 5 is the same as level 5, except it doesn't allow anything but .c and .h files in the src and source directories
+// Level 5 is the same as level 4, except it doesn't allow anything but .c and .h files in the src and source directories
 static void do_level5(const filenames_container& filenames)
 {
 
