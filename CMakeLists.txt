@@ -13,7 +13,9 @@ add_executable(epitech-norm-helper
     "src/program.cpp"
     "include/program.hpp"
     "src/checks/o1.cpp"
-    "include/checks/o1.hpp")
+    "include/checks/o1.hpp"
+    "src/basename.cpp"
+    "include/basename.hpp")
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
@@ -28,9 +30,9 @@ if(LTO)
     endif()
 endif()
 
-# Make C++20 mandatory
+# Make C++17 mandatory
 set_target_properties(epitech-norm-helper PROPERTIES
-    CXX_STANDARD 20
+    CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
     CXX_EXTENSIONS OFF)
 

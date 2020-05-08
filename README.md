@@ -4,19 +4,33 @@ The Epitech Norm Helper is a helper for obeying the coding norms of the Epitech.
 
 ## Dependencies
 
+* A C++17 compiler
+* POSIX
 * fmt
 * cxxopts
 * Boost.Regex
 
 ## Building
 
-This project uses Make, allowing it to be built on most UNIX systems. You should be able to build the program with `make`
+This project uses CMake, allowing it to be built on most systems. You should be able to build the program with `cmake`. You can produce files for your build system with :
+
+```
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+```
 
 You can also add the following flags :
 
 Name | Function
 --------|--------
-`RELEASE=1` | Build the program in release mode, instead of in debug mode. This takes a long time to build, but the resulting executable will be smaller and faster
+`-DLTO=ON` | Enable link-time optimisation
+
+You can pass your own compiler flags with `-DCMAKE_C_FLAGS` and `-DCMAKE_CXX_FLAGS`.
+
+You can then compile with this command :
+
+```
+cmake --build build --config Release
+```
 
 ## Licensing
 

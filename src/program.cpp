@@ -11,7 +11,7 @@ static void change_current_directory(const std::string& directory)
 {
 	int result = chdir(directory.c_str());
 	if (result != 0)
-		diagnostic::fatal_error(fmt::format("invalid directory '{}' given, defaulting to current directory", directory), true);
+		diagnostic::fatal_error(fmt::format("invalid directory '{}' given", directory), true);
 }
 
 static auto make_rules_functions_map()
