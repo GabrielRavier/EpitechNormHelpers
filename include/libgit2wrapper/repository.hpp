@@ -39,6 +39,11 @@ public:
 	{
 		return this->libgit2_handle.get();
 	}
+
+	std::string workdir() const
+	{
+		return git_repository_workdir(this->libgit2_handle.get());
+	}
 };
 
 }
