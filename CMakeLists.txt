@@ -15,7 +15,9 @@ add_executable(epitech-norm-helper
     "src/checks/o1.cpp"
     "include/checks/o1.hpp"
     "src/basename.cpp"
-    "include/basename.hpp")
+    "include/basename.hpp"
+    "src/executable_type.cpp"
+    "include/executable_type.hpp")
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 

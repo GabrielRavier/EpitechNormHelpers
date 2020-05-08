@@ -5,13 +5,17 @@
 #include "libgit2wrapper/index.hpp"
 #include "diagnostic.hpp"
 #include "basename.hpp"
+#include "executable_type.hpp"
 #include <vector>
 #include <string>
 #include <string_view>
+#include <span>
 #include <fstream>
 #include <stdexcept>
 #include <fmt/format.h>
 #include <boost/regex.hpp>
+
+// Improvement idea for this : Remove regexes and match everything individually to give a better warning message
 
 using filenames_container = std::vector<std::string>;
 
@@ -37,23 +41,7 @@ static void do_level1(const filenames_container& filenames)
 	}
 }
 
-static bool is_valid_elf(std::ifstream& file_stream)
-{
-	char buffer[4];
-	file_stream.read(buffer, sizeof(buffer));
-	if (file_stream.gcount() < 4)
-		return false;
-
-	return (buffer[0] == 0x7F) && (buffer[1] == 'E') && (buffer[2] == 'L') && (buffer[3] == 'F');
-}
-
-static bool is_valid_executable(std::string_view filename)
-{
-	std::ifstream file_stream{std::string{filename}, std::ios::binary};
-	return is_valid_elf(file_stream);
-}
-
-// Level 2 also tries to find valid ELF executables and [repo-name].* files (where '[repo-name]' is the base name of the root directory of the git repository) and warn about them
+// Level 2 also tries to find valid ELF/PE/Dalvik executables and [repo-name].* files (where '[repo-name]' is the base name of the root directory of the git repository) and warn about them
 static void do_level2(const filenames_container& filenames)
 {
 	std::string git_root_repository_name = get_git_root_directory_name();
@@ -66,8 +54,9 @@ static void do_level2(const filenames_container& filenames)
 		if (boost::regex_match(basename, match, basename_regex))
 			diagnostic::warn(fmt::format("o1: {} matched level 2", filename), false);
 
-		if (is_valid_executable(filename))
-			diagnostic::warn(fmt::format("o1: {} matched level 2 ELF executable check", filename), false);
+		executable::type executable_type = executable::get_type_from_file(filename);
+		if (executable_type != executable::type::none)
+			diagnostic::warn(fmt::format("o1: {} matched level 2 executable check, being a valid {} executable", filename, executable_type), false);
 	}
 }
 
