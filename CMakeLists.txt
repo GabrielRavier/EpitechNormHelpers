@@ -42,10 +42,11 @@ if(LTO)
 endif()
 
 # Make C++17 mandatory
-set_target_properties(epitech-norm-helper PROPERTIES
-    CXX_STANDARD 17
-    CXX_STANDARD_REQUIRED ON
-    CXX_EXTENSIONS OFF)
+set_target_properties(epitech-norm-helper
+    PROPERTIES
+        CXX_STANDARD 17
+        CXX_STANDARD_REQUIRED ON
+        CXX_EXTENSIONS OFF)
 
 # fmt library
 find_package(fmt REQUIRED)
@@ -56,7 +57,10 @@ find_package(libgit2 REQUIRED)
 target_link_libraries(epitech-norm-helper ${LIBGIT2_LIBRARIES})
 
 # Boost.Regex library
-find_package(Boost COMPONENTS regex REQUIRED)
+find_package(Boost
+    COMPONENTS
+        regex REQUIRED)
+
 target_link_libraries(epitech-norm-helper ${Boost_LIBRARIES})
 
 # Add 'external' directory as include directory, for external libraries, as well as our 'include' directory
