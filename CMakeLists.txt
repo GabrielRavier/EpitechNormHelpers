@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 cmake_minimum_required(VERSION 2.6)
 
 option(LTO "Enable link-time optimisation" OFF)
@@ -12,12 +13,20 @@ add_executable(epitech-norm-helper
     "include/options.hpp"
     "src/program.cpp"
     "include/program.hpp"
-    "src/checks/o1.cpp"
-    "include/checks/o1.hpp"
     "src/basename.cpp"
     "include/basename.hpp"
-    "src/executable_type.cpp"
-    "include/executable_type.hpp")
+    "src/executable-type.cpp"
+    "include/executable-type.hpp"
+    "src/regex-utils.cpp"
+    "include/regex-utils.hpp"
+    "src/checks/o1.cpp"
+    "include/checks/o1.hpp"
+    "src/checks/o2.cpp"
+    "include/checks/o2.hpp"
+    "include/libgit2wrapper/errors.hpp"
+    "include/libgit2wrapper/global.hpp"
+    "include/libgit2wrapper/index.hpp"
+    "include/libgit2wrapper/repository.hpp")
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 

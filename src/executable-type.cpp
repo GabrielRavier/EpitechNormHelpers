@@ -1,4 +1,5 @@
-#include "executable_type.hpp"
+// SPDX-License-Identifier: GPL-3.0-or-later
+#include "executable-type.hpp"
 #include <fstream>
 #include <string_view>
 

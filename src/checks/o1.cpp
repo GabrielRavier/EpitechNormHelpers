@@ -5,34 +5,22 @@
 #include "libgit2wrapper/index.hpp"
 #include "diagnostic.hpp"
 #include "basename.hpp"
-#include "executable_type.hpp"
+#include "executable-type.hpp"
+#include "regex-utils.hpp"
 #include <vector>
 #include <string>
-#include <string_view>
-#include <span>
-#include <fstream>
-#include <stdexcept>
 #include <unordered_set>
 #include <fmt/format.h>
 #include <boost/regex.hpp>
 
 // Improvement idea for this : Remove regexes and match everything individually to give a better warning message
 
-using filenames_container = std::vector<std::string>;
-
-static std::string escape_string_for_regex(const std::string& string)
-{
-	static const boost::regex escape_regex{R"delimiter([.^$|()\[\]{}*+?\\])delimiter"};
-	constexpr const char *replace_regex{R"delimiter(\\&)delimiter"};
-	return boost::regex_replace(string, escape_regex, replace_regex, boost::match_default | boost::format_sed);
-}
-
 // Level 1 checks for *.o, *.elf, *.obj, *.gch, *.pch, *.a, *.lib, *.exe, *.out, *.app, *.so, *.so.*, *.dylib, *.dll, *~, #*#, .#*, Session.vim, Sessionx.vim, *.autosave, CMakeLists.txt.user, CMakeCache.txt, cmake_install.cmake, install_manifest.txt, compile_commands.json and *.d files in the git repo
-static void do_level1(const filenames_container& filenames)
+static void do_level1(const git::index::file_list& filenames)
 {
 	for (const auto& filename : filenames)
 	{
-		static const boost::regex basename_regex{R"delimiter((?:((.*(\.(o|elf|obj|gch|pch|a|lib|exe|out|app|so|so\..*|dylib|dll|d|autosave)|~))|#.*#|\.#.*|Sessionx?\.vim|CMakeLists\.txt\.user|(CMakeCache|install_manifest)\.txt|cmake_install\.cmake|compile_commands\.json)))delimiter"};
+		static const boost::regex basename_regex{R"delimiter((?:(?:(?:.*(?:\.(?:[oad]|elf|obj|[gp]ch|lib|exe|out|app|so(\..*)?|dylib|dll|autosave)|~))|#.*#|\.#.*|Sessionx?\.vim|CMakeLists\.txt\.user|(?:CMakeCache|install_manifest)\.txt|cmake_install\.cmake|compile_commands\.json)))delimiter"};
 		const std::string basename = basename_wrappers::base_name(filename);
 
 		boost::smatch match;
@@ -42,11 +30,11 @@ static void do_level1(const filenames_container& filenames)
 }
 
 // Level 2 also tries to find valid ELF/PE/Dalvik executables and [repo-name].* files (where '[repo-name]' is the base name of the root directory of the git repository) and warn about them
-static void do_level2(const filenames_container& filenames, const std::string& git_root_repository_name)
+static void do_level2(const git::index::file_list& filenames, const std::string& git_root_repository_name)
 {
 	for (const auto& filename : filenames)
 	{
-		static const boost::regex basename_regex{fmt::format(R"delimiter((?:{}.*))delimiter", escape_string_for_regex(git_root_repository_name))};
+		static const boost::regex basename_regex{fmt::format(R"delimiter((?:{}.*))delimiter", regex_utils::escape_string_for_insertion_in_regex(git_root_repository_name))};
 		const std::string basename = basename_wrappers::base_name(filename);
 
 		boost::smatch match;
@@ -59,13 +47,13 @@ static void do_level2(const filenames_container& filenames, const std::string& g
 	}
 }
 
-// Level 3 also checks for *.i*86, *.x86_64, *.hex, *.slo, *.lo, *.ko, *.lo, *.lai, *.la, *.mod, *.smod, *.ilk, *.map, *dSYM/, *.su, *.idb, *.pdb, *.mod*, *.cmd, .tmp_versions/, modules.order, Module.symvers, Mkfile.old, dkms.conf, .dir-locals.el, [._]*.s[a-v}[a-z], [._]*.sw[a-p], [._]s[a-rt-v][a-z], [._]ss[a-gi-z], [._]sw[a-p], [._]*.un~ and *.exp files in the git repo
-static void do_level3(const filenames_container& filenames)
+// Level 3 also checks for *.i*86, *.x86_64, *.hex, *.slo, *.lo, *.ko, *.lai, *.la, *.mod, *.smod, *.ilk, *.map, *dSYM/, *.su, *.idb, *.pdb, *.mod*, *.cmd, .tmp_versions/, modules.order, Module.symvers, Mkfile.old, dkms.conf, .dir-locals.el, [._]*.s[a-v][a-z], [._]*.sw[a-p], [._]s[a-rt-v][a-z], [._]ss[a-gi-z], [._]sw[a-p], [._]*.un~ and *.exp files in the git repo
+static void do_level3(const git::index::file_list& filenames)
 {
 	std::unordered_set<std::string> matched_directories;	// Have a set of matched directories, so we can then just print them all in the end (duplicate matches will be removed since this is a set)
 	for (const auto& filename : filenames)
 	{
-		static const boost::regex basename_regex{R"delimiter((?:((.*\.(i.*86|x86_64|hex|slo|lo|ko|lo|lai|la|mod|smod|ilk|map|su|idb|pdg|mod.*|cmd|exp))|(modules\.order|Module\.symvers|Mkfile\.old|dkms\.conf|\.dir-locals\.el)|([._](s[a-rt-v][a-z]|ss[a-gi-z]|sw[a-p]|.*\.(s[a-v}[a-z]|sw[a-p]|un~))))))delimiter"};
+		static const boost::regex basename_regex{R"delimiter((?:(?:(?:.*\.(?:i.*86|x86_64|hex|s?lo|ko|lai?|s?mod|ilk|map|su|[ip]db|mod.*|cmd|exp|s[a-v][a-z]|sw[a-p]|un~))|(?:modules\.order|Module\.symvers|Mkfile\.old|dkms\.conf|\.dir-locals\.el)|(?:[._](?:s[a-rt-v][a-z]|ss[a-gi-z]|sw[a-p])))))delimiter"};
 		const std::string basename = basename_wrappers::base_name(filename);
 
 		boost::smatch match;
@@ -81,72 +69,12 @@ static void do_level3(const filenames_container& filenames)
 		diagnostic::warn(fmt::format("o1: '{}' directory matched level 3", directory), false);
 }
 
-// Level 4 only allows : Makefile, GNUmakefile, CMakeLists.txt, configure.ac, configure, Makefile.in, .gitignore, .gitconfig, README*, COPYING, *.c, *.h and *.cmake files, files in LICENSES, doc, documentation, inc, include, ext, external, src and source directories
-static void do_level4(const filenames_container& filenames)
-{
-	for (const auto& filename : filenames)
-	{
-		static const boost::regex whitelisted_directories_regex{R"delimiter((?:^|\/)(?:src|source|doc|documentation|inc|include|ext|external|LICENSES)\/)delimiter"};
-
-		boost::smatch match;
-		if (!boost::regex_search(filename, match, whitelisted_directories_regex))
-		{
-			static const boost::regex basename_regex{R"delimiter((?:GNUm|M)akefile|CMakeLists.txt|configure(?:.ac)?|Makefile.in|\.git(?:ignore|config)|README.*|COPYING|.*\.(c|h|cmake))delimiter"};
-			const std::string basename = basename_wrappers::base_name(filename);
-			if (!boost::regex_match(basename, match, basename_regex))
-				diagnostic::warn(fmt::format("o1: '{}' matched level 4", filename), false);
-		}
-	}
-}
-
-// Level 5 is the same as level 4, except it doesn't allow anything but .c and .h files in the src and source directories, and anything but .h files in the inc and include directories (i.e. if a path includes an 'include' or 'inc' directory, it will require the files in it to be .h files
-static void do_level5(const filenames_container& filenames)
-{
-	for (const auto& filename : filenames)
-	{
-		static const boost::regex inc_include_directories_regex{R"delimiter((?:^|\/)(?:inc|include)\/)delimiter"};
-		static const boost::regex src_source_directories_regex{R"delimiter((?:^|\/)(?:src|source)\/)delimiter"};
-		const std::string basename = basename_wrappers::base_name(filename);
-
-		boost::smatch match;
-		boost::regex file_regex;
-		if (boost::regex_search(filename, match, inc_include_directories_regex))
-		{
-			static const boost::regex header_regex{R"delimiter(.*\.h)delimiter"};
-			file_regex = header_regex;
-		}
-		else if (boost::regex_search(filename, match, src_source_directories_regex))
-		{
-			static const boost::regex source_regex{R"delimiter(.*\.(?:c|h))delimiter"};
-			file_regex = source_regex;
-		}
-		else
-		{
-			continue;
-		}
-
-		if (!boost::regex_match(basename, match, file_regex))
-			diagnostic::warn(fmt::format("o1: '{}' matched level 5", filename), false);
-	}
-}
-
-static filenames_container list_files_in_git_repo(const git::repository& repo)
-{
-	git::index repo_index(repo);
-	size_t entry_count = repo_index.entrycount();
-
-	filenames_container result;
-	for (size_t i = 0; i < entry_count; ++i)
-		result.push_back(repo_index[i]->path);
-
-	return result;
-}
 
 void checks::o1(int level)
 {
 	git::initializer libgit2_initializer;
 	git::repository repository_in_cwd{"."};
-	filenames_container filenames = list_files_in_git_repo(repository_in_cwd);
+	git::index::file_list filenames = git::index{repository_in_cwd}.list_files();
 
 	// Note: All these checks are assuming you're using git
 	if (level >= 1)
@@ -160,10 +88,4 @@ void checks::o1(int level)
 
 	if (level >= 3)
 		do_level3(filenames);
-
-	if (level >= 4)
-		do_level4(filenames);
-
-	if (level >= 5)
-		do_level5(filenames);
 }
