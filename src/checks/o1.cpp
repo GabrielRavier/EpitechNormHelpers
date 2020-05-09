@@ -27,14 +27,6 @@ static std::string escape_string_for_regex(const std::string& string)
 	return boost::regex_replace(string, escape_regex, replace_regex, boost::match_default | boost::format_sed);
 }
 
-static std::string get_git_root_directory_name()
-{
-	git::initializer initialize_libgit2;
-	git::repository repository_in_cwd(".");
-
-	return basename_wrappers::base_name(repository_in_cwd.workdir());
-}
-
 // Level 1 checks for *.o, *.elf, *.obj, *.gch, *.pch, *.a, *.lib, *.exe, *.out, *.app, *.so, *.so.*, *.dylib, *.dll, *~, #*#, .#*, Session.vim, Sessionx.vim, *.autosave, CMakeLists.txt.user, CMakeCache.txt, cmake_install.cmake, install_manifest.txt, compile_commands.json and *.d files in the git repo
 static void do_level1(const filenames_container& filenames)
 {
@@ -50,9 +42,8 @@ static void do_level1(const filenames_container& filenames)
 }
 
 // Level 2 also tries to find valid ELF/PE/Dalvik executables and [repo-name].* files (where '[repo-name]' is the base name of the root directory of the git repository) and warn about them
-static void do_level2(const filenames_container& filenames)
+static void do_level2(const filenames_container& filenames, const std::string& git_root_repository_name)
 {
-	std::string git_root_repository_name = get_git_root_directory_name();
 	for (const auto& filename : filenames)
 	{
 		static const boost::regex basename_regex{fmt::format(R"delimiter((?:{}.*))delimiter", escape_string_for_regex(git_root_repository_name))};
@@ -139,30 +130,33 @@ static void do_level5(const filenames_container& filenames)
 	}
 }
 
-static filenames_container list_files_in_git_repo(const char *repository_path)
+static filenames_container list_files_in_git_repo(const git::repository& repo)
 {
-	git::initializer initialize_libgit2;
-	git::repository repository_in_cwd(repository_path);
-	git::index repository_in_cwd_index(repository_in_cwd);
-	size_t entry_count = repository_in_cwd_index.entrycount();
+	git::index repo_index(repo);
+	size_t entry_count = repo_index.entrycount();
 
 	filenames_container result;
 	for (size_t i = 0; i < entry_count; ++i)
-		result.push_back(repository_in_cwd_index[i]->path);
+		result.push_back(repo_index[i]->path);
 
 	return result;
 }
 
 void checks::o1(int level)
 {
-	filenames_container filenames = list_files_in_git_repo(".");
+	git::initializer libgit2_initializer;
+	git::repository repository_in_cwd{"."};
+	filenames_container filenames = list_files_in_git_repo(repository_in_cwd);
 
 	// Note: All these checks are assuming you're using git
 	if (level >= 1)
 		do_level1(filenames);
 
 	if (level >= 2)
-		do_level2(filenames);
+	{
+		std::string working_directory_basename = basename_wrappers::base_name(repository_in_cwd.workdir());
+		do_level2(filenames, working_directory_basename);
+	}
 
 	if (level >= 3)
 		do_level3(filenames);
