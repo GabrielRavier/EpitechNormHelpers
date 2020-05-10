@@ -6,7 +6,7 @@
 namespace basename_wrappers
 {
 
-std::string base_name(const std::string& path);
-std::string directory_base_name(const std::string& path);
+std::string base_name(std::string_view path);
+std::string directory_base_name(std::string_view path);
 
 }

@@ -6,19 +6,19 @@
 #include <libgen.h>
 #include <iostream>
 
-std::string basename_wrappers::base_name(const std::string& path)
+std::string basename_wrappers::base_name(std::string_view path)
 {
 	// basename may modify the input, so we make a copy
-	std::string copy = path;
+	auto copy = std::string{path};
 	std::string result = basename(copy.data());
 
 	return result;
 }
 
-std::string basename_wrappers::directory_base_name(const std::string& path)
+std::string basename_wrappers::directory_base_name(std::string_view path)
 {
 	// dirname may modify the input, so we make a copy
-	std::string copy = path;
+	auto copy = std::string{path};
 	std::string result = dirname(copy.data());
 
 	return result;
