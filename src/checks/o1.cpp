@@ -18,7 +18,7 @@
 // Level 1 checks for *.o, *.elf, *.obj, *.gch, *.pch, *.a, *.lib, *.exe, *.out, *.app, *.so, *.so.*, *.dylib, *.dll, *~, #*#, .#*, Session.vim, Sessionx.vim, *.autosave, CMakeLists.txt.user, CMakeCache.txt, cmake_install.cmake, install_manifest.txt, compile_commands.json and *.d files in the git repo
 static void do_level1(const git::index::file_list& filenames)
 {
-	for (const auto& filename : filenames)
+	for (std::string_view filename : filenames)
 	{
 		static const boost::regex basename_regex{R"delimiter((?:(?:(?:.*(?:\.(?:[oad]|elf|obj|[gp]ch|lib|exe|out|app|so(\..*)?|dylib|dll|autosave)|~))|#.*#|\.#.*|Sessionx?\.vim|CMakeLists\.txt\.user|(?:CMakeCache|install_manifest)\.txt|cmake_install\.cmake|compile_commands\.json)))delimiter"};
 		const std::string basename = basename_wrappers::base_name(filename);
@@ -32,7 +32,7 @@ static void do_level1(const git::index::file_list& filenames)
 // Level 2 also tries to find valid ELF/PE/Dalvik executables and [repo-name].* files (where '[repo-name]' is the base name of the root directory of the git repository) and warn about them
 static void do_level2(const git::index::file_list& filenames, const std::string& git_root_repository_name)
 {
-	for (const auto& filename : filenames)
+	for (std::string_view filename : filenames)
 	{
 		static const boost::regex basename_regex{fmt::format(R"delimiter((?:{}.*))delimiter", regex_utils::escape_string_for_insertion_in_regex(git_root_repository_name))};
 		const std::string basename = basename_wrappers::base_name(filename);
@@ -51,7 +51,7 @@ static void do_level2(const git::index::file_list& filenames, const std::string&
 static void do_level3(const git::index::file_list& filenames)
 {
 	std::unordered_set<std::string> matched_directories;	// Have a set of matched directories, so we can then just print them all in the end (duplicate matches will be removed since this is a set)
-	for (const auto& filename : filenames)
+	for (std::string_view filename : filenames)
 	{
 		static const boost::regex basename_regex{R"delimiter((?:(?:(?:.*\.(?:i.*86|x86_64|hex|s?lo|ko|lai?|s?mod|ilk|map|su|[ip]db|mod.*|cmd|exp|s[a-v][a-z]|sw[a-p]|un~))|(?:modules\.order|Module\.symvers|Mkfile\.old|dkms\.conf|\.dir-locals\.el)|(?:[._](?:s[a-rt-v][a-z]|ss[a-gi-z]|sw[a-p])))))delimiter"};
 		const std::string basename = basename_wrappers::base_name(filename);
@@ -61,11 +61,12 @@ static void do_level3(const git::index::file_list& filenames)
 			diagnostic::warn(fmt::format("o1: '{}' matched level 3", filename), false);
 
 		static const boost::regex directory_regex{R"delimiter(.*dSYM\/|(?:.*\/|^)\.tmp_versions\/)delimiter"};	// Made specifically to match the entire path up to the '/' after the directory name
-		if (boost::regex_search(filename, match, directory_regex))
-			matched_directories.insert(match[0].str());
+		boost::match_results<std::string_view::const_iterator> sv_match;
+		if (boost::regex_search(filename.begin(), filename.end(), sv_match, directory_regex))
+			matched_directories.insert(sv_match[0].str());
 	}
 
-	for (const auto& directory : matched_directories)
+	for (std::string_view directory : matched_directories)
 		diagnostic::warn(fmt::format("o1: '{}' directory matched level 3", directory), false);
 }
 
