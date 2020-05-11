@@ -23,6 +23,8 @@ add_executable(epitech-norm-helper
     "include/checks/o1.hpp"
     "src/checks/o2.cpp"
     "include/checks/o2.hpp"
+    "src/checks/o3.cpp"
+    "include/checks/o3.hpp"
     "include/libgit2wrapper/errors.hpp"
     "include/libgit2wrapper/global.hpp"
     "include/libgit2wrapper/index.hpp"

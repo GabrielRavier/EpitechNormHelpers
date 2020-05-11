@@ -3,6 +3,7 @@
 #include "diagnostic.hpp"
 #include "checks/o1.hpp"
 #include "checks/o2.hpp"
+#include "checks/o3.hpp"
 #include <iostream>
 #include <string_view>
 #include <fmt/format.h>
@@ -20,6 +21,7 @@ static auto make_rules_functions_map()
 	std::unordered_map<std::string, std::function<void(int check_level)>> result;
 	result["o1"] = checks::o1;
 	result["o2"] = checks::o2;
+	result["o3"] = checks::o3;
 
 	return result;
 }
