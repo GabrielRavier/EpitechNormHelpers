@@ -36,6 +36,11 @@ public:
 
 	}
 
+	~repository()
+	{
+		git_repository_free(this->libgit2_handle.get());
+	}
+
 	git_repository *get_libgit2_handle() const
 	{
 		return this->libgit2_handle.get();
