@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.12)
 
 option(LTO "Enable link-time optimisation" OFF)
 
@@ -65,6 +65,11 @@ find_package(Boost
 
 target_link_libraries(epitech-norm-helper ${Boost_LIBRARIES})
 
-# Add 'external' directory as include directory, for external libraries, as well as our 'include' directory
-target_include_directories(epitech-norm-helper PRIVATE external)
+# external stuff
+include(external/external.cmake)
+
+# cppitertools library
+target_link_libraries(epitech-norm-helper cppitertools)
+
+# Add our 'include' directory as an include directory
 target_include_directories(epitech-norm-helper PRIVATE include)

@@ -2,7 +2,7 @@
 #include "options.hpp"
 #include <cxxopts.hpp>
 #include <fmt/format.h>
-#include <cppitertools/enumerate.hpp>
+#include <enumerate.hpp>
 #include <array>
 #include <string>
 #include <vector>
