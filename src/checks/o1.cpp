@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-#include "checks/o1.hpp"
+#include "checks/checks.hpp"
 #include "libgit2wrapper/global.hpp"
 #include "libgit2wrapper/repository.hpp"
 #include "libgit2wrapper/index.hpp"
@@ -25,7 +25,7 @@ static void do_level1(const git::index::file_list& filenames)
 
 		boost::smatch match;
 		if (boost::regex_match(basename, match, basename_regex))
-			diagnostic::warn(fmt::format("o1: '{}' matched level 1", filename), false);
+			diagnostic::warn(fmt::format("o1: '{}' matched level 1", filename));
 	}
 }
 
@@ -39,11 +39,11 @@ static void do_level2(const git::index::file_list& filenames, const std::string&
 
 		boost::smatch match;
 		if (boost::regex_match(basename, match, basename_regex))
-			diagnostic::warn(fmt::format("o1: '{}' matched level 2", filename), false);
+			diagnostic::warn(fmt::format("o1: '{}' matched level 2", filename));
 
 		executable::type executable_type = executable::get_type_from_file(filename);
 		if (executable_type != executable::type::none)
-			diagnostic::warn(fmt::format("o1: '{}' matched level 2 executable check, being a valid {} executable", filename, executable_type), false);
+			diagnostic::warn(fmt::format("o1: '{}' matched level 2 executable check, being a valid {} executable", filename, executable_type));
 	}
 }
 
@@ -58,7 +58,7 @@ static void do_level3(const git::index::file_list& filenames)
 
 		boost::smatch match;
 		if (boost::regex_match(basename, match, basename_regex))
-			diagnostic::warn(fmt::format("o1: '{}' matched level 3", filename), false);
+			diagnostic::warn(fmt::format("o1: '{}' matched level 3", filename));
 
 		static const boost::regex directory_regex{R"delimiter(.*dSYM\/|(?:.*\/|^)\.tmp_versions\/)delimiter"};	// Made specifically to match the entire path up to the '/' after the directory name
 		boost::match_results<std::string_view::const_iterator> sv_match;
@@ -67,7 +67,7 @@ static void do_level3(const git::index::file_list& filenames)
 	}
 
 	for (std::string_view directory : matched_directories)
-		diagnostic::warn(fmt::format("o1: '{}' directory matched level 3", directory), false);
+		diagnostic::warn(fmt::format("o1: '{}' directory matched level 3", directory));
 }
 
 

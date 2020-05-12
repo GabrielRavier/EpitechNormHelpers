@@ -4,6 +4,8 @@
 namespace checks
 {
 
+void o1(int level);
+void o2(int level);
 void o3(int level);
 
 }

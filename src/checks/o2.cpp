@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-#include "checks/o2.hpp"
+#include "checks/checks.hpp"
 #include "libgit2wrapper/global.hpp"
 #include "libgit2wrapper/index.hpp"
 #include "diagnostic.hpp"
@@ -16,7 +16,7 @@ static void do_level1(const git::index::file_list& filenames)
 
 		boost::smatch match;
 		if (boost::regex_match(basename, match, basename_regex))
-			diagnostic::warn(fmt::format("o2: '{}' matched level 1", filename), false);
+			diagnostic::warn(fmt::format("o2: '{}' matched level 1", filename));
 	}
 }
 
@@ -30,7 +30,7 @@ static void do_level2(const git::index::file_list& filenames)
 
 		boost::smatch match;
 		if (boost::regex_match(basename, match, basename_regex))
-			diagnostic::warn(fmt::format("o2: '{}' matched level 2", filename), false);
+			diagnostic::warn(fmt::format("o2: '{}' matched level 2", filename));
 	}
 }
 
@@ -44,7 +44,7 @@ static void do_level3(const git::index::file_list& filenames)
 
 		boost::smatch match;
 		if (boost::regex_match(basename, match, basename_regex))
-			diagnostic::warn(fmt::format("o2: '{}' matched level 3", filename), false);
+			diagnostic::warn(fmt::format("o2: '{}' matched level 3", filename));
 	}
 }
 
@@ -63,7 +63,7 @@ static void do_level4(const git::index::file_list& filenames)
 
 			boost::smatch match;
 			if (!boost::regex_match(basename, match, basename_regex))
-				diagnostic::warn(fmt::format("o2: '{}' matched level 4", filename), false);
+				diagnostic::warn(fmt::format("o2: '{}' matched level 4", filename));
 		}
 	}
 }
@@ -96,7 +96,7 @@ static void do_level5(const git::index::file_list& filenames)
 
 		boost::smatch match;
 		if (!boost::regex_match(basename, match, file_regex))
-			diagnostic::warn(fmt::format("o2: '{}' matched level 5", filename), false);
+			diagnostic::warn(fmt::format("o2: '{}' matched level 5", filename));
 	}
 }
 

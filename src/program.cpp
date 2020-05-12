@@ -1,19 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "program.hpp"
 #include "diagnostic.hpp"
-#include "checks/o1.hpp"
-#include "checks/o2.hpp"
-#include "checks/o3.hpp"
+#include "checks/checks.hpp"
 #include <iostream>
 #include <string_view>
 #include <fmt/format.h>
 #include <unistd.h>
+#include <system_error>
 
 static void change_current_directory(const std::string& directory)
 {
 	int result = chdir(directory.c_str());
 	if (result != 0)
-		diagnostic::fatal_error(fmt::format("invalid directory '{}' given", directory), true);
+		throw std::system_error(errno, std::generic_category(), fmt::format("invalid directory '{}' given", directory));
 }
 
 static auto make_rules_functions_map()
@@ -42,12 +41,12 @@ void program(const options_parser::parsed_options& options)
 			}
 			catch (const std::exception& exception)
 			{
-				diagnostic::error(fmt::format("exception thrown while doing {} check : {}", rule.first, exception.what()), false);
+				diagnostic::error(fmt::format("exception thrown while doing {} check : {}", rule.first, exception.what()));
 			}
 		}
 		else
 		{
-			diagnostic::error(fmt::format("{} check unimplemented", rule.first), false);
+			diagnostic::error(fmt::format("{} check unimplemented", rule.first));
 		}
 	}
 }
