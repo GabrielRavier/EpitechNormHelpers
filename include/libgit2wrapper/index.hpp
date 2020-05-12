@@ -33,11 +33,6 @@ public:
 		this->libgit2_handle.reset(opened_index);
 	}
 
-	~index()
-	{
-		git_index_free(this->libgit2_handle.get());
-	}
-
 	size_t entrycount() const
 	{
 		return git_index_entrycount(this->libgit2_handle.get());

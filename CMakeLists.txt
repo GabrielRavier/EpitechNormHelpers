@@ -71,5 +71,8 @@ include(external/external.cmake)
 # cppitertools library
 target_link_libraries(epitech-norm-helper cppitertools)
 
+# cppast library
+target_link_libraries(epitech-norm-helper cppast)
+
 # Add our 'include' directory as an include directory
 target_include_directories(epitech-norm-helper PRIVATE include)
