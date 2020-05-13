@@ -58,7 +58,7 @@ static void do_level4(const git::index::file_list& filenames)
 		boost::match_results<std::string_view::const_iterator> sv_match;
 		if (!boost::regex_search(filename.begin(), filename.end(), sv_match, whitelisted_directories_regex))
 		{
-			static const boost::regex basename_regex{R"delimiter((?:GNUm|M)akefile|CMakeLists.txt|configure(?:.ac)?|Makefile.in|\.git(?:ignore|config)|README.*|COPYING|.*\.(c|h|cmake))delimiter"};
+			static const boost::regex basename_regex{R"delimiter((?:GNUm|M)akefile|CMakeLists.txt|configure(?:.ac)?|Makefile.in|\.git(?:ignore|config|modules)|README.*|COPYING|.*\.(c|h|cmake))delimiter"};
 			const std::string basename = basename_wrappers::base_name(filename);
 
 			boost::smatch match;
