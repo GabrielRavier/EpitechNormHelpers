@@ -15,38 +15,27 @@ static void change_current_directory(const std::string& directory)
 		throw std::system_error(errno, std::generic_category(), fmt::format("invalid directory '{}' given", directory));
 }
 
-static auto make_rules_functions_map()
-{
-	std::unordered_map<std::string, std::function<void(int check_level)>> result;
-	result["o1"] = checks::o1;
-	result["o2"] = checks::o2;
-	result["o3"] = checks::o3;
-
-	return result;
-}
-
 void program(const options_parser::parsed_options& options)
 {
 	change_current_directory(options.directory);
 
-	auto rules_functions_map = make_rules_functions_map();
-	for (const auto& rule : options.rule_options)
+	for (const auto& check : options.enabled_checks)
 	{
-		auto match = rules_functions_map.find(rule.first);
-		if (match != rules_functions_map.end())
+		auto check_implementation = check.check_information.implementation;
+		if (check_implementation)
 		{
 			try
 			{
-				match->second(rule.second);
+				check_implementation(check.level);
 			}
 			catch (const std::exception& exception)
 			{
-				diagnostic::error(fmt::format("exception thrown while doing {} check : {}", rule.first, exception.what()));
+				diagnostic::error(fmt::format("exception thrown while doing {} check : {}", check.check_information.short_name, exception.what()));
 			}
 		}
 		else
 		{
-			diagnostic::error(fmt::format("{} check unimplemented", rule.first));
+			diagnostic::error(fmt::format("{} check unimplemented", check.check_information.short_name));
 		}
 	}
 }

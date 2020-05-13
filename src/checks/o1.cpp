@@ -71,7 +71,7 @@ static void do_level3(const git::index::file_list& filenames)
 }
 
 
-void checks::o1(int level)
+void checks::o1(checks::level_t level)
 {
 	git::initializer libgit2_initializer;
 	git::repository repository_in_cwd{"."};

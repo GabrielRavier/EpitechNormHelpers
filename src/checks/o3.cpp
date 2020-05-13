@@ -26,7 +26,7 @@ static void do_level1()
 	}
 }
 
-void checks::o3(int level)
+void checks::o3(checks::level_t level)
 {
 	if (level >= 1)
 		do_level1();
