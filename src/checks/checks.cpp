@@ -1,4 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 #include "checks/checks.hpp"
+#include "checks/o1.hpp"
+#include "checks/o2.hpp"
+#include "checks/o3.hpp"
 #include <cctype>
 #include <enumerate.hpp>
 #include <fmt/format.h>
@@ -14,21 +18,18 @@ static auto get_unfinished_global_check_list()
 				 {
 					 {
 						 .name = "Contents of the delivery folder",
-						 .maximum_level = 1,
-						 .flags = checks::flag_uses_libgit,
-						 .implementation = checks::o1,
+						 .maximum_level = 3,
+						 .implementation = checks::o1::do_check,
 					 },
 					 {
 						 .name = "File extensions",
-						 .maximum_level = 1,
-						 .flags = checks::flag_uses_libgit,
-						 .implementation = checks::o2,
+						 .maximum_level = 5,
+						 .implementation = checks::o2::do_check,
 					 },
 					 {
 						 .name = "File coherence",
 						 .maximum_level = 1,
-						 .flags = checks::flag_uses_cppast,
-						 .implementation = checks::o3,
+						 .implementation = checks::o3::do_check,
 					 },
 					 {
 						 .name = "Naming files and folders",

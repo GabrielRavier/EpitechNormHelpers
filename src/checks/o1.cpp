@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "checks/checks.hpp"
+#include "checks/o1.hpp"
 #include "libgit2wrapper/global.hpp"
 #include "libgit2wrapper/repository.hpp"
 #include "libgit2wrapper/index.hpp"
@@ -71,11 +72,9 @@ static void do_level3(const git::index::file_list& filenames)
 }
 
 
-void checks::o1(checks::level_t level)
+void checks::o1::do_check(checks::level_t level, managers::resources_manager& check_resource_manager)
 {
-	git::initializer libgit2_initializer;
-	git::repository repository_in_cwd{"."};
-	git::index::file_list filenames = git::index{repository_in_cwd}.list_files();
+	git::index::file_list filenames = check_resource_manager.cwd_git.request_index().list_files();
 
 	// Note: All these checks are assuming you're using git
 	if (level >= 1)
@@ -83,7 +82,7 @@ void checks::o1(checks::level_t level)
 
 	if (level >= 2)
 	{
-		std::string working_directory_basename = basename_wrappers::base_name(repository_in_cwd.workdir());
+		std::string working_directory_basename = basename_wrappers::base_name(check_resource_manager.cwd_git.request_repo().workdir());
 		do_level2(filenames, working_directory_basename);
 	}
 

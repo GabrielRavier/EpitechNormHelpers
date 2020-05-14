@@ -20,7 +20,7 @@ namespace options_parser
 	struct parsed_options
 	{
 		std::vector<parsed_check_option> enabled_checks;
-		std::string directory;
+		std::filesystem::path directory;
 		std::filesystem::path compile_commands_directory;
 	};
 

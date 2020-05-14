@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "checks/checks.hpp"
+#include "checks/o2.hpp"
 #include "libgit2wrapper/global.hpp"
 #include "libgit2wrapper/index.hpp"
 #include "diagnostic.hpp"
@@ -100,11 +101,9 @@ static void do_level5(const git::index::file_list& filenames)
 	}
 }
 
-void checks::o2(checks::level_t level)
+void checks::o2::do_check(checks::level_t level, managers::resources_manager& check_resource_manager)
 {
-	git::initializer libgit2_initializer;
-	git::repository repository_in_cwd{"."};
-	git::index::file_list filenames = git::index{repository_in_cwd}.list_files();
+	git::index::file_list filenames = check_resource_manager.cwd_git.request_index().list_files();
 
 	if (level >= 1)
 		do_level1(filenames);

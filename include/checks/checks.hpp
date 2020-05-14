@@ -4,29 +4,18 @@
 #include <array>
 #include <functional>
 #include <string>
+#include "managers.hpp"
 
 namespace checks
 {
 
 using level_t = unsigned char;
 
-void o1(level_t level);
-void o2(level_t level);
-void o3(level_t level);
-
-enum flag : unsigned char
-{
-	flag_none = 0,
-	flag_uses_cppast = 1 << 0,
-	flag_uses_libgit = 1 << 1,
-};
-
 struct information
 {
 	const char *name;
 	level_t maximum_level;
-	enum flag flags;
-	std::function<void(int level)> implementation;
+	std::function<void(level_t level, managers::resources_manager& check_resource_manager)> implementation;
 	std::string short_name;
 };
 

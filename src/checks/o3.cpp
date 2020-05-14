@@ -1,33 +1,16 @@
 #include "checks/checks.hpp"
+#include "checks/o3.hpp"
 #include <cppast/libclang_parser.hpp>
 #include <fmt/format.h>
 #include "diagnostic.hpp"
 
 static void do_level1()
 {
-	const cppast::cpp_entity_index index{};
-	cppast::libclang_compilation_database compilation_database{"build"};
-	cppast::simple_file_parser<cppast::libclang_parser> parser{type_safe::ref(index)};
-	try
-	{
-		cppast::parse_database(parser, compilation_database);
-	}
-	catch (cppast::libclang_error& libclang_error)
-	{
-		diagnostic::fatal_error(fmt::format("libclang: {}", libclang_error.what()));
-	}
-
-	if (parser.error())
-		diagnostic::fatal_error(fmt::format("a parse error occured"));
-
-	for (const auto& file : parser.files())
-	{
-
-	}
 }
 
-void checks::o3(checks::level_t level)
+void checks::o3::do_check(checks::level_t level, managers::resources_manager& check_resource_manager)
 {
+	check_resource_manager.cppast.request_parsed_files_list();
 	if (level >= 1)
 		do_level1();
 }

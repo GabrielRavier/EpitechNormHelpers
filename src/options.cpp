@@ -18,13 +18,18 @@ static void make_options_from_check_list(cxxopts::Options& options, const checks
 	{
 		char category_abbreviation_lowered = tolower(check_category.abbreviation);
 
-		options.add_options()(fmt::format("check-{}all", category_abbreviation_lowered), fmt::format("Enable all checks in '{}' category", check_category.name), cxxopts::value<unsigned>()->implicit_value("1"));
+		options.add_options()(fmt::format("check-{}all", category_abbreviation_lowered), fmt::format("Enable all checks in '{}' category with specified level", check_category.name), cxxopts::value<unsigned>()->implicit_value("1"));
 
 		for (auto check_information : check_category.checks_information)
 		{
 			std::string option_name_string = fmt::format("check-{}", check_information.short_name);
+			std::string description_string = fmt::format("Enable '{}' check ", check_information.name);
+			if (check_information.maximum_level > 1)
+				description_string += fmt::format("(levels 1 through {}", check_information.maximum_level);
+			else
+				description_string += "(level 1 only)";
 
-			options.add_options()(option_name_string, fmt::format("Enable '{}' check", check_information.name), cxxopts::value<unsigned>()->implicit_value("1"));
+			options.add_options()(option_name_string, description_string, cxxopts::value<unsigned>()->implicit_value("1"));
 		}
 	}
 }
@@ -97,7 +102,7 @@ options_parser::parsed_options options_parser::parse_options(int argc, char *arg
 	make_options_from_check_list(options, global_check_list);
 
 	options.add_options()
-			("check-all", "All checks at the specified level", cxxopts::value<unsigned>())
+			("check-all", "Enable all checks at the specified level", cxxopts::value<unsigned>())
 			("directory", "Directory in which the tool will run. All other paths are relative to this one", cxxopts::value<std::string>()->default_value("."))
 			("compile-commands-directory", "Directory containing a compile_commands.json file", cxxopts::value<std::string>()->default_value("."))
 			("h,help", "Print usage");
