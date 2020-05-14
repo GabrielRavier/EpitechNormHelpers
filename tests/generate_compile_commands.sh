@@ -1,3 +1,4 @@
 #!/bin/bash
 cd "$(dirname "$0")"
-bear -o o3/compile_commands.json cc o3/{not-,}success.c 
+bear -o o3/compile_commands.json cc -c o3/{success,failure}.c
+rm {success,failure}.o

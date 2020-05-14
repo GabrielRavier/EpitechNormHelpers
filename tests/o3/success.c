@@ -1,4 +1,6 @@
-int f1()
+#include "header.h"
+
+void f1()
 {
 
 }
