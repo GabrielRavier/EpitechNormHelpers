@@ -60,7 +60,7 @@ static options_parser::parsed_options make_parsed_options_from_parse_result(cons
 				char category_abbreviation = checkArg[0];
 				const checks::category *corresponding_category = std::find_if(check_list.categories.begin(), check_list.categories.end(), [category_abbreviation](const auto& category)
 				{
-					return category.abbreviation == tolower(category_abbreviation);
+					return std::tolower(category.abbreviation) == category_abbreviation;
 				});
 				if (corresponding_category != check_list.categories.end())
 					for (const auto& check : corresponding_category->checks_information)
