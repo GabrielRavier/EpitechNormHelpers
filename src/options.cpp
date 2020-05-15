@@ -10,7 +10,7 @@
 #include <tuple>
 
 /**
- * @brief From an option list, make a cxxopts::Options and a vector of strings containing all possible check options in abbreviated form ("o2" for "--check-o2")
+ * @brief From an option list, make a cxxopts::Options
  */
 static void make_options_from_check_list(cxxopts::Options& options, const checks::list& check_list)
 {
@@ -96,7 +96,7 @@ static options_parser::parsed_options make_parsed_options_from_parse_result(cons
 
 options_parser::parsed_options options_parser::parse_options(int argc, char *argv[])
 {
-	cxxopts::Options options("epitech-norm-helper");
+	cxxopts::Options options{"epitech-norm-helper"};
 	const checks::list& global_check_list = checks::get_global_check_list();
 
 	make_options_from_check_list(options, global_check_list);
