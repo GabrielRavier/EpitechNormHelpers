@@ -58,7 +58,7 @@ static options_parser::parsed_options make_parsed_options_from_parse_result(cons
 			else if (checkArg.substr(1) == "all")
 			{
 				char category_abbreviation = checkArg[0];
-				const checks::category *corresponding_category = std::find_if(check_list.categories.begin(), check_list.categories.end(), [category_abbreviation](const auto& category)
+				auto corresponding_category = std::find_if(check_list.categories.begin(), check_list.categories.end(), [category_abbreviation](const auto& category)
 				{
 					return std::tolower(category.abbreviation) == category_abbreviation;
 				});
@@ -69,7 +69,7 @@ static options_parser::parsed_options make_parsed_options_from_parse_result(cons
 			else
 			{
 				char category_abbreviation = checkArg[0];
-				const checks::category *corresponding_category = std::find_if(check_list.categories.begin(), check_list.categories.end(), [category_abbreviation](const auto& category)
+				auto corresponding_category = std::find_if(check_list.categories.begin(), check_list.categories.end(), [category_abbreviation](const auto& category)
 				{
 					return std::tolower(category.abbreviation) == category_abbreviation;
 				});
