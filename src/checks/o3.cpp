@@ -1,12 +1,14 @@
-#include "checks/checks.hpp"
+// SPDX-License-Identifier: GPL-3.0-or-later
 #include "checks/o3.hpp"
+#include "checks/checks.hpp"
 #include <cppast/libclang_parser.hpp>
 #include <cppast/visitor.hpp>
 #include <cppast/cpp_entity_kind.hpp>
 #include <fmt/format.h>
 #include "diagnostic.hpp"
 
-static void warn_if_more_than_5_functions(const cppast::cpp_file& parsed_file)
+// Level 1 checks for files containing more than 5 functions
+static void do_level1_one_file(const cppast::cpp_file& parsed_file)
 {
 	size_t function_count = 0;
 	cppast::visit(parsed_file, [&function_count](const cppast::cpp_entity& entity, cppast::visitor_info)
@@ -25,6 +27,6 @@ void checks::o3::do_check(checks::level_t level, managers::resources_manager& ch
 	if (level >= 1)
 	{
 		for (const auto& parsed_file : parsed_files_list)
-			warn_if_more_than_5_functions(parsed_file);
+			do_level1_one_file(parsed_file);
 	}
 }

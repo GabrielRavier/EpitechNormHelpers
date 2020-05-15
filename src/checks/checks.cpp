@@ -3,6 +3,7 @@
 #include "checks/o1.hpp"
 #include "checks/o2.hpp"
 #include "checks/o3.hpp"
+#include "checks/o4.hpp"
 #include <cctype>
 #include <enumerate.hpp>
 #include <fmt/format.h>
@@ -33,7 +34,8 @@ static auto get_unfinished_global_check_list()
 					 },
 					 {
 						 .name = "Naming files and folders",
-						 .maximum_level = 1,
+						 .maximum_level = 2,
+						 .implementation = checks::o4::do_check,
 					 },
 				 },
 				 .name = "Files organization",

@@ -35,6 +35,14 @@ const git::index& managers::cwd_git_manager::request_index()
 	return *this->index;
 }
 
+const git::index::file_list& managers::cwd_git_manager::request_file_list()
+{
+	if (!this->file_list.has_value())
+		this->file_list.emplace(this->request_index().list_files());
+
+	return *this->file_list;
+}
+
 managers::cppast_manager::cppast_manager(const std::filesystem::path& compile_options_directory_parameter)
 	: compile_options_directory(compile_options_directory_parameter)
 {

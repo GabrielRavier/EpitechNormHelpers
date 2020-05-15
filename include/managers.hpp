@@ -16,12 +16,14 @@ class cwd_git_manager
 	std::optional<git::initializer> initializer;
 	std::optional<git::repository> repository;	// Destroyed before initializer
 	std::optional<git::index> index;	// Destroyed before repository and initializer
+	std::optional<git::index::file_list> file_list;
 
 	void request_git_initialization();
 
 public:
 	const git::repository& request_repo();
 	const git::index& request_index();
+	const git::index::file_list& request_file_list();
 };
 
 class cppast_manager
