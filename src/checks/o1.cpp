@@ -16,17 +16,19 @@
 
 // Improvement idea for this : Remove regexes and match everything individually to give a better warning message
 
+static void warn_match(std::string_view matched_string, checks::level_t level)
+{
+	regex_utils::warn_match_in_check("o1", matched_string, level);
+}
+
 // Level 1 checks for *.o, *.elf, *.obj, *.gch, *.pch, *.a, *.lib, *.exe, *.out, *.app, *.so, *.so.*, *.dylib, *.dll, *~, #*#, .#*, Session.vim, Sessionx.vim, *.autosave, CMakeLists.txt.user, CMakeCache.txt, cmake_install.cmake, install_manifest.txt, compile_commands.json and *.d files in the git repo
 static void do_level1(const git::index::file_list& filenames)
 {
 	for (std::string_view filename : filenames)
 	{
 		static const boost::regex basename_regex{R"delimiter((?:(?:(?:.*(?:\.(?:[oad]|elf|obj|[gp]ch|lib|exe|out|app|so(\..*)?|dylib|dll|autosave)|~))|#.*#|\.#.*|Sessionx?\.vim|CMakeLists\.txt\.user|(?:CMakeCache|install_manifest)\.txt|cmake_install\.cmake|compile_commands\.json)))delimiter"};
-		const std::string basename = basename_wrappers::base_name(filename);
-
-		boost::smatch match;
-		if (boost::regex_match(basename, match, basename_regex))
-			diagnostic::warn(fmt::format("o1: '{}' matched level 1", filename));
+		if (regex_utils::simple_regex_match(basename_wrappers::base_name(filename), basename_regex))
+			warn_match(filename, 1);
 	}
 }
 
@@ -36,11 +38,8 @@ static void do_level2(const git::index::file_list& filenames, const std::string&
 	for (std::string_view filename : filenames)
 	{
 		static const boost::regex basename_regex{fmt::format(R"delimiter((?:{}.*))delimiter", regex_utils::escape_string_for_insertion_in_regex(git_root_repository_name))};
-		const std::string basename = basename_wrappers::base_name(filename);
-
-		boost::smatch match;
-		if (boost::regex_match(basename, match, basename_regex))
-			diagnostic::warn(fmt::format("o1: '{}' matched level 2", filename));
+		if (regex_utils::simple_regex_match(basename_wrappers::base_name(filename), basename_regex))
+			warn_match(filename, 2);
 
 		executable::type executable_type = executable::get_type_from_file(filename);
 		if (executable_type != executable::type::none)
@@ -55,11 +54,8 @@ static void do_level3(const git::index::file_list& filenames)
 	for (std::string_view filename : filenames)
 	{
 		static const boost::regex basename_regex{R"delimiter((?:(?:(?:.*\.(?:i.*86|x86_64|hex|s?lo|ko|lai?|s?mod|ilk|map|su|[ip]db|mod.*|cmd|exp|s[a-v][a-z]|sw[a-p]|un~))|(?:modules\.order|Module\.symvers|Mkfile\.old|dkms\.conf|\.dir-locals\.el)|(?:[._](?:s[a-rt-v][a-z]|ss[a-gi-z]|sw[a-p])))))delimiter"};
-		const std::string basename = basename_wrappers::base_name(filename);
-
-		boost::smatch match;
-		if (boost::regex_match(basename, match, basename_regex))
-			diagnostic::warn(fmt::format("o1: '{}' matched level 3", filename));
+		if (regex_utils::simple_regex_match(basename_wrappers::base_name(filename), basename_regex))
+			warn_match(filename, 3);
 
 		static const boost::regex directory_regex{R"delimiter(.*dSYM\/|(?:.*\/|^)\.tmp_versions\/)delimiter"};	// Made specifically to match the entire path up to the '/' after the directory name
 		boost::match_results<std::string_view::const_iterator> sv_match;

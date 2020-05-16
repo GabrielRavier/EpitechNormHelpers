@@ -47,9 +47,14 @@ executable::type executable::get_type_from_stream(std::ifstream& file_stream)
 
 }
 
-executable::type executable::get_type_from_file(std::string_view filename)
+executable::type executable::get_type_from_file(std::filesystem::path filename)
 {
-	std::ifstream file_stream{std::string{filename}, std::ios::binary};
+	if (std::filesystem::is_directory(filename))
+		return executable::type::none;
+
+	std::ifstream file_stream;
+	file_stream.exceptions(std::ifstream::badbit);
+	file_stream.open(std::string{filename}, std::ios::binary);
 
 	return executable::get_type_from_stream(file_stream);
 }

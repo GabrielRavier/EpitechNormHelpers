@@ -1,6 +1,6 @@
  // SPDX-License-Identifier: GPL-3.0-or-later
 #pragma once
-#include <string_view>
+#include <filesystem>
 #include <fstream>
 #include <fmt/format.h>
 
@@ -16,7 +16,7 @@ enum class type
 };
 
 executable::type get_type_from_stream(std::ifstream& file);
-executable::type get_type_from_file(std::string_view path);
+executable::type get_type_from_file(std::filesystem::path path);
 
 }
 

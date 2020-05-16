@@ -4,20 +4,23 @@
 #include "managers.hpp"
 #include "basename.hpp"
 #include "diagnostic.hpp"
+#include "regex-utils.hpp"
 #include <boost/regex.hpp>
 #include <fmt/format.h>
+
+static void warn_match(std::string_view matched_string, checks::level_t level)
+{
+	regex_utils::warn_match_in_check("o4", matched_string, level);
+}
 
 // Level 1 checks for *.c, *.h, *.cpp and *.hpp files that don't have a snake_case name
 static void do_level1(const git::index::file_list& filenames)
 {
 	for (std::string_view filename : filenames)
 	{
-		static const boost::regex snake_case_source_code_regex{R"delimiter([^a-z0-9_\-].*\.(?:[ch]|[ch]pp))delimiter"};
-		const std::string basename = basename_wrappers::base_name(filename);
-
-		boost::smatch match;
-		if (boost::regex_match(basename, match, snake_case_source_code_regex))
-			diagnostic::warn(fmt::format("o4: '{}' matched level 1", filename));
+		static const boost::regex snake_case_source_code_regex{R"delimiter([^a-z0-9_\-].*\.(?:[ch]|[ch]pp)$)delimiter"};
+		if (regex_utils::simple_regex_search(basename_wrappers::base_name(filename), snake_case_source_code_regex))
+			warn_match(filename, 1);
 	}
 }
 
@@ -27,10 +30,8 @@ static void do_level2(const git::index::file_list& filenames)
 	for (std::string_view filename : filenames)
 	{
 		static const boost::regex snake_case_filename_regex{R"delimiter([^a-z0-9_\-\.\/])delimiter"};
-
-		boost::match_results<std::string_view::const_iterator> sv_match;
-		if (boost::regex_search(filename.begin(), filename.end(), sv_match, snake_case_filename_regex))
-			diagnostic::warn(fmt::format("o4: '{}' matched level 2", filename));
+		if (regex_utils::simple_regex_search(filename, snake_case_filename_regex))
+			warn_match(filename, 2);
 	}
 }
 

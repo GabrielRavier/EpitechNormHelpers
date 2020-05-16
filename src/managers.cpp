@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 #include "managers.hpp"
 #include "diagnostic.hpp"
 #include "libgit2wrapper/global.hpp"
@@ -70,7 +71,15 @@ cppast::detail::iteratable_intrusive_list<cppast::cpp_file> managers::cppast_man
 	if (!this->parsed_files.has_value())
 	{
 		this->parsed_files.emplace(type_safe::ref(this->request_entity_index()));
-		cppast::parse_database(*this->parsed_files, this->request_compilation_database());
+		try
+		{
+			cppast::parse_database(*this->parsed_files, this->request_compilation_database());
+		}
+		catch (cppast::libclang_error& libclang_error)
+		{
+			this->parsed_files.reset();
+			throw;
+		}
 
 		if (this->parsed_files->error())
 			diagnostic::warn("a parse error occured, this may cause problems");

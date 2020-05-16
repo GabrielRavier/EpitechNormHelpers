@@ -4,6 +4,7 @@
 #include "checks/o2.hpp"
 #include "checks/o3.hpp"
 #include "checks/o4.hpp"
+#include "checks/g1.hpp"
 #include <cctype>
 #include <enumerate.hpp>
 #include <fmt/format.h>
@@ -47,6 +48,7 @@ static auto get_unfinished_global_check_list()
 					 {
 						 .name = "File header",
 						 .maximum_level = 1,
+						 .implementation = checks::g1::do_check,
 					 },
 					 {
 						 .name = "Seperation of functions",
