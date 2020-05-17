@@ -15,10 +15,10 @@ static void check_beginning_of_files_for_string(const git::index::file_list& fil
 	for (std::string_view filename : filenames)
 	{
 		const auto start_of_file = file_utils::attempt_file_to_string_with_size(filename, start_check_string.length());
-		if (!start_of_file.has_value())
+		if (std::holds_alternative<file_utils::error>(start_of_file) && std::get<file_utils::error>(start_of_file) != file_utils::error::too_small)
 			continue;
 
-		if (*start_of_file != start_check_string)
+		if (!std::holds_alternative<std::string>(start_of_file) || std::get<std::string>(start_of_file) != start_check_string)
 			diagnostic::warn(fmt::format("g1: level {}: Didn't find string at start of '{}' (string is \"{}\")", level, filename, start_check_string_description));
 	}
 }
