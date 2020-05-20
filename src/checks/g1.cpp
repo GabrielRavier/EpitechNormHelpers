@@ -65,14 +65,14 @@ static void do_level4(const git::index::file_list& filenames)
 // Level 5 checks for the full standard header of the school.
 static void do_level5(const git::index::file_list& filenames)
 {
-	static const boost::regex header_regex{R"delimiter(\A/*\n\*\* EPITECH PROJECT, .*\n\*\* .*\n\*\* File description:\n\*\* .*\n*/)delimiter"};
+	static const boost::regex header_regex{R"delimiter(\A/\*\n\*\* EPITECH PROJECT, .*\n\*\* .*\n\*\* File description\:\n\*\* .*\n\*/)delimiter"};
 	check_files_for_regex(filenames, header_regex, "Epitech header", 5);
 }
 
 // Level 6 is the same as level 5, except it also checks $YEAR for being a valid 4-digit number
 static void do_level6(const git::index::file_list& filenames)
 {
-	static const boost::regex header_regex{R"delimiter(\A/*\n\*\* EPITECH PROJECT, \d{4}\n\*\* .*\n\*\* File description:\n\*\* .*\n*/)delimiter"};
+	static const boost::regex header_regex{R"delimiter(\A/\*\n\*\* EPITECH PROJECT, [0-9]{4}\n\*\* .*\n\*\* File description\:\n\*\* .*\n\*/)delimiter"};
 	check_files_for_regex(filenames, header_regex, "Epitech header with valid year", 5);
 }
 
