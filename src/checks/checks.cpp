@@ -5,6 +5,7 @@
 #include "checks/o3.hpp"
 #include "checks/o4.hpp"
 #include "checks/g1.hpp"
+#include "checks/g2.hpp"
 #include <cctype>
 #include <enumerate.hpp>
 #include <fmt/format.h>
@@ -53,6 +54,7 @@ static auto get_unfinished_global_check_list()
 					 {
 						 .name = "Seperation of functions",
 						 .maximum_level = 1,
+						 .implementation = checks::g2::do_check,
 					 },
 					 {
 						 .name = "Indentation of pre-processor directives",
