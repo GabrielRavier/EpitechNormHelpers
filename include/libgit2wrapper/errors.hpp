@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #pragma once
-#include <stdexcept>
 #include <fmt/format.h>
 #include <git2/errors.h>
+#include <stdexcept>
 
 namespace git
 {
@@ -16,4 +16,4 @@ namespace git
 	throw std::runtime_error(fmt::format("git error {}: {}", last_git_error->klass, last_git_error->message));
 }
 
-}
+} // namespace git

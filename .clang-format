@@ -4,6 +4,8 @@ IndentWidth: 4
 TabWidth: 4
 UseTab: Always
 ColumnLimit: 0
+AccessModifierOffset: -4
+AlwaysBreakTemplateDeclarations: No
 
 # Can't have seperate alignemnts for references and pointers so can't have references be left aligned I guess ¯\_(ツ)_/¯
 PointerAlignment: Right

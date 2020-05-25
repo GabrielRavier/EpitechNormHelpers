@@ -8,8 +8,8 @@ namespace checks
 namespace o3
 {
 
-void do_check(checks::level_t level, managers::resources_manager& check_resource_manager);
+void do_check(checks::level_t level, managers::resources_manager &check_resource_manager);
 
 }
 
-}
+} // namespace checks

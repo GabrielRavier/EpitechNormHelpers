@@ -2,8 +2,8 @@
 #pragma once
 #include "libgit2wrapper/repository.hpp"
 #include <git2/index.h>
-#include <vector>
 #include <string>
+#include <vector>
 
 namespace git
 {
@@ -23,7 +23,7 @@ class index
 public:
 	using file_list = std::vector<std::string>;
 
-	index(const git::repository& repository)
+	index(const git::repository &repository)
 	{
 		git_repository *libgit2_repository_handle = repository.get_libgit2_handle();
 		git_index *opened_index;
@@ -55,4 +55,4 @@ public:
 	}
 };
 
-}
+} // namespace git

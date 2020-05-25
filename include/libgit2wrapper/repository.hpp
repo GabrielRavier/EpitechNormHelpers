@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #pragma once
-#include <git2/repository.h>
-#include <string>
-#include <memory>
 #include "libgit2wrapper/errors.hpp"
+#include <git2/repository.h>
+#include <memory>
+#include <string>
 
 namespace git
 {
@@ -30,10 +30,9 @@ public:
 		this->libgit2_handle.reset(opened_repository);
 	}
 
-	repository(const std::string& directory)
+	repository(const std::string &directory)
 		: repository(directory.c_str())
 	{
-
 	}
 
 	git_repository *get_libgit2_handle() const
@@ -47,4 +46,4 @@ public:
 	}
 };
 
-}
+} // namespace git

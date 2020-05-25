@@ -17,10 +17,10 @@ struct initializer
 		git_libgit2_shutdown();
 	}
 
-	initializer(const initializer&) = delete;
-	initializer& operator=(const initializer&) = delete;
-	initializer(initializer&&) = delete;
-	initializer& operator=(initializer&&) = delete;
+	initializer(const initializer &) = delete;
+	initializer &operator=(const initializer &) = delete;
+	initializer(initializer &&) = delete;
+	initializer &operator=(initializer &&) = delete;
 };
 
-}
+} // namespace git

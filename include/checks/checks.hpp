@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #pragma once
-#include <vector>
+#include "managers.hpp"
 #include <array>
 #include <functional>
 #include <string>
-#include "managers.hpp"
+#include <vector>
 
 namespace checks
 {
@@ -15,7 +15,7 @@ struct information
 {
 	const char *name;
 	level_t maximum_level;
-	std::function<void(level_t level, managers::resources_manager& check_resource_manager)> implementation;
+	std::function<void(level_t level, managers::resources_manager &check_resource_manager)> implementation;
 	std::string short_name;
 };
 
@@ -31,6 +31,6 @@ struct list
 	std::array<category, 8> categories;
 };
 
-const list& get_global_check_list();
+const list &get_global_check_list();
 
-}
+} // namespace checks

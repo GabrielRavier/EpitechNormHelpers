@@ -9,4 +9,4 @@ namespace diagnostic
 void error(std::string_view error_description);
 void warn(std::string_view warning_description);
 
-}
+} // namespace diagnostic
