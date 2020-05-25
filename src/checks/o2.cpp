@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "checks/o2.hpp"
+#include "basename.hpp"
 #include "checks/checks.hpp"
+#include "diagnostic.hpp"
 #include "libgit2wrapper/global.hpp"
 #include "libgit2wrapper/index.hpp"
-#include "diagnostic.hpp"
-#include "basename.hpp"
 #include "regex-utils.hpp"
 #include <boost/regex.hpp>
 
@@ -13,7 +13,7 @@ static void warn_match(std::string_view matched_string, checks::level_t level)
 	regex_utils::warn_match_in_check("o2", matched_string, level);
 }
 
-static void check_basenames_for_regex(const git::index::file_list& filenames, const boost::regex& basename_regex, checks::level_t level)
+static void check_basenames_for_regex(const git::index::file_list &filenames, const boost::regex &basename_regex, checks::level_t level)
 {
 	for (std::string_view filename : filenames)
 		if (regex_utils::simple_regex_match(basename_wrappers::base_name(filename), basename_regex))
@@ -21,28 +21,28 @@ static void check_basenames_for_regex(const git::index::file_list& filenames, co
 }
 
 // Level 1 doesn't allow files with these extensions : *.C, *.H, *.CPP, *.HPP, *.hh, *.cc, *.i, *.f, *.F, *.FOR, *.FPP, *.FTN, *.m, *.M, *.d
-static void do_level1(const git::index::file_list& filenames)
+static void do_level1(const git::index::file_list &filenames)
 {
 	static const boost::regex basename_regex{R"delimiter((?:.*\.(?:[CHifFdmM]|[CH]PP|hh|cc|FOR|FPP|FTN)))delimiter"};
 	check_basenames_for_regex(filenames, basename_regex, 1);
 }
 
 // Level 2 doesn't allow files with these extensions : *.cpp, *.cp, *.cxx, *.c++, *.hpp, *.hp, *.hx, *.h++, *.tcc, *.icc, *.ii, *.mi, *.mm, *.mii, *.di, *.dd, *.ads, *.adb, *.for, *.ftn, *.fpp, *.FPP, *.FTN, *.f90, *.f95, *.f03, *.f08, *.F90, *.F95, *.F03, *.F08, *.go, *.brig
-static void do_level2(const git::index::file_list& filenames)
+static void do_level2(const git::index::file_list &filenames)
 {
 	static const boost::regex basename_regex{R"delimiter((?:.*\.(?:[ch](?:pp?|xx|\+\+)|[ti]cc|ii|mii?|mm|d[id]|ad[sb]|f(?:or|tn|pp)|[fF](?:90|95|03|08)|go|brig)))delimiter"};
 	check_basenames_for_regex(filenames, basename_regex, 2);
 }
 
 // Level 3 doesn't allow files with these extensions : *.asm, *.s, *.S, *.sx
-static void do_level3(const git::index::file_list& filenames)
+static void do_level3(const git::index::file_list &filenames)
 {
 	static const boost::regex basename_regex{R"delimiter((?:.*\.(?:asm|[sS]|sx)))delimiter"};
 	check_basenames_for_regex(filenames, basename_regex, 3);
 }
 
 // Level 4 only allows : Makefile, GNUmakefile, CMakeLists.txt, configure.ac, configure, Makefile.in, .gitignore, .gitconfig, README*, COPYING, *.c, *.h and *.cmake files, files in LICENSES, doc, documentation, inc, include, ext, external, src and source directories
-static void do_level4(const git::index::file_list& filenames)
+static void do_level4(const git::index::file_list &filenames)
 {
 	for (std::string_view filename : filenames)
 	{
@@ -58,7 +58,7 @@ static void do_level4(const git::index::file_list& filenames)
 }
 
 // Level 5 is the same as level 4, except it doesn't allow anything but .c and .h files in the src and source directories, and anything but .h files in the inc and include directories (i.e. if a path includes an 'include' or 'inc' directory, it will require the files in it to be .h files
-static void do_level5(const git::index::file_list& filenames)
+static void do_level5(const git::index::file_list &filenames)
 {
 	for (std::string_view filename : filenames)
 	{
@@ -86,7 +86,7 @@ static void do_level5(const git::index::file_list& filenames)
 	}
 }
 
-void checks::o2::do_check(checks::level_t level, managers::resources_manager& check_resource_manager)
+void checks::o2::do_check(checks::level_t level, managers::resources_manager &check_resource_manager)
 {
 	git::index::file_list filenames = check_resource_manager.cwd_git.request_file_list();
 

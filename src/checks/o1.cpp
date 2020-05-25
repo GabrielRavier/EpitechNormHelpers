@@ -1,18 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-#include "checks/checks.hpp"
 #include "checks/o1.hpp"
-#include "libgit2wrapper/global.hpp"
-#include "libgit2wrapper/repository.hpp"
-#include "libgit2wrapper/index.hpp"
-#include "diagnostic.hpp"
 #include "basename.hpp"
+#include "checks/checks.hpp"
+#include "diagnostic.hpp"
 #include "executable-type.hpp"
+#include "libgit2wrapper/global.hpp"
+#include "libgit2wrapper/index.hpp"
+#include "libgit2wrapper/repository.hpp"
 #include "regex-utils.hpp"
-#include <vector>
+#include <boost/regex.hpp>
+#include <fmt/format.h>
 #include <string>
 #include <unordered_set>
-#include <fmt/format.h>
-#include <boost/regex.hpp>
+#include <vector>
 
 // Improvement idea for this : Remove regexes and match everything individually to give a better warning message
 
@@ -22,7 +22,7 @@ static void warn_match(std::string_view matched_string, checks::level_t level)
 }
 
 // Level 1 checks for *.o, *.elf, *.obj, *.gch, *.pch, *.a, *.lib, *.exe, *.out, *.app, *.so, *.so.*, *.dylib, *.dll, *~, #*#, .#*, Session.vim, Sessionx.vim, *.autosave, CMakeLists.txt.user, CMakeCache.txt, cmake_install.cmake, install_manifest.txt, compile_commands.json and *.d files in the git repo
-static void do_level1(const git::index::file_list& filenames)
+static void do_level1(const git::index::file_list &filenames)
 {
 	for (std::string_view filename : filenames)
 	{
@@ -33,7 +33,7 @@ static void do_level1(const git::index::file_list& filenames)
 }
 
 // Level 2 also tries to find valid ELF/PE/Dalvik executables and [repo-name].* files (where '[repo-name]' is the base name of the root directory of the git repository) and warn about them
-static void do_level2(const git::index::file_list& filenames, const std::string& git_root_repository_name)
+static void do_level2(const git::index::file_list &filenames, const std::string &git_root_repository_name)
 {
 	for (std::string_view filename : filenames)
 	{
@@ -48,16 +48,16 @@ static void do_level2(const git::index::file_list& filenames, const std::string&
 }
 
 // Level 3 also checks for *.i*86, *.x86_64, *.hex, *.slo, *.lo, *.ko, *.lai, *.la, *.mod, *.smod, *.ilk, *.map, *dSYM/, *.su, *.idb, *.pdb, *.mod*, *.cmd, .tmp_versions/, modules.order, Module.symvers, Mkfile.old, dkms.conf, .dir-locals.el, [._]*.s[a-v][a-z], [._]*.sw[a-p], [._]s[a-rt-v][a-z], [._]ss[a-gi-z], [._]sw[a-p], [._]*.un~ and *.exp files in the git repo
-static void do_level3(const git::index::file_list& filenames)
+static void do_level3(const git::index::file_list &filenames)
 {
-	std::unordered_set<std::string> matched_directories;	// Have a set of matched directories, so we can then just print them all in the end (duplicate matches will be removed since this is a set)
+	std::unordered_set<std::string> matched_directories; // Have a set of matched directories, so we can then just print them all in the end (duplicate matches will be removed since this is a set)
 	for (std::string_view filename : filenames)
 	{
 		static const boost::regex basename_regex{R"delimiter((?:(?:(?:.*\.(?:i.*86|x86_64|hex|s?lo|ko|lai?|s?mod|ilk|map|su|[ip]db|mod.*|cmd|exp|s[a-v][a-z]|sw[a-p]|un~))|(?:modules\.order|Module\.symvers|Mkfile\.old|dkms\.conf|\.dir-locals\.el)|(?:[._](?:s[a-rt-v][a-z]|ss[a-gi-z]|sw[a-p])))))delimiter"};
 		if (regex_utils::simple_regex_match(basename_wrappers::base_name(filename), basename_regex))
 			warn_match(filename, 3);
 
-		static const boost::regex directory_regex{R"delimiter(.*dSYM\/|(?:.*\/|^)\.tmp_versions\/)delimiter"};	// Made specifically to match the entire path up to the '/' after the directory name
+		static const boost::regex directory_regex{R"delimiter(.*dSYM\/|(?:.*\/|^)\.tmp_versions\/)delimiter"}; // Made specifically to match the entire path up to the '/' after the directory name
 		boost::match_results<std::string_view::const_iterator> sv_match;
 		if (boost::regex_search(filename.begin(), filename.end(), sv_match, directory_regex))
 			matched_directories.insert(sv_match[0].str());
@@ -67,8 +67,7 @@ static void do_level3(const git::index::file_list& filenames)
 		diagnostic::warn(fmt::format("o1: '{}' directory matched level 3", directory));
 }
 
-
-void checks::o1::do_check(checks::level_t level, managers::resources_manager& check_resource_manager)
+void checks::o1::do_check(checks::level_t level, managers::resources_manager &check_resource_manager)
 {
 	git::index::file_list filenames = check_resource_manager.cwd_git.request_file_list();
 
