@@ -1,7 +1,7 @@
 [submodule "external/cppast"]
-    path = external/cppast
+	path = epitech-norm-tool/external/cppast
     url = https://github.com/foonathan/cppast.git
 
 [submodule "external/cppitertools"]
-    path = external/cppitertools
+	path = epitech-norm-tool/external/cppitertools
     url = https://github.com/ryanhaining/cppitertools.git

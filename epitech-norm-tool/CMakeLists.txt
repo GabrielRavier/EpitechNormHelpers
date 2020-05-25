@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.12)
 
 option(LTO "Enable link-time optimisation" OFF)
 
-project(epitech-norm-helper CXX)
+project(epitech-norm-tool CXX)
 
-add_executable(epitech-norm-helper
+add_executable(epitech-norm-tool
     "src/main.cpp"
     "src/basename.cpp"
     "include/basename.hpp"
@@ -51,12 +51,12 @@ if(LTO)
     check_ipo_supported(RESULT result)
 
     if(result)
-        set_target_properties(epitech-norm-helper INTERPROCEDURAL_OPTIMIZATION TRUE)
+        set_target_properties(epitech-norm-tool INTERPROCEDURAL_OPTIMIZATION TRUE)
     endif()
 endif()
 
 # Make C++17 mandatory
-set_target_properties(epitech-norm-helper
+set_target_properties(epitech-norm-tool
     PROPERTIES
         CXX_STANDARD 17
         CXX_STANDARD_REQUIRED ON
@@ -64,27 +64,27 @@ set_target_properties(epitech-norm-helper
 
 # fmt library
 find_package(fmt REQUIRED)
-target_link_libraries(epitech-norm-helper fmt::fmt)
+target_link_libraries(epitech-norm-tool fmt::fmt)
 
 # libgit2 library
 find_package(libgit2 REQUIRED)
-target_link_libraries(epitech-norm-helper ${LIBGIT2_LIBRARIES})
+target_link_libraries(epitech-norm-tool ${LIBGIT2_LIBRARIES})
 
 # Boost.Regex library
 find_package(Boost
     COMPONENTS
         regex REQUIRED)
 
-target_link_libraries(epitech-norm-helper ${Boost_LIBRARIES})
+target_link_libraries(epitech-norm-tool ${Boost_LIBRARIES})
 
 # external stuff
 include(external/external.cmake)
 
 # cppitertools library
-target_link_libraries(epitech-norm-helper cppitertools)
+target_link_libraries(epitech-norm-tool cppitertools)
 
 # cppast library
-target_link_libraries(epitech-norm-helper cppast)
+target_link_libraries(epitech-norm-tool cppast)
 
 # Add our 'include' directory as an include directory
-target_include_directories(epitech-norm-helper PRIVATE include)
+target_include_directories(epitech-norm-tool PRIVATE include)
