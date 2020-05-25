@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-#include <string_view>
+#include "diagnostic.hpp"
+#include <fmt/format.h>
 #include <iostream>
 #include <stdio.h>
-#include <fmt/format.h>
-#include "diagnostic.hpp"
+#include <string_view>
 
 static void do_diagnostic_print(std::string_view error_description, std::string_view error_kind)
 {

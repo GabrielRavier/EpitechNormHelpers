@@ -1,5 +1,4 @@
 Language: Cpp
-Standard: Cpp17
 BreakBeforeBraces: Allman
 
 # BeforeLambdaBody doesn't seem to work but I'll just leave it in for later

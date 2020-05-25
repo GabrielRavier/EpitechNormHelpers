@@ -27,7 +27,7 @@ static bool is_valid_dalvik(const unsigned char *buffer, size_t length)
 	return (buffer[0] == 0x64) && (buffer[1] == 0x65) && (buffer[2] == 0x78) && (buffer[3] == 0xA) && (buffer[4] == 0x30) && (buffer[5] == 0x33) && (buffer[6] == 0x35) && (buffer[7] == 0x0);
 }
 
-executable::type executable::get_type_from_stream(std::ifstream& file_stream)
+executable::type executable::get_type_from_stream(std::ifstream &file_stream)
 {
 	char buffer[8];
 	file_stream.read(buffer, sizeof(buffer));
@@ -44,7 +44,6 @@ executable::type executable::get_type_from_stream(std::ifstream& file_stream)
 		return executable::type::dalvik;
 
 	return executable::type::none;
-
 }
 
 executable::type executable::get_type_from_file(std::filesystem::path filename)

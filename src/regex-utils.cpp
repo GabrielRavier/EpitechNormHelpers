@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "regex-utils.hpp"
-#include <string>
-#include <string_view>
-#include <boost/regex.hpp>
-#include <fmt/format.h>
 #include "basename.hpp"
 #include "diagnostic.hpp"
+#include <boost/regex.hpp>
+#include <fmt/format.h>
+#include <string>
+#include <string_view>
 
 std::string regex_utils::escape_string_for_insertion_in_regex(std::string_view string)
 {
@@ -18,12 +18,12 @@ std::string regex_utils::escape_string_for_insertion_in_regex(std::string_view s
 	return result;
 }
 
-bool regex_utils::simple_regex_match(std::string_view string, const boost::regex& regex)
+bool regex_utils::simple_regex_match(std::string_view string, const boost::regex &regex)
 {
 	return boost::regex_match(string.begin(), string.end(), regex);
 }
 
-bool regex_utils::simple_regex_search(std::string_view string, const boost::regex& regex)
+bool regex_utils::simple_regex_search(std::string_view string, const boost::regex &regex)
 {
 	return boost::regex_search(string.begin(), string.end(), regex);
 }

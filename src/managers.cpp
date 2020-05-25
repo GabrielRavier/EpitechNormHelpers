@@ -2,14 +2,14 @@
 #include "managers.hpp"
 #include "diagnostic.hpp"
 #include "libgit2wrapper/global.hpp"
-#include "libgit2wrapper/repository.hpp"
 #include "libgit2wrapper/index.hpp"
-#include <type_safe/reference.hpp>
+#include "libgit2wrapper/repository.hpp"
 #include <cppast/cpp_entity_index.hpp>
-#include <cppast/parser.hpp>
 #include <cppast/libclang_parser.hpp>
-#include <optional>
+#include <cppast/parser.hpp>
 #include <filesystem>
+#include <optional>
+#include <type_safe/reference.hpp>
 
 void managers::cwd_git_manager::request_git_initialization()
 {
@@ -17,7 +17,7 @@ void managers::cwd_git_manager::request_git_initialization()
 		this->initializer.emplace();
 }
 
-const git::repository& managers::cwd_git_manager::request_repo()
+const git::repository &managers::cwd_git_manager::request_repo()
 {
 	if (!this->repository.has_value())
 	{
@@ -28,15 +28,16 @@ const git::repository& managers::cwd_git_manager::request_repo()
 	return *this->repository;
 }
 
-const git::index& managers::cwd_git_manager::request_index()
+const git::index &managers::cwd_git_manager::request_index()
 {
 	if (!this->index.has_value())
-		this->index.emplace(this->request_repo());;
+		this->index.emplace(this->request_repo());
+	;
 
 	return *this->index;
 }
 
-const git::index::file_list& managers::cwd_git_manager::request_file_list()
+const git::index::file_list &managers::cwd_git_manager::request_file_list()
 {
 	if (!this->file_list.has_value())
 		this->file_list.emplace(this->request_index().list_files());
@@ -44,13 +45,12 @@ const git::index::file_list& managers::cwd_git_manager::request_file_list()
 	return *this->file_list;
 }
 
-managers::cppast_manager::cppast_manager(const std::filesystem::path& compile_options_directory_parameter)
+managers::cppast_manager::cppast_manager(const std::filesystem::path &compile_options_directory_parameter)
 	: compile_options_directory(compile_options_directory_parameter)
 {
-
 }
 
-const cppast::cpp_entity_index& managers::cppast_manager::request_entity_index()
+const cppast::cpp_entity_index &managers::cppast_manager::request_entity_index()
 {
 	if (!this->entity_index.has_value())
 		this->entity_index.emplace();
@@ -58,7 +58,7 @@ const cppast::cpp_entity_index& managers::cppast_manager::request_entity_index()
 	return *this->entity_index;
 }
 
-const cppast::libclang_compilation_database& managers::cppast_manager::request_compilation_database()
+const cppast::libclang_compilation_database &managers::cppast_manager::request_compilation_database()
 {
 	if (!this->compilation_database.has_value())
 		this->compilation_database.emplace(this->compile_options_directory);
@@ -75,7 +75,7 @@ cppast::detail::iteratable_intrusive_list<cppast::cpp_file> managers::cppast_man
 		{
 			cppast::parse_database(*this->parsed_files, this->request_compilation_database());
 		}
-		catch (cppast::libclang_error& libclang_error)
+		catch (cppast::libclang_error &libclang_error)
 		{
 			this->parsed_files.reset();
 			throw;

@@ -1,20 +1,20 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "options.hpp"
 #include "checks/checks.hpp"
-#include <cxxopts.hpp>
-#include <fmt/format.h>
-#include <enumerate.hpp>
 #include <array>
+#include <cxxopts.hpp>
+#include <enumerate.hpp>
+#include <fmt/format.h>
 #include <string>
-#include <vector>
 #include <tuple>
+#include <vector>
 
 /**
  * @brief From an option list, make a cxxopts::Options
  */
-static void make_options_from_check_list(cxxopts::Options& options, const checks::list& check_list)
+static void make_options_from_check_list(cxxopts::Options &options, const checks::list &check_list)
 {
-	for (const auto& check_category : check_list.categories)
+	for (const auto &check_category : check_list.categories)
 	{
 		char category_abbreviation_lowered = tolower(check_category.abbreviation);
 
@@ -37,11 +37,11 @@ static void make_options_from_check_list(cxxopts::Options& options, const checks
 /**
  * @brief From a cxxopts::ParseResult and a checks::list, make a options_parser::parsed_options
  */
-static options_parser::parsed_options make_parsed_options_from_parse_result(const cxxopts::ParseResult& parse_result, const checks::list& check_list)
+static options_parser::parsed_options make_parsed_options_from_parse_result(const cxxopts::ParseResult &parse_result, const checks::list &check_list)
 {
 	std::unordered_map<std::string, options_parser::parsed_check_option> result_map;
 
-	for (const auto& argument : parse_result.arguments())
+	for (const auto &argument : parse_result.arguments())
 	{
 		std::string key = argument.key();
 		if (key.compare(0, 6, "check-", 6) == 0)
@@ -51,31 +51,29 @@ static options_parser::parsed_options make_parsed_options_from_parse_result(cons
 
 			if (checkArg == "all")
 			{
-				for (const auto& category : check_list.categories)
-					for (const auto& check : category.checks_information)
+				for (const auto &category : check_list.categories)
+					for (const auto &check : category.checks_information)
 						result_map[check.short_name] = {check, argument.as<unsigned>()};
 			}
 			else if (checkArg.substr(1) == "all")
 			{
 				char category_abbreviation = checkArg[0];
-				auto corresponding_category = std::find_if(check_list.categories.begin(), check_list.categories.end(), [category_abbreviation](const auto& category)
-				{
+				auto corresponding_category = std::find_if(check_list.categories.begin(), check_list.categories.end(), [category_abbreviation](const auto &category) {
 					return std::tolower(category.abbreviation) == category_abbreviation;
 				});
 				if (corresponding_category != check_list.categories.end())
-					for (const auto& check : corresponding_category->checks_information)
+					for (const auto &check : corresponding_category->checks_information)
 						result_map[check.short_name] = {check, argument.as<unsigned>()};
 			}
 			else
 			{
 				char category_abbreviation = checkArg[0];
-				auto corresponding_category = std::find_if(check_list.categories.begin(), check_list.categories.end(), [category_abbreviation](const auto& category)
-				{
+				auto corresponding_category = std::find_if(check_list.categories.begin(), check_list.categories.end(), [category_abbreviation](const auto &category) {
 					return std::tolower(category.abbreviation) == category_abbreviation;
 				});
 
 				if (corresponding_category != check_list.categories.end())
-					for (const auto& check : corresponding_category->checks_information)
+					for (const auto &check : corresponding_category->checks_information)
 						if (check.short_name == checkArg)
 						{
 							result_map[check.short_name] = {check, argument.as<unsigned>()};
@@ -97,7 +95,7 @@ static options_parser::parsed_options make_parsed_options_from_parse_result(cons
 options_parser::parsed_options options_parser::parse_options(int argc, char *argv[])
 {
 	cxxopts::Options options{"epitech-norm-helper"};
-	const checks::list& global_check_list = checks::get_global_check_list();
+	const checks::list &global_check_list = checks::get_global_check_list();
 
 	make_options_from_check_list(options, global_check_list);
 
