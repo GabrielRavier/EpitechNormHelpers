@@ -7,7 +7,7 @@
 #include <cppast/visitor.hpp>
 #include <fmt/format.h>
 
-// clang-format covers this, sadly it doesn't let us check if there is *less* than 1 line seperating, but eh ¯\_(ツ)_/¯ (might do basic check later)
+// clang-format covers this, sadly it doesn't let us check if there is *less* than 1 line seperating, but eh ¯\_(ツ)_/¯ (might do very basic check later)
 void checks::g2::do_check(checks::level_t level, managers::resources_manager &)
 {
 	if (level >= 1)
