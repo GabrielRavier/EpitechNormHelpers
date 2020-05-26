@@ -1,6 +1,6 @@
-## Epitech Norm Helper
+## Epitech Norm Tool
 
-The Epitech Norm Helper is a helper for obeying the coding norms of the Epitech.
+The Epitech Norm Tool is a tool that assists in obeying the coding norms of the Epitech.
 
 ## Dependencies
 
