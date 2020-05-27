@@ -17,6 +17,7 @@ add_executable(epitech-norm-tool
     "include/file-utils.hpp"
     "src/managers.cpp"
     "include/managers.hpp"
+    "include/managers-fwd.hpp"
     "src/options.cpp"
     "include/options.hpp"
     "src/program.cpp"

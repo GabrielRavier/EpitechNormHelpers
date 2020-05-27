@@ -2,6 +2,7 @@
 #include "checks/o3.hpp"
 #include "checks/checks.hpp"
 #include "diagnostic.hpp"
+#include "managers.hpp"
 #include <cppast/cpp_entity_kind.hpp>
 #include <cppast/libclang_parser.hpp>
 #include <cppast/visitor.hpp>

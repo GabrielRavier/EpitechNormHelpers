@@ -7,6 +7,7 @@
 #include "libgit2wrapper/global.hpp"
 #include "libgit2wrapper/index.hpp"
 #include "libgit2wrapper/repository.hpp"
+#include "managers.hpp"
 #include "regex-utils.hpp"
 #include <boost/regex.hpp>
 #include <fmt/format.h>

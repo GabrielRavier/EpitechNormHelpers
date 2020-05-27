@@ -5,6 +5,7 @@
 #include "diagnostic.hpp"
 #include "libgit2wrapper/global.hpp"
 #include "libgit2wrapper/index.hpp"
+#include "managers.hpp"
 #include "regex-utils.hpp"
 #include <boost/regex.hpp>
 
