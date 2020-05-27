@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "executable-type.hpp"
-#include <fstream>
-#include <string_view>
+#include <cstddef>	// for std::size_t
+#include <fstream>	// for std::fstream, std::istream::read
+#include <string>	// for std::string
 
-static bool is_valid_elf(const unsigned char *buffer, size_t length)
+static bool is_valid_elf(const unsigned char *buffer, std::size_t length)
 {
 	if (length < 4)
 		return false;
@@ -11,7 +12,7 @@ static bool is_valid_elf(const unsigned char *buffer, size_t length)
 	return (buffer[0] == 0x7F) && (buffer[1] == 0x45) && (buffer[2] == 0x4C) && (buffer[3] == 0x46);
 }
 
-static bool is_valid_mz(const unsigned char *buffer, size_t length)
+static bool is_valid_mz(const unsigned char *buffer, std::size_t length)
 {
 	if (length < 2)
 		return false;
@@ -19,7 +20,7 @@ static bool is_valid_mz(const unsigned char *buffer, size_t length)
 	return (buffer[0] == 0x4D) && (buffer[1] == 0x5A);
 }
 
-static bool is_valid_dalvik(const unsigned char *buffer, size_t length)
+static bool is_valid_dalvik(const unsigned char *buffer, std::size_t length)
 {
 	if (length < 8)
 		return false;
@@ -53,7 +54,7 @@ executable::type executable::get_type_from_file(std::filesystem::path filename)
 
 	std::ifstream file_stream;
 	file_stream.exceptions(std::ifstream::badbit);
-	file_stream.open(std::string{filename}, std::ios::binary);
+	file_stream.open(std::string{filename}, std::ifstream::binary);
 
 	return executable::get_type_from_stream(file_stream);
 }
