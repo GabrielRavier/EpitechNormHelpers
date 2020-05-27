@@ -1,14 +1,17 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "checks/g1.hpp"
-#include "basename.hpp"
-#include "checks/checks.hpp"
-#include "diagnostic.hpp"
-#include "file-utils.hpp"
-#include "managers.hpp"
-#include "regex-utils.hpp"
-#include <algorithm>
-#include <boost/regex.hpp>
-#include <fmt/format.h>
+#include <fmt/core.h>	// for fmt::format
+#include <algorithm>	// for std::remove_if
+#include <boost/regex.hpp>	// for boost::regex
+#include <string_view>	// for std::string_view
+#include <variant>	// for std::holds_alternative
+#include "basename.hpp"	// for basename_wrappers::base_name
+#include "checks/checks.hpp"	// for checks::level_t
+#include "diagnostic.hpp"	// for diagnostic::warn
+#include "file-utils.hpp"	// for file_utils::attempt_file_to_string, file_utils::error, etc.
+#include "libgit2wrapper/index.hpp"	// for git::index
+#include "managers.hpp"	// for managers::resources_manager
+#include "regex-utils.hpp"	// for regex_utils::simple_regex_search
 
 static void check_beginning_of_files_for_string(const git::index::file_list &filenames, std::string_view start_check_string, std::string_view start_check_string_description, checks::level_t level)
 {
