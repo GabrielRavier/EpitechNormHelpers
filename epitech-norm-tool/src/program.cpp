@@ -3,6 +3,7 @@
 #include "checks/checks.hpp"
 #include "diagnostic.hpp"
 #include "managers.hpp"
+#include "options.hpp"
 #include <fmt/format.h>
 #include <iostream>
 #include <string_view>

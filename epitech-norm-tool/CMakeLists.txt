@@ -20,6 +20,7 @@ add_executable(epitech-norm-tool
     "include/managers-fwd.hpp"
     "src/options.cpp"
     "include/options.hpp"
+    "include/options-fwd.hpp"
     "src/program.cpp"
     "include/program.hpp"
     "src/regex-utils.cpp"
