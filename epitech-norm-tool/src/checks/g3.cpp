@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "checks/g3.hpp"
-#include "checks/checks.hpp"
-#include "diagnostic.hpp"
+#include "checks/checks.hpp"	// for checks::level_t
+#include "diagnostic.hpp"	// for diagnostic::error
 
 // clang-tidy covers this
 void checks::g3::do_check(checks::level_t level, managers::resources_manager &)
