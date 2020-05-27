@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "diagnostic.hpp"
-#include <fmt/format.h>
-#include <iostream>
-#include <stdio.h>
-#include <string_view>
+#include <fmt/core.h>	// for std::format
+#include <cstdlib>	// for std::exit, EXIT_FAILURE
+#include <iostream>	// for std::cerr
+#include <string>	// for operator<<(std::ostream&, std::string)
+#include <string_view>	// for std::string_view
 
 static void do_diagnostic_print(std::string_view error_description, std::string_view error_kind)
 {
@@ -14,7 +15,7 @@ static void do_diagnostic_print(std::string_view error_description, std::string_
 {
 	do_diagnostic_print(error_description, "fatal error");
 
-	exit(EXIT_FAILURE);
+	std::exit(EXIT_FAILURE);
 }
 
 void diagnostic::error(std::string_view error_description)
