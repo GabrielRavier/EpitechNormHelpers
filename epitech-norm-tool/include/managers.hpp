@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #pragma once
 #include <cppast/cpp_entity_index.hpp>	// for cppast::cpp_entity_index
-#include <cppast/libclang_parser.hpp>	// for cppast::libclang_compilation_database
+#include <cppast/libclang_parser.hpp>	// for cppast::libclang_compilation_database, etc.
 #include <cppast/parser.hpp>	// for cppast::parser.hpp
 #include <filesystem>	// for std::filesystem::path
 #include <optional>	// for std::optional
