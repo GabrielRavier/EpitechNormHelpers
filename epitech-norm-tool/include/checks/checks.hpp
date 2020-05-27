@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #pragma once
-#include "managers-fwd.hpp"
 #include <array>	// for std::array
 #include <functional>	// for std::function
 #include <string>	// for std::string
 #include <vector>	// for std::vector
+#include "managers-fwd.hpp"
 
 namespace checks
 {
