@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "options.hpp"
-#include "checks/checks.hpp"
-#include <array>
-#include <cxxopts.hpp>
-#include <enumerate.hpp>
-#include <fmt/format.h>
-#include <string>
-#include <tuple>
-#include <vector>
+#include <cctype>	// for stds::tolower
+#include <fmt/core.h>	// for fmt::format
+#include <cstdlib>	// for std::exit, EXIT_SUCCESS
+#include <algorithm>	// for std::find_if
+#include <cxxopts.hpp>	// for cxxopts::Options, cxxopts::ParseResult, etc.
+#include <iostream>	// for std::cout
+#include <string>	// for std::string
+#include <unordered_map>	// for std::unordered_map
+#include "checks/checks.hpp"	// for checks::list
 
 /**
  * @brief From an option list, make a cxxopts::Options
@@ -16,14 +17,14 @@ static void make_options_from_check_list(cxxopts::Options &options, const checks
 {
 	for (const auto &check_category : check_list.categories)
 	{
-		char category_abbreviation_lowered = tolower(check_category.abbreviation);
+		char category_abbreviation_lowered = std::tolower(check_category.abbreviation);
 
 		options.add_options()(fmt::format("check-{}all", category_abbreviation_lowered), fmt::format("Enable all checks in '{}' category with specified level", check_category.name), cxxopts::value<unsigned>()->implicit_value("1"));
 
 		for (auto check_information : check_category.checks_information)
 		{
-			std::string option_name_string = fmt::format("check-{}", check_information.short_name);
-			std::string description_string = fmt::format("Enable '{}' check ", check_information.name);
+			auto option_name_string = fmt::format("check-{}", check_information.short_name);
+			auto description_string = fmt::format("Enable '{}' check ", check_information.name);
 			if (check_information.maximum_level > 1)
 				description_string += fmt::format("(levels 1 through {}", check_information.maximum_level);
 			else
@@ -43,11 +44,11 @@ static options_parser::parsed_options make_parsed_options_from_parse_result(cons
 
 	for (const auto &argument : parse_result.arguments())
 	{
-		std::string key = argument.key();
+		auto key = argument.key();
 		if (key.compare(0, 6, "check-", 6) == 0)
 		{
 			// Got "check" argument
-			std::string checkArg = key.substr(6);
+			auto checkArg = key.substr(6);
 
 			if (checkArg == "all")
 			{
@@ -114,7 +115,7 @@ options_parser::parsed_options options_parser::parse_options(int argc, char *arg
 	if (parse_result.count("help"))
 	{
 		std::cout << options.help();
-		exit(EXIT_SUCCESS);
+		std::exit(EXIT_SUCCESS);
 	}
 
 	auto parsed_options = make_parsed_options_from_parse_result(parse_result, global_check_list);

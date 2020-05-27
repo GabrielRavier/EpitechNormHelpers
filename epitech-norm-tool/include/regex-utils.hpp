@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #pragma once
-#include "checks/checks.hpp"
-#include <boost/regex.hpp>
-#include <string>
-#include <string_view>
+#include <boost/regex/v4/regex_fwd.hpp>	// for boost::regex
+#include <string>	// for std::string
+#include <string_view>	// for std::string_view
+#include "checks/checks.hpp"	// for checks::level_t
 
 namespace regex_utils
 {
