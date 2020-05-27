@@ -6,7 +6,7 @@
 #include <cppast/cpp_entity.hpp>	  // for cppast::cpp_entity
 #include <cppast/cpp_entity_kind.hpp> // for cppast::is_function
 #include <cppast/cpp_file.hpp>		  // for cppast::cpp_file
-#include <cppast/visitor.hpp>		  // for cppast::visitor, cppast::visitor_info
+#include <cppast/visitor.hpp>		  // for cppast::visit, cppast::visitor_info
 #include <cstddef>					  // for std::size_t
 #include <fmt/core.h>				  // for fmt::format
 

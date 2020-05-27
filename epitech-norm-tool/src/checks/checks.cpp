@@ -6,6 +6,7 @@
 
 // For do_check function declarations
 #include "checks/f1.hpp"
+#include "checks/f2.hpp"
 #include "checks/g1.hpp"
 #include "checks/g2.hpp"
 #include "checks/g3.hpp"
@@ -91,6 +92,7 @@ static auto get_unfinished_global_check_list()
 							  {
 								  .name = "Naming functions",
 								  .maximum_level = 1,
+								  .implementation = checks::f2::do_check,
 							  },
 							  {
 								  .name = "Number of columns",
