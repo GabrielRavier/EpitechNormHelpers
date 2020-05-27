@@ -1,0 +1,6 @@
+g3:
+- cppcoreguidelines-avoid-magic-numbers
+- cppcoreguidelines-avoid-non-const-global-variables
+
+command line for all:
+--checks=cppcoreguidelines-avoid-magic-numbers,cppcoreguidelines-avoid-non-const-global-variables

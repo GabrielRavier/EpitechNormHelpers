@@ -2,6 +2,7 @@
 #include "checks/checks.hpp"
 #include "checks/g1.hpp"
 #include "checks/g2.hpp"
+#include "checks/g3.hpp"
 #include "checks/o1.hpp"
 #include "checks/o2.hpp"
 #include "checks/o3.hpp"
@@ -58,6 +59,7 @@ static auto get_unfinished_global_check_list()
 							  {
 								  .name = "Indentation of pre-processor directives",
 								  .maximum_level = 1,
+								  .implementation = checks::g3::do_check,
 							  },
 							  {
 								  .name = "Global variables",
