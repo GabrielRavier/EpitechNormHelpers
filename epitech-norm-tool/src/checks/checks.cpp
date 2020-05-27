@@ -1,5 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "checks/checks.hpp"
+#include <fmt/core.h>	// for fmt::format
+#include <cstddef> // For std::size_t
+#include <cctype>	// For std::tolower
+
+// For do_check function declarations
 #include "checks/g1.hpp"
 #include "checks/g2.hpp"
 #include "checks/g3.hpp"
@@ -7,9 +12,6 @@
 #include "checks/o2.hpp"
 #include "checks/o3.hpp"
 #include "checks/o4.hpp"
-#include <cctype>
-#include <enumerate.hpp>
-#include <fmt/format.h>
 
 static auto get_unfinished_global_check_list()
 {
@@ -221,7 +223,7 @@ static auto finish_check_list(checks::list list)
 	{
 		char category_abbreviation_lowered = std::tolower(category.abbreviation);
 
-		size_t index = 1;
+		std::size_t index = 1;
 		for (auto &check : category.checks_information)
 		{
 			check.short_name = fmt::format("{}{}", category_abbreviation_lowered, index);
