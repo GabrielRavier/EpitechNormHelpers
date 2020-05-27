@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "basename.hpp"
-#include <algorithm>
-#include <iostream>
-#include <libgen.h>
-#include <string>
-#include <string_view>
+#include <libgen.h>	// for dirname, basename
+#include <string>	// for std::string
+#include <string_view>	// for std::string_view
 
 std::string basename_wrappers::base_name(std::string_view path)
 {
