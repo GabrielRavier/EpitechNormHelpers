@@ -40,7 +40,8 @@ void program(const options_parser::parsed_options &options)
 		}
 		else
 		{
-			diagnostic::error(fmt::format("{} check unimplemented", check.check_information.short_name));
+			if (check.level >= 1)	// If the check level is 0, the check is disabled
+				diagnostic::error(fmt::format("{} check unimplemented", check.check_information.short_name));
 		}
 	}
 }

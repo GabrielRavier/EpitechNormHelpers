@@ -43,6 +43,8 @@ add_executable(epitech-norm-tool
     "include/checks/g4.hpp"
     "src/checks/g5.cpp"
     "include/checks/g5.hpp"
+    "src/checks/f1.cpp"
+    "include/checks/f1.hpp"
     "include/checks/checks.hpp"
     "src/checks/checks.cpp"
     "include/libgit2wrapper/errors.hpp"

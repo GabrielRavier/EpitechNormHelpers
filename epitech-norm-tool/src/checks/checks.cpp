@@ -5,6 +5,7 @@
 #include <fmt/core.h> // for fmt::format
 
 // For do_check function declarations
+#include "checks/f1.hpp"
 #include "checks/g1.hpp"
 #include "checks/g2.hpp"
 #include "checks/g3.hpp"
@@ -85,6 +86,7 @@ static auto get_unfinished_global_check_list()
 							  {
 								  .name = "Coherence of functions",
 								  .maximum_level = 1,
+								  .implementation = checks::f1::do_check,
 							  },
 							  {
 								  .name = "Naming functions",
