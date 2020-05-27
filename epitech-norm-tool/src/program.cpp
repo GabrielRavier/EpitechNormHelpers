@@ -26,6 +26,9 @@ void program(const options_parser::parsed_options &options)
 
 	for (const auto &check : options.enabled_checks)
 	{
+		if (check.level < 1)
+			continue;	// If the check is not at least at level 1, it is disabled
+
 		auto check_implementation = check.check_information.implementation;
 		if (check_implementation)
 		{
@@ -40,8 +43,7 @@ void program(const options_parser::parsed_options &options)
 		}
 		else
 		{
-			if (check.level >= 1)	// If the check level is 0, the check is disabled
-				diagnostic::error(fmt::format("{} check unimplemented", check.check_information.short_name));
+			diagnostic::error(fmt::format("{} check unimplemented", check.check_information.short_name));
 		}
 	}
 }

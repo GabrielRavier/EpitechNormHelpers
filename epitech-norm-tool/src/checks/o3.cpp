@@ -23,12 +23,9 @@ static void do_level1_one_file(const cppast::cpp_file &parsed_file)
 		diagnostic::warn(fmt::format("o3: {}: {} functions found (more than 5), you may want to subdivide your file into several sub-files", parsed_file.name(), function_count));
 }
 
-void checks::o3::do_check(checks::level_t level, managers::resources_manager &check_resource_manager)
+void checks::o3::do_check(checks::level_t, managers::resources_manager &check_resource_manager)
 {
 	auto parsed_files_list = check_resource_manager.cppast.request_parsed_files_list();
-	if (level >= 1)
-	{
-		for (const auto &parsed_file : parsed_files_list)
-			do_level1_one_file(parsed_file);
-	}
+	for (const auto &parsed_file : parsed_files_list)
+		do_level1_one_file(parsed_file);
 }

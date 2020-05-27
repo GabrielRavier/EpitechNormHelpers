@@ -70,8 +70,7 @@ void checks::o1::do_check(checks::level_t level, managers::resources_manager &ch
 	git::index::file_list filenames = check_resource_manager.cwd_git.request_file_list();
 
 	// Note: All these checks are assuming you're using git
-	if (level >= 1)
-		do_level1(filenames);
+	do_level1(filenames);
 
 	if (level >= 2)
 	{
