@@ -8,6 +8,8 @@
 #include "checks/g1.hpp"
 #include "checks/g2.hpp"
 #include "checks/g3.hpp"
+#include "checks/g4.hpp"
+#include "checks/g5.hpp"
 #include "checks/o1.hpp"
 #include "checks/o2.hpp"
 #include "checks/o3.hpp"
@@ -66,10 +68,12 @@ static auto get_unfinished_global_check_list()
 							  {
 								  .name = "Global variables",
 								  .maximum_level = 1,
+								  .implementation = checks::g4::do_check,
 							  },
 							  {
 								  .name = "Static",
 								  .maximum_level = 1,
+								  .implementation = checks::g5::do_check,
 							  },
 						  },
 					  .name = "Global scope",

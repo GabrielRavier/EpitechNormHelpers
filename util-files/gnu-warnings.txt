@@ -1,0 +1,9 @@
+g5:
+- -Wmissing-declarations
+- -Wmissing-variable-declarations (clang-specific)
+
+command line for all (GCC):
+- -Wmissing-declarations
+
+command line for all (Clang):
+- -Wmissing-declarations -Wmissing-variable-declarations

@@ -8,7 +8,7 @@ The doc directory contains documentation on the coding norm. epitech_c_coding_st
 
 ## Files for utilities
 
-The util-files directory contains files to help using external utilities to conform to the norm. .clang-format is a file to be used with `clang-format` for formatting projects. clang-tidy.txt contains informations for how to do certain checks with clang-tidy
+The util-files directory contains files to help using external utilities to conform to the norm. .clang-format is a file to be used with `clang-format` for formatting projects. clang-tidy.txt contains informations for how to do certain checks with clang-tidy. gnu-warnings.txt contains informations on how to do certain checks directly with GCC-like compilers.
 
 ## Epitech Norm Tool
 
