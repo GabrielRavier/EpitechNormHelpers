@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "regex-utils.hpp"
 #include <fmt/core.h>	// for fmt::format
-#include <boost/regex.hpp>	// for boost::regex_match, boost::regex_replace, boost::regex_search, etc.
+#include <boost/regex/v4/basic_regex.hpp>	// for boost::regex
+#include <boost/regex/v4/match_flags.hpp>	// for boost::format_sed
+#include <boost/regex/v4/regex_match.hpp>	// for boost::regex_match
+#include <boost/regex/v4/regex_replace.hpp>	// for boost::regex_replace
+#include <boost/regex/v4/regex_search.hpp>	// for boost::regex_search
 #include <string_view>	// for std::string_view
 #include "diagnostic.hpp"	// for diagnostic::warn
 
