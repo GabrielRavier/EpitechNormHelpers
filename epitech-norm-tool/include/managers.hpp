@@ -9,6 +9,7 @@
 #include "libgit2wrapper/global.hpp"	// for git::initializer
 #include "libgit2wrapper/index.hpp"	// for git::index
 #include "libgit2wrapper/repository.hpp"	// for git::repository
+namespace cppast { class cpp_file; }	// forward declare cppast::cpp_file in case none of the above actually define it
 
 namespace managers
 {
