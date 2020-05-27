@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #pragma once
-#include <filesystem>	// for std::filesystem::path
-#include <vector>	// for std::vector
-#include "checks/checks.hpp"	// for checks::information
+#include "checks/checks.hpp" // for checks::information
+#include <filesystem>		 // for std::filesystem::path
+#include <vector>			 // for std::vector
 
 namespace options_parser
 {

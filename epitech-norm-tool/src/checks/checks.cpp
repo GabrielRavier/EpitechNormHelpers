@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "checks/checks.hpp"
-#include <fmt/core.h>	// for fmt::format
-#include <cstddef> // For std::size_t
-#include <cctype>	// For std::tolower
+#include <cctype>	  // For std::tolower
+#include <cstddef>	  // For std::size_t
+#include <fmt/core.h> // for fmt::format
 
 // For do_check function declarations
 #include "checks/g1.hpp"

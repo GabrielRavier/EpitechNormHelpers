@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #pragma once
-#include <fmt/core.h>	// for fmt::format_parse_context
-#include <fmt/format.h>	// for fmt::formatter
 #include <filesystem>	// for std::filesystem::path
-#include <fstream>	// for std::ifstream
+#include <fmt/core.h>	// for fmt::format_parse_context
+#include <fmt/format.h> // for fmt::formatter
+#include <fstream>		// for std::ifstream
 #include <string_view>	// std::string_view
 
 namespace executable

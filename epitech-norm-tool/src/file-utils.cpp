@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "file-utils.hpp"
-#include <cstdint>	// for std::uintmax_t
 #include <algorithm>	// for std::copy_n
+#include <cstdint>		// for std::uintmax_t
 #include <filesystem>	// for std::filesystem::file_size, std::filesystem::path
-#include <fstream>	// for std::ifstream, std::ostream::operator<<, std::stringstream
-#include <iterator>	// std::back_inserter
-#include <optional>	// for std::optional, std::nullopt
-#include <string>	// for std::string
-#include <system_error>	// for std::error_code
+#include <fstream>		// for std::ifstream, std::ostream::operator<<, std::stringstream
+#include <iterator>		// std::back_inserter
+#include <optional>		// for std::optional, std::nullopt
+#include <string>		// for std::string
+#include <system_error> // for std::error_code
 
 std::optional<std::string> file_utils::attempt_file_to_string(const std::filesystem::path &filename)
 {

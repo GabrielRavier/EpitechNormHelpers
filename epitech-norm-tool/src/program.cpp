@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "program.hpp"
-#include <exception>	// for std::exception
-#include <errno.h>	// for errno
-#include <fmt/core.h>	// for fmt::format
-#include <unistd.h>	// for chdir
-#include <filesystem>	// for std::filesystem::path
-#include <system_error>	// for std::generic_category, std::system_error
-#include "checks/checks.hpp"	// for checks::information
-#include "diagnostic.hpp"	// for diagnostic::error
-#include "managers.hpp"	// for managers::resources_manager
-#include "options.hpp"	// for options_parser::parsed_options
+#include "checks/checks.hpp" // for checks::information
+#include "diagnostic.hpp"	 // for diagnostic::error
+#include "managers.hpp"		 // for managers::resources_manager
+#include "options.hpp"		 // for options_parser::parsed_options
+#include <errno.h>			 // for errno
+#include <exception>		 // for std::exception
+#include <filesystem>		 // for std::filesystem::path
+#include <fmt/core.h>		 // for fmt::format
+#include <system_error>		 // for std::generic_category, std::system_error
+#include <unistd.h>			 // for chdir
 
 static void change_current_directory(const std::filesystem::path &directory)
 {

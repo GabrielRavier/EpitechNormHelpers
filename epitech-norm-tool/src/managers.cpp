@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "managers.hpp"
-#include <cppast/cpp_entity_index.hpp>	// for cppast::cpp_entity_index
-#include <cppast/libclang_parser.hpp>	// for cppast::libclang_parser, cppast::parse_database, etc.
-#include <cppast/parser.hpp>	// for cppast::simple_file_parser
-#include <filesystem>	// for std::filesystem::path
-#include <optional>	// for std::optional
-#include <type_safe/reference.hpp>	// for type_safe::ref
-#include <cppast/detail/intrusive_list.hpp>	// for cppast::detail::iteratable_intrusive_list
-#include "diagnostic.hpp"	// for diagnostic::warn
-#include "libgit2wrapper/global.hpp"	// for git::initializer
-#include "libgit2wrapper/index.hpp"	// for git::index
+#include "diagnostic.hpp"					// for diagnostic::warn
+#include "libgit2wrapper/global.hpp"		// for git::initializer
+#include "libgit2wrapper/index.hpp"			// for git::index
 #include "libgit2wrapper/repository.hpp"	// for git::repository
+#include <cppast/cpp_entity_index.hpp>		// for cppast::cpp_entity_index
+#include <cppast/detail/intrusive_list.hpp> // for cppast::detail::iteratable_intrusive_list
+#include <cppast/libclang_parser.hpp>		// for cppast::libclang_parser, cppast::parse_database, etc.
+#include <cppast/parser.hpp>				// for cppast::simple_file_parser
+#include <filesystem>						// for std::filesystem::path
+#include <optional>							// for std::optional
+#include <type_safe/reference.hpp>			// for type_safe::ref
 
 void managers::cwd_git_manager::request_git_initialization()
 {

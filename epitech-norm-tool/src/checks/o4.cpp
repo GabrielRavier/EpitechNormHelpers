@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "checks/o4.hpp"
-#include <boost/regex.hpp>	// for boost::regex
-#include <string_view>	// for std::string_view
-#include "basename.hpp"	// for basename_wrappers::base_name
-#include "checks/checks.hpp"	// for checks::level_t
-#include "managers.hpp"	// for managers::resources_manager
-#include "regex-utils.hpp"	// for regex_utils::warn_match_in_check, regex_utils::simple_regex_search, etc.
+#include "basename.hpp"		 // for basename_wrappers::base_name
+#include "checks/checks.hpp" // for checks::level_t
+#include "managers.hpp"		 // for managers::resources_manager
+#include "regex-utils.hpp"	 // for regex_utils::warn_match_in_check, regex_utils::simple_regex_search, etc.
+#include <boost/regex.hpp>	 // for boost::regex
+#include <string_view>		 // for std::string_view
 
 static void warn_match(std::string_view matched_string, checks::level_t level)
 {

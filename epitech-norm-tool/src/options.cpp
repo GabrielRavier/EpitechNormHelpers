@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "options.hpp"
-#include <cctype>	// for stds::tolower
-#include <fmt/core.h>	// for fmt::format
-#include <cstdlib>	// for std::exit, EXIT_SUCCESS
-#include <algorithm>	// for std::find_if
-#include <cxxopts.hpp>	// for cxxopts::Options, cxxopts::ParseResult, etc.
-#include <iostream>	// for std::cout
-#include <string>	// for std::string
-#include <unordered_map>	// for std::unordered_map
-#include "checks/checks.hpp"	// for checks::list
+#include "checks/checks.hpp" // for checks::list
+#include <algorithm>		 // for std::find_if
+#include <cctype>			 // for stds::tolower
+#include <cstdlib>			 // for std::exit, EXIT_SUCCESS
+#include <cxxopts.hpp>		 // for cxxopts::Options, cxxopts::ParseResult, etc.
+#include <fmt/core.h>		 // for fmt::format
+#include <iostream>			 // for std::cout
+#include <string>			 // for std::string
+#include <unordered_map>	 // for std::unordered_map
 
 /**
  * @brief From an option list, make a cxxopts::Options

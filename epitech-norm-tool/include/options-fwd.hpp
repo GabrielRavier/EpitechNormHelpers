@@ -1,3 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #pragma once
-namespace options_parser { struct parsed_options; }
+namespace options_parser
+{
+struct parsed_options;
+}

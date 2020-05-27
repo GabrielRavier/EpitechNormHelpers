@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #pragma once
-#include <cppast/cpp_entity_index.hpp>	// for cppast::cpp_entity_index
-#include <cppast/libclang_parser.hpp>	// for cppast::libclang_compilation_database, etc.
-#include <cppast/parser.hpp>	// for cppast::parser.hpp
-#include <filesystem>	// for std::filesystem::path
-#include <optional>	// for std::optional
-#include <cppast/detail/intrusive_list.hpp>	// for cppast::detail::iteratable_intrusive_list
-#include "libgit2wrapper/global.hpp"	// for git::initializer
-#include "libgit2wrapper/index.hpp"	// for git::index
+#include "libgit2wrapper/global.hpp"		// for git::initializer
+#include "libgit2wrapper/index.hpp"			// for git::index
 #include "libgit2wrapper/repository.hpp"	// for git::repository
-namespace cppast { class cpp_file; }	// forward declare cppast::cpp_file in case none of the above actually define it
+#include <cppast/cpp_entity_index.hpp>		// for cppast::cpp_entity_index
+#include <cppast/detail/intrusive_list.hpp> // for cppast::detail::iteratable_intrusive_list
+#include <cppast/libclang_parser.hpp>		// for cppast::libclang_compilation_database, etc.
+#include <cppast/parser.hpp>				// for cppast::parser.hpp
+#include <filesystem>						// for std::filesystem::path
+#include <optional>							// for std::optional
+namespace cppast { class cpp_file; } // forward declare cppast::cpp_file in case none of the above actually define it
 
 namespace managers
 {

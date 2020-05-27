@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-#include <exception>	// for std::exception
-#include <fmt/core.h>	// for fmt::format
-#include <cstdlib>	// for std::exit
-#include <cxxopts.hpp>	// for cxxopts::OptionParseException
-#include "diagnostic.hpp"	// for diagnostic::fatal_error
-#include "options.hpp"	// for options_parser::parse_options
-#include "program.hpp"	// for program
+#include "diagnostic.hpp" // for diagnostic::fatal_error
+#include "options.hpp"	  // for options_parser::parse_options
+#include "program.hpp"	  // for program
+#include <cstdlib>		  // for std::exit
+#include <cxxopts.hpp>	  // for cxxopts::OptionParseException
+#include <exception>	  // for std::exception
+#include <fmt/core.h>	  // for fmt::format
 
 int main(int argc, char *argv[])
 {

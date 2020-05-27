@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "checks/o1.hpp"
-#include <fmt/core.h>	// for fmt::format
-#include <boost/regex.hpp>	// for boost::regex
-#include <unordered_set>	// for std::unordered_set
-#include "basename.hpp"	// for basename_wrappers::base_name
-#include "checks/checks.hpp"	// for checks::level_t
-#include "diagnostic.hpp"	// for diagnostic::warn
-#include "executable-type.hpp"	// for executable::get_type_from_file
-#include "libgit2wrapper/index.hpp"	// for git::index
-#include "libgit2wrapper/repository.hpp"	// for git::repository
-#include "managers.hpp"	// for managers::resources_manager
-#include "regex-utils.hpp"	// for regex_utils::simple_regex_match, regex_utils::warn_match_in_check, etc.
+#include "basename.hpp"					 // for basename_wrappers::base_name
+#include "checks/checks.hpp"			 // for checks::level_t
+#include "diagnostic.hpp"				 // for diagnostic::warn
+#include "executable-type.hpp"			 // for executable::get_type_from_file
+#include "libgit2wrapper/index.hpp"		 // for git::index
+#include "libgit2wrapper/repository.hpp" // for git::repository
+#include "managers.hpp"					 // for managers::resources_manager
+#include "regex-utils.hpp"				 // for regex_utils::simple_regex_match, regex_utils::warn_match_in_check, etc.
+#include <boost/regex.hpp>				 // for boost::regex
+#include <fmt/core.h>					 // for fmt::format
+#include <unordered_set>				 // for std::unordered_set
 
 // Improvement idea for this : Remove regexes and match everything individually to give a better warning message
 

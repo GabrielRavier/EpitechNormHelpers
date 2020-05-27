@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "executable-type.hpp"
-#include <cstddef>	// for std::size_t
-#include <fstream>	// for std::fstream, std::istream::read
-#include <string>	// for std::string
+#include <cstddef> // for std::size_t
+#include <fstream> // for std::fstream, std::istream::read
+#include <string>  // for std::string
 
 static bool is_valid_elf(const unsigned char *buffer, std::size_t length)
 {

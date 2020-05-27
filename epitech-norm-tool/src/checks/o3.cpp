@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "checks/o3.hpp"
-#include <fmt/core.h>	// for fmt::format
-#include <cstddef>	// for std::size_t
-#include <cppast/cpp_entity_kind.hpp>	// for cppast::is_function
-#include <cppast/visitor.hpp>	// for cppast::visitor, cppast::visitor_info
-#include <cppast/cpp_entity.hpp>	// for cppast::cpp_entity
-#include <cppast/cpp_file.hpp>	// for cppast::cpp_file
-#include "checks/checks.hpp"	// for checks::level_t
-#include "diagnostic.hpp"	// for diagnostic::warn
-#include "managers.hpp" // for managers::resource_manager
+#include "checks/checks.hpp"		  // for checks::level_t
+#include "diagnostic.hpp"			  // for diagnostic::warn
+#include "managers.hpp"				  // for managers::resource_manager
+#include <cppast/cpp_entity.hpp>	  // for cppast::cpp_entity
+#include <cppast/cpp_entity_kind.hpp> // for cppast::is_function
+#include <cppast/cpp_file.hpp>		  // for cppast::cpp_file
+#include <cppast/visitor.hpp>		  // for cppast::visitor, cppast::visitor_info
+#include <cstddef>					  // for std::size_t
+#include <fmt/core.h>				  // for fmt::format
 
 // Level 1 checks for files containing more than 5 functions
 static void do_level1_one_file(const cppast::cpp_file &parsed_file)

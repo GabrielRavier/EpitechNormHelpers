@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "regex-utils.hpp"
-#include <fmt/core.h>	// for fmt::format
-#include <boost/regex/v4/regex.hpp>	// for boost::regex
-#include <string_view>	// for std::string_view
-#include "diagnostic.hpp"	// for diagnostic::warn
+#include "diagnostic.hpp"			// for diagnostic::warn
+#include <boost/regex/v4/regex.hpp> // for boost::regex
+#include <fmt/core.h>				// for fmt::format
+#include <string_view>				// for std::string_view
 
 std::string regex_utils::escape_string_for_insertion_in_regex(std::string_view string)
 {
