@@ -1,18 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-#include "diagnostic.hpp"
-#include "options.hpp"
-#include "program.hpp"
-#include <cxxopts.hpp>
-#include <exception>
-#include <fmt/format.h>
-#include <iostream>
+#include <exception>	// for std::exception
+#include <fmt/core.h>	// for fmt::format
+#include <cstdlib>	// for std::exit
+#include <cxxopts.hpp>	// for cxxopts::OptionParseException
+#include "diagnostic.hpp"	// for diagnostic::fatal_error
+#include "options.hpp"	// for options_parser::parse_options
+#include "program.hpp"	// for program
 
 int main(int argc, char *argv[])
 {
 	try
 	{
 		program(options_parser::parse_options(argc, argv));
-		return EXIT_SUCCESS;
+		std::exit(EXIT_SUCCESS);
 	}
 	catch (const cxxopts::OptionParseException &option_parse_exception)
 	{
