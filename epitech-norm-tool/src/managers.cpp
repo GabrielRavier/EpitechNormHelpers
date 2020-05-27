@@ -6,6 +6,7 @@
 #include <filesystem>	// for std::filesystem::path
 #include <optional>	// for std::optional
 #include <type_safe/reference.hpp>	// for type_safe::ref
+#include <cppast/detail/intrusive_list.hpp>	// for cppast::detail::iteratable_intrusive_list
 #include "diagnostic.hpp"	// for diagnostic::warn
 #include "libgit2wrapper/global.hpp"	// for git::initializer
 #include "libgit2wrapper/index.hpp"	// for git::index
