@@ -1,19 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "checks/o1.hpp"
-#include "basename.hpp"
-#include "checks/checks.hpp"
-#include "diagnostic.hpp"
-#include "executable-type.hpp"
-#include "libgit2wrapper/global.hpp"
-#include "libgit2wrapper/index.hpp"
-#include "libgit2wrapper/repository.hpp"
-#include "managers.hpp"
-#include "regex-utils.hpp"
-#include <boost/regex.hpp>
-#include <fmt/format.h>
-#include <string>
-#include <unordered_set>
-#include <vector>
+#include <fmt/core.h>	// for fmt::format
+#include <boost/regex.hpp>	// for boost::regex
+#include <unordered_set>	// for std::unordered_set
+#include "basename.hpp"	// for basename_wrappers::base_name
+#include "checks/checks.hpp"	// for checks::level_t
+#include "diagnostic.hpp"	// for diagnostic::warn
+#include "executable-type.hpp"	// for executable::get_type_from_file
+#include "libgit2wrapper/index.hpp"	// for git::index
+#include "libgit2wrapper/repository.hpp"	// for git::repository
+#include "managers.hpp"	// for managers::resources_manager
+#include "regex-utils.hpp"	// for regex_utils::simple_regex_match, regex_utils::warn_match_in_check, etc.
 
 // Improvement idea for this : Remove regexes and match everything individually to give a better warning message
 
@@ -34,7 +31,7 @@ static void do_level1(const git::index::file_list &filenames)
 }
 
 // Level 2 also tries to find valid ELF/PE/Dalvik executables and [repo-name].* files (where '[repo-name]' is the base name of the root directory of the git repository) and warn about them
-static void do_level2(const git::index::file_list &filenames, const std::string &git_root_repository_name)
+static void do_level2(const git::index::file_list &filenames, std::string_view git_root_repository_name)
 {
 	for (std::string_view filename : filenames)
 	{
@@ -78,7 +75,7 @@ void checks::o1::do_check(checks::level_t level, managers::resources_manager &ch
 
 	if (level >= 2)
 	{
-		std::string working_directory_basename = basename_wrappers::base_name(check_resource_manager.cwd_git.request_repo().workdir());
+		auto working_directory_basename = basename_wrappers::base_name(check_resource_manager.cwd_git.request_repo().workdir());
 		do_level2(filenames, working_directory_basename);
 	}
 
