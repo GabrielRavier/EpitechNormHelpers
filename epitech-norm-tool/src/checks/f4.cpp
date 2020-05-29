@@ -13,13 +13,13 @@
 // Level 1 checks for functions containing more than 20 statements
 static void do_level1_one_file(const cppast::cpp_file &parsed_file)
 {
-	cppast::visit(parsed_file,
-	[](const cppast::cpp_entity& entity) {
-		return cppast::is_function(entity.kind());
-	},
-	[](const cppast::cpp_entity& entity, const cppast::visitor_info& information) {
-	}
-	);
+	cppast::visit(
+		parsed_file,
+		[](const cppast::cpp_entity &entity) {
+			return cppast::is_function(entity.kind());
+		},
+		[](const cppast::cpp_entity &entity, const cppast::visitor_info &information) {
+		});
 }
 
 void checks::f4::do_check(checks::level_t, managers::resources_manager &check_resource_manager)
