@@ -8,6 +8,7 @@
 #include "checks/f1.hpp"
 #include "checks/f2.hpp"
 #include "checks/f3.hpp"
+#include "checks/f4.hpp"
 #include "checks/g1.hpp"
 #include "checks/g2.hpp"
 #include "checks/g3.hpp"
@@ -103,6 +104,7 @@ static auto get_unfinished_global_check_list()
 							  {
 								  .name = "Number of lines",
 								  .maximum_level = 1,
+								  .implementation = checks::f4::do_check,
 							  },
 							  {
 								  .name = "Arguments",

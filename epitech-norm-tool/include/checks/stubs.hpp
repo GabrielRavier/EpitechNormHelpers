@@ -5,10 +5,7 @@
 #include <fmt/core.h>	  // for fmt::format
 #include <string_view>	  // for std::string_view
 
-namespace checks
-{
-
-namespace stubs
+namespace checks::stubs
 {
 
 inline void done_in_clang_format(std::string_view check_name)
@@ -31,6 +28,4 @@ inline void unimplementable(std::string_view check_name)
 	diagnostic::error(fmt::format("{} unimplemented and unimplementable", check_name));
 }
 
-} // namespace stubs
-
-} // namespace checks
+} // namespace checks::stubs
