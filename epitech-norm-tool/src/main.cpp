@@ -7,7 +7,7 @@
 #include <exception>	  // for std::exception
 #include <fmt/core.h>	  // for fmt::format
 
-int main(int argc, char *argv[])
+[[noreturn]] int main(int argc, char *argv[])
 {
 	try
 	{
@@ -26,6 +26,4 @@ int main(int argc, char *argv[])
 	{
 		diagnostic::fatal_error("exception thrown: Something not inherited from std::exception");
 	}
-
-	// Unreachable
 }
