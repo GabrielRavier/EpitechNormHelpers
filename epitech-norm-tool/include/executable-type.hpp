@@ -9,11 +9,11 @@
 namespace executable
 {
 
-enum class type
+enum class type : char
 {
-	none,
+	not_an_executable_or_unknown,
 	elf,
-	mz,
+	mz_and_or_pe,	// It may be either a DOS or a Windows executable (or both)
 	dalvik,
 };
 
@@ -32,23 +32,24 @@ struct fmt::formatter<executable::type> : fmt::formatter<std::string_view>
 
 	template <typename FormatContext> auto format(const executable::type &executable_type, FormatContext &context)
 	{
+		using namespace std::string_view_literals;
 		std::string_view name;
 		switch (executable_type)
 		{
-		case executable::type::none:
-			name = "None";
+		case executable::type::not_an_executable_or_unknown:
+			name = "None"sv;
 			break;
 
 		case executable::type::elf:
-			name = "ELF";
+			name = "ELF"sv;
 			break;
 
-		case executable::type::mz:
-			name = "MZ and/or PE";
+		case executable::type::mz_and_or_pe:
+			name = "MZ and/or PE"sv;
 			break;
 
 		case executable::type::dalvik:
-			name = "Dalvik";
+			name = "Dalvik"sv;
 			break;
 		}
 

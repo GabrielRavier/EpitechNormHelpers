@@ -39,18 +39,18 @@ executable::type executable::get_type_from_stream(std::ifstream &file_stream)
 		return executable::type::elf;
 
 	if (is_valid_mz(unsigned_char_buffer, read_length))
-		return executable::type::mz;
+		return executable::type::mz_and_or_pe;
 
 	if (is_valid_dalvik(unsigned_char_buffer, read_length))
 		return executable::type::dalvik;
 
-	return executable::type::none;
+	return executable::type::not_an_executable_or_unknown;
 }
 
 executable::type executable::get_type_from_file(std::filesystem::path filename)
 {
 	if (std::filesystem::is_directory(filename))
-		return executable::type::none;
+		return executable::type::not_an_executable_or_unknown;
 
 	std::ifstream file_stream;
 	file_stream.exceptions(std::ifstream::badbit);

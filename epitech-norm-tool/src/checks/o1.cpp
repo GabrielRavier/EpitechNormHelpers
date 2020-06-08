@@ -40,7 +40,7 @@ static void do_level2(const git::index::file_list &filenames, std::string_view g
 			warn_match(filename, 2);
 
 		executable::type executable_type = executable::get_type_from_file(filename);
-		if (executable_type != executable::type::none)
+		if (executable_type != executable::type::not_an_executable_or_unknown)
 			diagnostic::warn(fmt::format("o1: '{}' matched level 2 executable check, being a valid {} executable", filename, executable_type));
 	}
 }
