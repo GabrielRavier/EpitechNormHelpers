@@ -9,7 +9,7 @@
 namespace executable
 {
 
-enum class type : char
+enum class type : unsigned char
 {
 	not_an_executable_or_unknown,
 	elf,
