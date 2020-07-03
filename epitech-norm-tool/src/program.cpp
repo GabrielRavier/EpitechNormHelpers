@@ -8,19 +8,10 @@
 #include <exception>		 // for std::exception
 #include <filesystem>		 // for std::filesystem::path
 #include <fmt/core.h>		 // for fmt::format
-#include <system_error>		 // for std::generic_category, std::system_error
-#include <unistd.h>			 // for chdir
-
-static void change_current_directory(const std::filesystem::path &directory)
-{
-	int result = chdir(directory.c_str());
-	if (result != 0)
-		throw std::system_error(errno, std::generic_category(), fmt::format("invalid directory '{}' given", directory.string()));
-}
 
 void program(const options_parser::parsed_options &options)
 {
-	change_current_directory(options.directory);
+	std::filesystem::current_path(options.directory);
 
 	managers::resources_manager check_resource_manager{.cppast = {options.compile_commands_directory}};
 
