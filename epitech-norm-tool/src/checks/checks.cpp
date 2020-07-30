@@ -21,6 +21,7 @@
 
 static auto get_unfinished_global_check_list()
 {
+	using namespace checks;
 	static const checks::list check_list =
 		{
 			.categories =
@@ -30,22 +31,22 @@ static auto get_unfinished_global_check_list()
 							  {
 								  .name = "Contents of the delivery folder",
 								  .maximum_level = 3,
-								  .implementation = checks::o1::do_check,
+								  .implementation = o1::do_check,
 							  },
 							  {
 								  .name = "File extensions",
 								  .maximum_level = 5,
-								  .implementation = checks::o2::do_check,
+								  .implementation = o2::do_check,
 							  },
 							  {
 								  .name = "File coherence",
 								  .maximum_level = 1,
-								  .implementation = checks::o3::do_check,
+								  .implementation = o3::do_check,
 							  },
 							  {
 								  .name = "Naming files and folders",
 								  .maximum_level = 2,
-								  .implementation = checks::o4::do_check,
+								  .implementation = o4::do_check,
 							  },
 						  },
 					  .name = "Files organization",
@@ -57,27 +58,27 @@ static auto get_unfinished_global_check_list()
 							  {
 								  .name = "File header",
 								  .maximum_level = 1,
-								  .implementation = checks::g1::do_check,
+								  .implementation = g1::do_check,
 							  },
 							  {
 								  .name = "Seperation of functions",
 								  .maximum_level = 1,
-								  .implementation = checks::g2::do_check,
+								  .implementation = g2::do_check,
 							  },
 							  {
 								  .name = "Indentation of pre-processor directives",
 								  .maximum_level = 1,
-								  .implementation = checks::g3::do_check,
+								  .implementation = g3::do_check,
 							  },
 							  {
 								  .name = "Global variables",
 								  .maximum_level = 1,
-								  .implementation = checks::g4::do_check,
+								  .implementation = g4::do_check,
 							  },
 							  {
 								  .name = "Static",
 								  .maximum_level = 1,
-								  .implementation = checks::g5::do_check,
+								  .implementation = g5::do_check,
 							  },
 						  },
 					  .name = "Global scope",
@@ -89,22 +90,22 @@ static auto get_unfinished_global_check_list()
 							  {
 								  .name = "Coherence of functions",
 								  .maximum_level = 1,
-								  .implementation = checks::f1::do_check,
+								  .implementation = f1::do_check,
 							  },
 							  {
 								  .name = "Naming functions",
 								  .maximum_level = 1,
-								  .implementation = checks::f2::do_check,
+								  .implementation = f2::do_check,
 							  },
 							  {
 								  .name = "Number of columns",
 								  .maximum_level = 1,
-								  .implementation = checks::f3::do_check,
+								  .implementation = f3::do_check,
 							  },
 							  {
 								  .name = "Number of lines",
 								  .maximum_level = 1,
-								  .implementation = checks::f4::do_check,
+								  .implementation = f4::do_check,
 							  },
 							  {
 								  .name = "Arguments",
