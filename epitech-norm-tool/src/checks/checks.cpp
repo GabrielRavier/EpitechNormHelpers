@@ -9,6 +9,7 @@
 #include "checks/f2.hpp"
 #include "checks/f3.hpp"
 #include "checks/f4.hpp"
+#include "checks/f5.hpp"
 #include "checks/g1.hpp"
 #include "checks/g2.hpp"
 #include "checks/g3.hpp"
@@ -110,6 +111,7 @@ static auto get_unfinished_global_check_list()
 							  {
 								  .name = "Arguments",
 								  .maximum_level = 1,
+								  .implementation = f5::do_check,
 							  },
 							  {
 								  .name = "Comments inside a function",

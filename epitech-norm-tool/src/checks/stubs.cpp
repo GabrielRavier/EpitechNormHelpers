@@ -23,7 +23,7 @@ void checks::stubs::done_in_clang_tidy(std::string_view check_name)
 
 void checks::stubs::done_in_compiler(std::string_view check_name)
 {
-	diagnostic::error(fmt::format("{}: " STR_NOT_IMPLEMENTED_PLS_LOOK_AT " look at " STR_GNU_COMPILER_LOOK_AT STR_FOR_NOTES_HOW_DO_THIS_CHECK_WITH " " STR_GNU_COMPILER_WITH, check_name));
+	diagnostic::error(fmt::format("{}: " STR_NOT_IMPLEMENTED_PLS_LOOK_AT " look at " STR_GNU_COMPILER_LOOK_AT " " STR_FOR_NOTES_HOW_DO_THIS_CHECK_WITH " " STR_GNU_COMPILER_WITH, check_name));
 }
 
 void checks::stubs::done_in_compiler_and_clang_tidy(std::string_view check_name)
