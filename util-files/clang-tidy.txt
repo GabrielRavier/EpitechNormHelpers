@@ -6,4 +6,4 @@ g5:
 - cppcoreguidelines-avoid-non-const-global-variables
 
 command line to enable all these checks:
---checks=cppcoreguidelines-avoid-magic-numbers,cppcoreguidelines-avoid-non-const-global-variables,cppcoreguidelines-avoid-non-const-global-variables
+--checks=cppcoreguidelines-avoid-magic-numbers,cppcoreguidelines-avoid-non-const-global-variables
