@@ -2,8 +2,12 @@ g5:
 - -Wmissing-declarations
 - -Wmissing-variable-declarations (clang-specific)
 
+f5:
+- -Wstrict-prototypes (doesn't work on clang)
+- -Wmissing-prototypes (clang-specific, doesn't do *exactly* what -Wstrict-prototypes does but it's close enough)
+
 command line for all (GCC):
-- -Wmissing-declarations
+- -Wmissing-declarations -Wstrict-prototypes
 
 command line for all (Clang):
-- -Wmissing-declarations -Wmissing-variable-declarations
+- -Wmissing-declarations -Wmissing-variable-declarations -Wmissing-prototypes
