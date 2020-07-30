@@ -41,7 +41,7 @@ class cppast_manager
 
 public:
 	cppast_manager(const std::filesystem::path &compile_options_directory_parameter);
-	cppast::detail::iteratable_intrusive_list<cppast::cpp_file> request_parsed_files_list();
+	decltype(parsed_files->files()) request_parsed_files_list();
 };
 
 struct resources_manager

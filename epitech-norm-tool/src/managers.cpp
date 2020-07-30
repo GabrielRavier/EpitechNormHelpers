@@ -67,7 +67,7 @@ const cppast::libclang_compilation_database &managers::cppast_manager::request_c
 	return *this->compilation_database;
 }
 
-cppast::detail::iteratable_intrusive_list<cppast::cpp_file> managers::cppast_manager::request_parsed_files_list()
+decltype(managers::cppast_manager{""}.parsed_files->files()) managers::cppast_manager::request_parsed_files_list()
 {
 	if (!this->parsed_files.has_value())
 	{

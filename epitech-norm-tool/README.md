@@ -5,7 +5,6 @@ The Epitech Norm Tool is a tool that assists in obeying the coding norms of the 
 ## Dependencies
 
 * A C++17 compiler
-* POSIX
 * fmt
 * cxxopts
 * Boost.Regex
