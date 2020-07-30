@@ -26,6 +26,5 @@ static void do_level1_one_file(const cppast::cpp_file &parsed_file)
 void checks::o3::do_check(checks::level_t, managers::resources_manager &check_resource_manager)
 {
 	auto parsed_files_list = check_resource_manager.cppast.request_parsed_files_list();
-	for (const auto &parsed_file : parsed_files_list)
-		do_level1_one_file(parsed_file);
+	std::for_each(parsed_files_list.begin(), parsed_files_list.end(), do_level1_one_file);
 }
