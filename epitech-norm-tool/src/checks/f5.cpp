@@ -4,5 +4,5 @@
 
 void checks::f5::do_check(checks::level_t, managers::resources_manager &)
 {
-	checks::stubs::done_in_compiler("f5");
+	checks::stubs::done_in_compiler("f5 (declaration part only, struct parameter type checking isn't implemented in any compiler)");
 }

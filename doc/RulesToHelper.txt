@@ -17,7 +17,7 @@ F2: Naming functions: For the verb part, could do such a check but it would prob
 F3: Number of columns: Easy to check, be sure to use the size of tabs that Epitech specifies (probably ask). clang-format should help
 F4: Number of lines: Add strident check for >20 lines functions
 F5: Arguments: For no parameters void check : gcc: -Wstrict-prototypes. For struct check, need something custom
-F6: Comments inside a function: Should be easy enough to check manually
+F6: Comments inside a function: Should be easy enough to check manually with a greppy check (i.e. check for `[ \t]/[/*]`)
 F7: Nested function: Should be easy enough to find, just compile with clang. Otherwise, use -Wpedantic
 
 L- Layout inside a function scope

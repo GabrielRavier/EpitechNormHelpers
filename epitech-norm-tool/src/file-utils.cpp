@@ -12,7 +12,7 @@
 std::optional<std::string> file_utils::attempt_file_to_string(const std::filesystem::path &filename)
 {
 	std::ifstream file;
-	file.open(std::string{filename});
+	file.open(filename);
 
 	std::stringstream as_stream;
 	as_stream << file.rdbuf();

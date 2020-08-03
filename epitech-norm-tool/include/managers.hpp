@@ -9,6 +9,8 @@
 #include <cppast/parser.hpp>				// for cppast::parser.hpp
 #include <filesystem>						// for std::filesystem::path
 #include <optional>							// for std::optional
+#include <vector>							// for std::vector
+#include <string>							// for std::string
 namespace cppast { class cpp_file; } // forward declare cppast::cpp_file in case none of the above actually define it
 
 namespace managers
@@ -20,6 +22,7 @@ class cwd_git_manager
 	std::optional<git::repository> repository; // Destroyed before initializer
 	std::optional<git::index> index;		   // Destroyed before repository and initializer
 	std::optional<git::index::file_list> file_list;
+	std::optional<git::index::file_list> source_file_list;
 
 	void request_git_initialization();
 
@@ -27,6 +30,7 @@ public:
 	const git::repository &request_repo();
 	const git::index &request_index();
 	const git::index::file_list &request_file_list();
+	const git::index::file_list &request_c_cpp_source_file_list();
 };
 
 class cppast_manager

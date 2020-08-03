@@ -82,16 +82,7 @@ static void do_level6(const git::index::file_list &filenames)
 // All the checks are only operated over .c, .cpp, .h and .hpp files
 void checks::g1::do_check(checks::level_t level, managers::resources_manager &check_resource_manager)
 {
-	auto filenames = check_resource_manager.cwd_git.request_file_list();
-
-	// Remove all files that aren't *.c, *.cpp, *.h or *.hpp files
-	std::remove_if(filenames.begin(), filenames.end(), [](const auto &filename) {
-		static const boost::regex basename_regex{R"delimiter(.*\.(?:[ch](?:pp)?))delimiter"};
-		const auto basename = basename_wrappers::base_name(filename);
-
-		boost::smatch match;
-		return !bool{boost::regex_match(basename, match, basename_regex)};
-	});
+	const auto &filenames = check_resource_manager.cwd_git.request_c_cpp_source_file_list();
 
 	if (level == 1)
 		do_level1(filenames);

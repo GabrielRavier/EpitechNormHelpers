@@ -57,7 +57,7 @@ static void do_level3(const git::index::file_list &filenames)
 
 		static const boost::regex directory_regex{R"delimiter(.*dSYM\/|(?:.*\/|^)\.tmp_versions\/)delimiter"}; // Made specifically to match the entire path up to the '/' after the directory name
 		boost::match_results<std::string_view::const_iterator> sv_match;
-		if (boost::regex_search(filename.begin(), filename.end(), sv_match, directory_regex))
+		if (boost::regex_search(filename.cbegin(), filename.cend(), sv_match, directory_regex))
 			matched_directories.insert(sv_match[0].str());
 	}
 

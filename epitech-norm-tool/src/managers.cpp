@@ -11,6 +11,8 @@
 #include <filesystem>						// for std::filesystem::path
 #include <optional>							// for std::optional
 #include <type_safe/reference.hpp>			// for type_safe::ref
+#include <boost/regex.hpp>					// for boost::regex
+#include <basename.hpp>						// for basename_wrappers::base_name
 
 void managers::cwd_git_manager::request_git_initialization()
 {
@@ -42,6 +44,27 @@ const git::index::file_list &managers::cwd_git_manager::request_file_list()
 {
 	if (!this->file_list.has_value())
 		this->file_list.emplace(this->request_index().list_files());
+
+	return *this->file_list;
+}
+
+const git::index::file_list &managers::cwd_git_manager::request_c_cpp_source_file_list()
+{
+	if (!this->file_list.has_value())
+	{
+		auto filenames = this->request_file_list();
+
+		// Remove all files that aren't *.c, *.cpp, *.h or *.hpp files
+		std::remove_if(filenames.begin(), filenames.end(), [](const auto &filename) {
+			static const boost::regex basename_regex{R"delimiter(.*\.(?:[ch](?:pp)?))delimiter"};
+			const auto basename = basename_wrappers::base_name(filename);
+
+			boost::smatch match;
+			return !bool{boost::regex_match(basename, match, basename_regex)};
+		});
+
+		this->file_list.emplace(std::move(filenames));
+	}
 
 	return *this->file_list;
 }
