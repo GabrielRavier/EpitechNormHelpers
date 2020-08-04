@@ -11,6 +11,7 @@
 #include "checks/f4.hpp"
 #include "checks/f5.hpp"
 #include "checks/f6.hpp"
+#include "checks/f7.hpp"
 #include "checks/g1.hpp"
 #include "checks/g2.hpp"
 #include "checks/g3.hpp"
@@ -122,6 +123,7 @@ static auto get_unfinished_global_check_list()
 							  {
 								  .name = "Nested function",
 								  .maximum_level = 1,
+								  .implementation = f7::do_check,
 							  },
 						  },
 					  .name = "Functions",

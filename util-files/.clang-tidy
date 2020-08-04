@@ -1,6 +1,7 @@
 # cppcoreguidelines-avoid-magic-numbers and cppcoreguidelines-avoid-non-const-global-variables are for g4
 # cppcoreguidelines-avoid-non-const-global-variables is for g5
 # readability-function-size and readability-function-size.LineThreshold are for f4
+# There is no explicit check for f7, clang-tidy will just fail to compile files containing nested functions
 Checks:          'cppcoreguidelines-avoid-magic-numbers,cppcoreguidelines-avoid-non-const-global-variables,readability-function-size'
 CheckOptions:
   - key:             readability-function-size.LineThreshold

@@ -21,7 +21,7 @@ F6: Comments inside a function: Should be easy enough to check manually with a g
 F7: Nested function: Should be easy enough to find, just compile with clang. Otherwise, use -Wpedantic
 
 L- Layout inside a function scope
-L1: Code line content: Some manual checks, clang-format should help
+L1: Code line content: Some manual checks, clang-format and clang-tidy should help
 L2: Indentation: clang-format
 L3: Spaces: Should be doable with clang-format
 L4: Curly brackets: Should be doable with clang-format
