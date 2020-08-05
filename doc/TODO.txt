@@ -1,5 +1,5 @@
 O1-O4: done
-G!: done
+G1: done
 G2: done in clang-format
 G3: done in clang-format
 G4: done in clang-tidy
@@ -10,11 +10,14 @@ F3: done in clang-format
 F4: done in clang-tidy
 F5: first part done in GNU compilers, second part unimplemented anywhere
 F6: "done" though it sucks
-F7: not done
-L1-L6: not done
+F7: done in GNU compilers and clang-tidy
+L1: Currently have some regexes for first and second line ( (?:[+\-*\/%&|\^]|<<|>>)?= .* (?:[+\-*\/%&|\^]|<<|>>)?= |;.*;), regex might be possible for third line, 4th line should be done by clang-format, idk about 5th line
+L2-L6: not done
 V1-V3: not done
 C1-C3: not done
 A1-A2: not done
 H1-H3: not done
 
 Make it so that stuff depending on Git can still work even when `--directory` is not set to the root of the git repository
+Use forward declares for string/vector if I can find out how to handle that with libstdc++/libc++
+Move git::index::file_list to file_utils
