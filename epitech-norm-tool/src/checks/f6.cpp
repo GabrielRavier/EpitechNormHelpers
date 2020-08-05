@@ -33,6 +33,8 @@ static void do_level2(const git::index::file_list &filenames)
 
 void checks::f6::do_check(checks::level_t level, managers::resources_manager &check_resource_manager)
 {
+	diagnostic::warn("f6: This check is very crude and may not work properly, especially if you have any kind of indentation outside of a function");
+
 	const auto &filenames = check_resource_manager.cwd_git.request_c_cpp_source_file_list();
 
 	if (level == 1)

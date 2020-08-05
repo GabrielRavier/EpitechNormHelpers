@@ -34,8 +34,6 @@ void regex_utils::warn_match_in_check(std::string_view check_name, std::string_v
 
 void regex_utils::match_all_occurences_of_regex_in_files(const git::index::file_list &filenames, std::string_view description_of_what_you_re_looking_for, const boost::regex& regex, int level)
 {
-	diagnostic::warn("f6: This check is very crude and may not work properly, especially if you have any kind of indentation outside of a function");
-
 	for (std::string_view filename : filenames)
 	{
 		const auto file_contents = file_utils::attempt_file_to_string(filename);

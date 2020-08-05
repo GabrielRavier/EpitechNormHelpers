@@ -18,6 +18,6 @@ C1-C3: not done
 A1-A2: not done
 H1-H3: not done
 
-Make it so that stuff depending on Git can still work even when `--directory` is not set to the root of the git repository
+Make it so that stuff depending on Git can still work even when `--directory` is not set to the root of the git repository, probably just change the file list method
 Use forward declares for string/vector if I can find out how to handle that with libstdc++/libc++
 Move git::index::file_list to file_utils
