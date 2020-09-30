@@ -17,7 +17,7 @@ static void do_level1(const git::index::file_list &filenames)
 	// This regex is pretty shit because it will even match something like `// //` because the second `//` is not at the beginning of the string and has a space before it
 	static const boost::regex comment_regex{R"delimiter([ \t]\/[*\/])delimiter"};
 
-	regex_utils::match_all_occurences_of_regex_in_files(filenames, "comment", comment_regex, 1);
+	regex_utils::match_all_occurences_of_regex_in_files(filenames, "comment", 1, comment_regex);
 }
 
 // Level 2 checks for any line in the file that has a comment that does not start on the first character
@@ -28,7 +28,7 @@ static void do_level2(const git::index::file_list &filenames)
 	// This regex is pretty shit because it will even match something like `///` because the two lasts characters are `//` and are not at the beginning of the line
 	static const boost::regex comment_regex{R"delimiter((?<!^)\/[*\/])delimiter"};
 
-	regex_utils::match_all_occurences_of_regex_in_files(filenames, "comment", comment_regex, 2);
+	regex_utils::match_all_occurences_of_regex_in_files(filenames, "comment", 2, comment_regex);
 }
 
 void checks::f6::do_check(checks::level_t level, managers::resources_manager &check_resource_manager)

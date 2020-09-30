@@ -17,6 +17,7 @@
 #include "checks/g3.hpp"
 #include "checks/g4.hpp"
 #include "checks/g5.hpp"
+#include "checks/l1.hpp"
 #include "checks/o1.hpp"
 #include "checks/o2.hpp"
 #include "checks/o3.hpp"
@@ -135,6 +136,7 @@ static auto get_unfinished_global_check_list()
 							  {
 								  .name = "Code line content",
 								  .maximum_level = 1,
+								  .implementation = l1::do_check,
 							  },
 							  {
 								  .name = "Indentation",

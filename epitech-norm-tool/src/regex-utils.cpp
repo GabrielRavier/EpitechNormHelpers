@@ -32,7 +32,7 @@ void regex_utils::warn_match_in_check(std::string_view check_name, std::string_v
 	diagnostic::warn(fmt::format("{}: '{}' matched level {}", check_name, matched_string, level));
 }
 
-void regex_utils::match_all_occurences_of_regex_in_files(const git::index::file_list &filenames, std::string_view description_of_what_you_re_looking_for, const boost::regex& regex, int level)
+void regex_utils::match_all_occurences_of_regex_in_files(const git::index::file_list &filenames, std::string_view description_of_what_you_re_looking_for, int level, const boost::regex& regex, boost::regex_constants::match_flags regex_flags)
 {
 	for (std::string_view filename : filenames)
 	{
@@ -46,7 +46,7 @@ void regex_utils::match_all_occurences_of_regex_in_files(const git::index::file_
 
 		// Get all matches in the file and diagnose them (idk if I can even do that tbh)
 		boost::match_results<decltype(file_contents_sv)::const_iterator> match;
-		while (boost::regex_search(file_contents_sv.cbegin(), file_contents_sv.cend(), match, regex))
+		while (boost::regex_search(file_contents_sv.cbegin(), file_contents_sv.cend(), match, regex, regex_flags))
 		{
 			// Thanks C++17 for forcing me to do this... At least C++20 lets you just pass it two iterators and have it work
 			auto matched_string = std::string_view{match[0].first, static_cast<size_t>(std::distance(match[0].first, match[0].second))};

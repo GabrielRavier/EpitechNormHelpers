@@ -57,6 +57,8 @@ add_executable(epitech-norm-tool
     "include/checks/f6.hpp"
     "src/checks/f7.cpp"
     "include/checks/f7.hpp"
+    "src/checks/l1.cpp"
+    "include/checks/l1.hpp"
     "include/checks/stubs.hpp"
     "src/checks/stubs.cpp"
     "include/checks/checks.hpp"
