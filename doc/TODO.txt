@@ -12,9 +12,7 @@ F5: first part done in GNU compilers, second part unimplemented anywhere
 F6: "done" though it sucks
 F7: done in GNU compilers and clang-tidy
 L1: Currently have some regexes for first and second line (( (?:[+\-*\/%&|\^]|<<|>>)?= |while|if|switch).* (?:[+\-*\/%&|\^]|<<|>>)?= |;.*;), regex might be possible for third line, 4th line should be done by clang-format, idk about 5th line
-L2: done in clang-format, TODO
-L3: not done
-L4: done in clang-format, TODO
+L2-L4: done in clang-format, TODO stub
 L5-L6: not done
 V1-V3: not done
 C1-C3: not done
