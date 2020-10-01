@@ -6,3 +6,5 @@ Checks:          'cppcoreguidelines-avoid-magic-numbers,cppcoreguidelines-avoid-
 CheckOptions:
   - key:             readability-function-size.LineThreshold
     value:           '20'
+    key:             readability-function-size.NestingThreshold
+    value:           '3'
