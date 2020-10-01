@@ -8,8 +8,11 @@ f5:
 f7:
 - -Wpedantic (GCC only, Clang doesn't allow nested functions at all)
 
+l5:
+- -Wdeclaration-after-statement (GCC only, Clang accepts it but doesn't do anything)
+
 command line for all (GCC):
-- -Wmissing-declarations -Wstrict-prototypes -Wpedantic
+- -Wmissing-declarations -Wstrict-prototypes -Wpedantic -Wdeclaration-after-statement
 
 command line for all (Clang):
 - -Wmissing-declarations -Wmissing-variable-declarations -Wstrict-prototypes
