@@ -23,7 +23,7 @@ static void do_level1(const git::index::file_list &filenames)
 
 void checks::l1::do_check(checks::level_t level, managers::resources_manager &check_resource_manager)
 {
-	diagnostic::warn("This check is somewhat crude (and incomplete within the tool itself, you should use clang-format and clang-tidy to complete it) and may not work properly if your source files aren't properly formatted or if you have very long statements (that take multiple lines).");
+	diagnostic::warn("l1: This check is somewhat crude (and incomplete within the tool itself, you should use clang-format and clang-tidy to complete it) and may not work properly if your source files aren't properly formatted or if you have very long statements (that take multiple lines).");
 	const auto &filenames = check_resource_manager.cwd_git.request_c_cpp_source_file_list();
 
 	if (level >= 1)
