@@ -14,7 +14,7 @@ F7: done in GNU compilers and clang-tidy
 L1: currently have some regexes for first and second line (( (?:[+\-*\/%&|\^]|<<|>>)?= |while|if|switch).* (?:[+\-*\/%&|\^]|<<|>>)?= |;.*;), regex might be possible for third line, 4th line should be done by clang-format, idk about 5th line
 L2-L4: done in clang-format, TODO stub
 L5: done in gcc, TODO stub
-L5-L6: TODO
+L6: TODO
 V1-V3: TODO
 C1-C3: TODO
 A1-A2: TODO
