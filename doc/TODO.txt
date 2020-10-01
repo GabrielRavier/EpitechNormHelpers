@@ -13,12 +13,12 @@ F6: "done" though it sucks
 F7: done in GNU compilers and clang-tidy
 L1: currently have some regexes for first and second line (( (?:[+\-*\/%&|\^]|<<|>>)?= |while|if|switch).* (?:[+\-*\/%&|\^]|<<|>>)?= |;.*;), regex might be possible for third line, 4th line should be done by clang-format, idk about 5th line
 L2-L4: done in clang-format, TODO stub
-L5: done in gcc
-L5-L6: not done
-V1-V3: not done
-C1-C3: not done
-A1-A2: not done
-H1-H3: not done
+L5: done in gcc, TODO stub
+L5-L6: TODO
+V1-V3: TODO
+C1-C3: TODO
+A1-A2: TODO
+H1-H3: TODO
 
 Make it so that stuff depending on Git can still work even when `--directory` is not set to the root of the git repository, probably just change the file list method
 Use forward declares for string/vector if I can find out how to handle that with libstdc++/libc++
