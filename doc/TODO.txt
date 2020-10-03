@@ -18,7 +18,8 @@ L6: TODO something in the tool idk
 V1: F2 partially does this, TODO make a modified version that checks all identifiers and not just functions, along with checking typedefs for _t and macros/global constants/enums for UPPER_SNAKE_CASE
 V2: unimplementable, TODO stub
 V3: done in clang-format, TODO stub
-C1-C3: TODO
+C1: done in clang-tidy (not perfectly but it mostly works), TODO stub
+C2-C3: TODO
 A1-A2: TODO
 H1-H3: TODO
 
