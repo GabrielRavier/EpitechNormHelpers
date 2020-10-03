@@ -8,5 +8,5 @@ EpitechNormHelpers.*
 # Build folder
 build/
 
-# compile_commands.json filess
+# compile_commands.json files
 compile_commands.json
