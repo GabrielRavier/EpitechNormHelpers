@@ -3,7 +3,9 @@
 # readability-function-size and readability-function-size.LineThreshold are for f4
 # There is no explicit check for f7, clang-tidy will just fail to compile files containing nested functions
 # readability-function-size.NestingThreshold is for c1 (it doesn't work perfectly but still)
-Checks:          'cppcoreguidelines-avoid-magic-numbers,cppcoreguidelines-avoid-non-const-global-variables,readability-function-size'
+# cppcoreguidelines-avoid-goto is for c3 (though it sadly doesn't work rn as clang-tidy will not run this check on C code)
+# c3 is done indirectly through GNU compilers (when you use the define flag for it when generating compile_commands.json)
+Checks:          'cppcoreguidelines-avoid-goto,cppcoreguidelines-avoid-magic-numbers,cppcoreguidelines-avoid-non-const-global-variables,readability-function-size'
 CheckOptions:
   - key:             readability-function-size.LineThreshold
     value:           '20'

@@ -11,8 +11,11 @@ f7:
 l5:
 - -Wdeclaration-after-statement (GCC only, Clang accepts it but doesn't do anything)
 
+c3:
+- -Dgoto='_Static_assert(0, "do not use goto")' (will work on any compiler with something like -D, even if they don't support _Static_assert, since it will fail to compile anyway)
+
 command line for all (GCC):
-- -Wmissing-declarations -Wstrict-prototypes -Wpedantic -Wdeclaration-after-statement
+- -Wmissing-declarations -Wstrict-prototypes -Wpedantic -Wdeclaration-after-statement -Dgoto='_Static_assert(0, "do not use goto")'
 
 command line for all (Clang):
-- -Wmissing-declarations -Wmissing-variable-declarations -Wstrict-prototypes
+- -Wmissing-declarations -Wmissing-variable-declarations -Wstrict-prototypes -Dgoto='_Static_assert(0, "do not use goto")'
