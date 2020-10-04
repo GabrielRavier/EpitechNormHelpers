@@ -22,7 +22,7 @@ C1: done in clang-tidy (not perfectly but it mostly works), TODO stub
 C2: undoable in clang-tidy/clang-format as far as I can see, maybe investigate more tools but rn this just seems undoable (it certainly is in the tool). TODO stub
 C3: done in GNU compilers with a define and consequently in clang-tidy (if configuring the compile_commands with the GNU compiler command). TODO stub
 A1: done in clang-tidy, TODO stub
-A2: TODO
+A2: unimplementable, TODO stub
 H1-H3: TODO
 
 Make it so that stuff depending on Git can still work even when `--directory` is not set to the root of the git repository, probably just change the file list method
