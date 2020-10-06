@@ -16,6 +16,8 @@ c3:
 
 command line for all (GCC):
 - -Wmissing-declarations -Wstrict-prototypes -Wpedantic -Wdeclaration-after-statement -Dgoto='_Static_assert(0, "do not use goto")'
+- CFLAGS="-Wall -Wextra -Wmissing-declarations -Wstrict-prototypes -Wpedantic -Wdeclaration-after-statement -Dgoto='_Static_assert(0, \"do not use goto\")'" (for use in Make invocation)
 
 command line for all (Clang):
 - -Wmissing-declarations -Wmissing-variable-declarations -Wstrict-prototypes -Dgoto='_Static_assert(0, "do not use goto")'
+- CFLAGS="-Wmissing-declarations -Wmissing-variable-declarations -Wstrict-prototypes -Dgoto='_Static_assert(0, \"do not use goto\")'" (for use in Make invocation)
